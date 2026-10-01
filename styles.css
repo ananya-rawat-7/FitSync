@@ -235,11 +235,45 @@ h1 span, h2 span { color: var(--orange); }
 .measurement-grid div { display: grid; gap: 5px; }
 .measurement-grid span { color: var(--muted); font-size: 9px; }
 .measurement-grid strong { color: var(--navy); font-family: var(--display); font-size: 26px; line-height: 1; }
+.bmi-summary { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(18, 48, 74, .14); }
+.bmi-summary span, .bmi-summary small { color: #586873; font-size: 9px; }
+.bmi-summary strong { color: var(--navy); font-family: var(--display); font-size: 23px; line-height: 1; }
+.bmi-summary small { grid-column: 2; }
 .account-card-note { margin: 17px 0 0; color: #586873; font-size: 9px; line-height: 1.6; }
 .account-plan-card { background: var(--navy); color: white; }
 .account-plan-card .account-card-label { color: #ffb08e; }
 .account-plan-card h3 { color: white; }
 .account-plan-card > p:last-child { margin: 13px 0 0; color: rgba(255, 255, 255, .8); font-size: 11px; line-height: 1.7; }
+.account-calorie-card { grid-column: 1 / -1; }
+.calorie-card-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+.calorie-card-heading > div > p { margin: 6px 0 0; color: var(--muted); font-size: 10px; }
+.calorie-card-heading > span { color: var(--muted); font-size: 9px; }
+.calorie-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 20px; }
+.calorie-stat-grid > div { min-width: 0; padding: 12px; background: #f2f5f5; }
+.calorie-stat-grid > div:first-child { background: var(--beige); }
+.calorie-stat-grid > span, .calorie-stat-grid > div > span { display: block; color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .5px; }
+.calorie-stat-grid strong { display: block; margin-top: 8px; color: var(--navy); font-family: var(--display); font-size: 25px; line-height: 1; overflow-wrap: anywhere; }
+.calorie-stat-grid small { color: var(--muted); font-size: 8px; }
+.calorie-status { margin: 13px 0 0; color: #357b58; font-size: 10px; font-weight: 600; }
+.calorie-status.is-over-target { color: #b44f32; }
+.calorie-entry-forms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 19px; }
+.calorie-entry-forms form { min-width: 0; padding: 17px; border: 1px solid var(--line); }
+.calorie-entry-forms h4, .entry-list-heading h4 { margin: 0 0 10px; color: var(--navy); font-family: var(--display); font-size: 19px; line-height: 1; }
+.calorie-entry-forms label { display: block; margin: 10px 0 5px; color: var(--navy); font-size: 9px; font-weight: 700; }
+.calorie-entry-forms label span { color: var(--muted); font-weight: 400; }
+.calorie-entry-forms input { width: 100%; min-height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 0; outline: none; background: white; font: inherit; font-size: 10px; }
+.calorie-entry-forms input:focus { border-color: var(--orange); }
+.calorie-entry-forms .button { min-height: 37px; margin-top: 13px; }
+.calorie-entry-forms .button svg { width: 14px; height: 14px; }
+.entry-form-message { min-height: 0; margin: 5px 0 0; color: #b44f32; font-size: 9px; }
+.entry-list-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 23px; }
+.entry-list-heading h4 { margin: 0; }
+.entry-list-heading span { color: var(--muted); font-size: 9px; }
+.today-entries { margin: 9px 0 0; padding: 0; list-style: none; }
+.today-entries li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); color: #59666f; font-size: 10px; }
+.today-entries li span { min-width: 0; overflow-wrap: anywhere; }
+.today-entries li strong { flex: 0 0 auto; color: var(--navy); font-size: 10px; }
+.today-entries .empty-entry-list { color: var(--muted); }
 .account-note, .auth-storage-note { margin: 13px 0 0; color: var(--muted); font-size: 9px; }
 .registration-questions { min-width: 0; margin: 13px 0 0; padding: 13px 0 0; border: 0; border-top: 1px solid var(--line); }
 .registration-questions legend { padding: 0; color: var(--navy); font-size: 10px; font-weight: 700; }
@@ -330,6 +364,9 @@ h1 span, h2 span { color: var(--orange); }
   .account-profile-card { grid-column: auto; grid-template-columns: 1fr; gap: 20px; }
   .account-profile-card .account-card-label { grid-column: auto; margin-bottom: -4px; }
   .account-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .account-calorie-card { grid-column: auto; }
+  .calorie-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .calorie-entry-forms { grid-template-columns: 1fr; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 17px; margin-bottom: 29px; }
   .section-heading h2, .progress-copy h2, .about-copy h2 { font-size: clamp(51px, 13vw, 69px); }
   .section-aside { margin: 0; font-size: 11px; }
