@@ -10,6 +10,7 @@ const toast = document.querySelector(".toast");
 const registerForm = document.querySelector("#register-form");
 const goalSelect = registerForm.elements.goal;
 let currentProfile = null;
+let jwtToken = null;
 
 registerForm.querySelector("#register-password").before(
   document.querySelector("#registration-questions").content.cloneNode(true),
@@ -42,27 +43,16 @@ function updateBodyLock() {
   document.body.classList.toggle("dialog-open", loginDialog.open || registerDialog.open || workoutDialog.open);
 }
 
-let csrfToken;
-
 async function apiRequest(path, options = {}) {
   let response;
   try {
-    const method = (options.method || "GET").toUpperCase();
     const headers = {
       ...(options.headers || {}),
       ...(options.body ? { "Content-Type": "application/json" } : {}),
     };
-    if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
-      if (!csrfToken) {
-        const csrfResponse = await fetch("/api/auth/csrf", { credentials: "same-origin" });
-        const csrfResult = await csrfResponse.json().catch(() => ({}));
-        if (!csrfResponse.ok || !csrfResult.token) throw new Error("Could not start a secure FitSync session.");
-        csrfToken = csrfResult.token;
-      }
-      headers["X-XSRF-TOKEN"] = csrfToken;
-    }
+    if (jwtToken) headers.Authorization = `Bearer ${jwtToken}`;
     response = await fetch(`/api${path}`, {
-      credentials: "same-origin",
+      credentials: "omit",
       ...options,
       headers,
     });
@@ -157,14 +147,6 @@ function completeSignIn(dashboard, shouldScroll = true) {
   showProfile(dashboard, shouldScroll);
 }
 
-apiRequest("/profile").then((dashboard) => {
-  completeSignIn(dashboard, false);
-}).catch(() => {
-  currentProfile = null;
-  accountSection.hidden = true;
-  accountNav.hidden = true;
-});
-
 menuToggle.addEventListener("click", () => {
   const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
   menuToggle.setAttribute("aria-expanded", String(!isOpen));
@@ -209,14 +191,15 @@ document.querySelector("#login-form").addEventListener("submit", async (event) =
   const form = event.currentTarget;
   const message = loginDialog.querySelector(".dialog-message");
   try {
-    const dashboard = await apiRequest("/auth/login", {
+    const auth = await apiRequest("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email: form.elements.email.value.trim(), password: form.elements.password.value }),
     });
     form.reset();
     message.textContent = "";
     loginDialog.close();
-    completeSignIn(dashboard);
+    jwtToken = auth.token;
+    completeSignIn(auth.dashboard);
   } catch (error) {
     message.textContent = error.message;
   }
@@ -244,7 +227,7 @@ registerForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    const dashboard = await apiRequest("/auth/register", {
+    const auth = await apiRequest("/auth/register", {
       method: "POST",
       body: JSON.stringify({
         name: form.elements.name.value.trim(),
@@ -261,7 +244,8 @@ registerForm.addEventListener("submit", async (event) => {
     form.reset();
     message.textContent = "";
     registerDialog.close();
-    completeSignIn(dashboard);
+    jwtToken = auth.token;
+    completeSignIn(auth.dashboard);
   } catch (error) {
     message.textContent = error.message;
   }
@@ -274,13 +258,8 @@ accountNav.addEventListener("click", (event) => {
   accountSection.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-document.querySelector("[data-logout]").addEventListener("click", async () => {
-  try {
-    await apiRequest("/auth/logout", { method: "POST" });
-  } catch (error) {
-    showToast(error.message);
-    return;
-  }
+document.querySelector("[data-logout]").addEventListener("click", () => {
+  jwtToken = null;
   currentProfile = null;
   accountSection.hidden = true;
   accountNav.hidden = true;
