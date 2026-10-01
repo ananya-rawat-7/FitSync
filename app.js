@@ -9,6 +9,10 @@ const loginTrigger = document.querySelector("[data-open-login]");
 const toast = document.querySelector(".toast");
 const usersStorageKey = "fitsync-users";
 const sessionStorageKey = "fitsync-session";
+const registerForm = document.querySelector("#register-form");
+registerForm.querySelector("#register-password").before(
+  document.querySelector("#registration-questions").content.cloneNode(true),
+);
 
 if (window.lucide) {
   window.lucide.createIcons();
@@ -49,13 +53,30 @@ async function hashPassword(password, existingSalt) {
 }
 
 function showProfile(user, shouldScroll = true) {
+  const trainingDays = Number(user.daysPerWeek);
+  const goalPlans = {
+    "Build strength": "Build around steady strength sessions, with recovery between harder workouts.",
+    "Improve endurance": "Mix comfortable cardio with strength work, and increase effort gradually.",
+    "Move more often": "Spread shorter movement sessions across the week to build a routine.",
+    "Support flexibility": "Pair gentle mobility work with easy movement and regular recovery.",
+    "Feel healthier": "Keep a balanced mix of movement and recovery that fits your schedule.",
+  };
+  const activityTip = user.activity === "Just getting started"
+    ? "Start comfortably and add intensity only when it feels right."
+    : "Adjust the pace to match your energy and recovery.";
+
   accountSection.hidden = false;
   accountNav.hidden = false;
   document.querySelector("[data-profile-name]").textContent = user.name;
   document.querySelector("[data-profile-email]").textContent = user.email;
   document.querySelector("[data-profile-goal]").textContent = user.goal;
   document.querySelector("[data-profile-activity]").textContent = user.activity;
+  document.querySelector("[data-profile-days]").textContent = trainingDays ? `${trainingDays} days / week` : "Not set";
   document.querySelector("[data-profile-created]").textContent = new Date(user.createdAt).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+  document.querySelector("[data-profile-height]").textContent = user.heightCm ? `${user.heightCm} cm` : "Not added";
+  document.querySelector("[data-profile-weight]").textContent = user.weightKg ? `${user.weightKg} kg` : "Not added";
+  document.querySelector("[data-profile-plan-title]").textContent = trainingDays ? `Your ${trainingDays}-day rhythm` : "Set your weekly rhythm";
+  document.querySelector("[data-profile-plan]").textContent = `${goalPlans[user.goal] || "Choose movement that suits your goals."} ${activityTip}`;
   document.querySelector("[data-profile-initials]").textContent = user.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
   loginTrigger.innerHTML = 'My profile <i data-lucide="user-round"></i>';
   window.lucide?.createIcons();
@@ -149,7 +170,7 @@ document.querySelector("[data-show-login]").addEventListener("click", () => {
   loginDialog.querySelector("#login-email").focus();
 });
 
-document.querySelector("#register-form").addEventListener("submit", async (event) => {
+registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const message = registerDialog.querySelector(".dialog-message");
@@ -172,6 +193,9 @@ document.querySelector("#register-form").addEventListener("submit", async (event
       email,
       goal: form.elements.goal.value,
       activity: form.elements.activity.value,
+      heightCm: form.elements.heightCm.value ? Number(form.elements.heightCm.value) : null,
+      weightKg: form.elements.weightKg.value ? Number(form.elements.weightKg.value) : null,
+      daysPerWeek: Number(form.elements.daysPerWeek.value),
       createdAt: new Date().toISOString(),
       salt: credentials.salt,
       passwordHash: credentials.hash,
