@@ -13,12 +13,28 @@ function Write-Log {
 
 function Invoke-Git {
   param([string[]]$GitArguments)
-  $output = & git @GitArguments 2>&1
-  foreach ($line in $output) {
-    Write-Log ([string]$line)
-  }
-  if ($LASTEXITCODE -ne 0) {
-    throw "Git command failed (exit $LASTEXITCODE): git $($GitArguments -join ' ')"
+  $gitPath = (Get-Command git.exe -ErrorAction Stop).Source
+  $tempPrefix = Join-Path $env:TEMP ("fitsync-git-" + [guid]::NewGuid().ToString("N"))
+  $stdoutPath = "$tempPrefix.out"
+  $stderrPath = "$tempPrefix.err"
+  $argumentLine = ($GitArguments | ForEach-Object {
+    if ($_ -match '[\s"]') { '"' + $_.Replace('"', '\"') + '"' }
+    else { $_ }
+  }) -join " "
+
+  try {
+    $process = Start-Process -FilePath $gitPath -ArgumentList $argumentLine -WorkingDirectory (Get-Location).Path -NoNewWindow -PassThru -Wait -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath
+    foreach ($line in Get-Content $stdoutPath -ErrorAction SilentlyContinue) {
+      Write-Log ([string]$line)
+    }
+    foreach ($line in Get-Content $stderrPath -ErrorAction SilentlyContinue) {
+      Write-Log ([string]$line)
+    }
+    if ($process.ExitCode -ne 0) {
+      throw "Git command failed (exit $($process.ExitCode)): git $($GitArguments -join ' ')"
+    }
+  } finally {
+    Remove-Item $stdoutPath, $stderrPath -ErrorAction SilentlyContinue
   }
 }
 
