@@ -11,7 +11,137 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    
     <script type="module" src="/src/main.jsx"></script>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="FitSync home">
+        <span class="brand-mark"><i data-lucide="activity"></i></span>
+        <span>FIT<span>SYNC</span></span>
+      </a>
+      <button class="menu-toggle icon-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+        <i data-lucide="menu"></i>
+      </button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#workouts">Workouts</a>
+        <a href="#progress">Progress</a>
+        <a href="#nutrition">Nutrition</a>
+        <a href="#about">About</a>
+        <a href="#account" data-account-nav hidden>My profile</a>
+      </nav>
+      <button class="login-trigger button button-small" type="button" data-open-login>Log in <i data-lucide="arrow-up-right"></i></button>
+    </header>
+<div id="root"></div>
+    <main>
+      <section class="hero section-wrap" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> YOUR FITNESS, YOUR WAY.</p>
+          <h1>TRAIN SMART.<br />MOVE BETTER.<br /><span>FEEL STRONGER.</span></h1>
+          <p class="hero-description">FitSync helps you plan workouts, track your sessions, understand your progress and build healthy fitness habits — all in one place.</p>
+          <div class="hero-actions">
+            <a class="button" href="#workouts">Start Your First Session <i data-lucide="arrow-up-right"></i></a>
+            <a class="button button-outline" href="#how-it-works">See How It Works <i data-lucide="play"></i></a>
+          </div>
+          <div class="hero-proof"><div class="avatar-stack"><span>J</span><span>A</span><span>M</span></div><p><strong>A little progress, every day.</strong><br />Built around real life, not perfection.</p></div>
+        </div>
+        <div class="hero-visual" aria-label="Athlete training with a dumbbell">
+          <img class="hero-photo" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=85" alt="Athlete focused on a strength workout" />
+          <div class="photo-tint"></div>
+          <div class="visual-label"><span class="visual-pulse"></span><span>YOUR NEXT REP<br /><strong>STARTS HERE</strong></span><i data-lucide="arrow-up-right"></i></div>
+          <div class="heart-card"><div class="heart-card-top"><span class="heart-icon"><i data-lucide="heart-pulse"></i></span><span>HEART RATE</span><strong>128 <small>BPM</small></strong></div><div class="heart-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><p>IN THE ZONE <i data-lucide="move-up-right"></i></p></div>
+          <div class="session-chip"><span class="session-chip-icon"><i data-lucide="dumbbell"></i></span><span><small>TODAY'S FOCUS</small><strong>Full body strength</strong></span><i data-lucide="arrow-up-right"></i></div>
+          <span class="hero-index">01 <span>/ 04</span></span>
+        </div>
+        <a class="scroll-cue" href="#how-it-works"><span></span> SCROLL TO EXPLORE</a>
+      </section>
+
+      <section class="how-section section-wrap" id="how-it-works">
+        <div class="section-heading"><div><p class="eyebrow">A ROUTINE THAT WORKS FOR YOU</p><h2>GOOD FITNESS.<br /><span>NO GUESSWORK.</span></h2></div><p class="section-aside">A few thoughtful tools make it easier to show up, stay consistent and feel good about the work you put in.</p></div>
+        <div class="steps-grid">
+          <article class="step"><span class="step-number">01</span><i data-lucide="calendar-days"></i><h3>PLAN YOUR WEEK</h3><p>Choose workouts that fit your schedule and create a simple weekly routine.</p><a href="#workouts" aria-label="Explore workouts"><i data-lucide="arrow-up-right"></i></a></article>
+          <article class="step"><span class="step-number">02</span><i data-lucide="list-checks"></i><h3>LOG YOUR SESSION</h3><p>Record your exercises, sets, repetitions and completed workouts.</p><a href="#workouts" aria-label="Explore workouts"><i data-lucide="arrow-up-right"></i></a></article>
+          <article class="step"><span class="step-number">03</span><i data-lucide="chart-no-axes-column-increasing"></i><h3>TRACK YOUR PROGRESS</h3><p>Understand your activity, consistency and workout progress over time.</p><a href="#progress" aria-label="See your progress"><i data-lucide="arrow-up-right"></i></a></article>
+          <article class="step"><span class="step-number">04</span><i data-lucide="heart-handshake"></i><h3>BUILD HEALTHY HABITS</h3><p>Get simple nutrition and recovery guidance to support your fitness routine.</p><a href="#nutrition" aria-label="Explore nutrition"><i data-lucide="arrow-up-right"></i></a></article>
+        </div>
+      </section>
+
+      <section class="styles-section" id="training-styles">
+        <div class="section-wrap"><div class="section-heading section-heading-light"><div><p class="eyebrow">FIND YOUR KIND OF STRONG</p><h2>PICK YOUR<br /><span>TRAINING STYLE.</span></h2></div><a class="text-link text-link-light" href="#workouts">ALL WORKOUTS <i data-lucide="arrow-up-right"></i></a></div>
+          <div class="style-grid">
+            <a class="style-card style-card-cardio" href="#workouts"><span class="style-index">01 / MOVE</span><span class="style-icon"><i data-lucide="timer"></i></span><span class="style-card-bottom"><span><strong>CARDIO</strong><small>Build endurance and keep your body active.</small></span><i data-lucide="arrow-up-right"></i></span></a>
+            <a class="style-card style-card-strength" href="#workouts"><span class="style-index">02 / BUILD</span><span class="style-icon"><i data-lucide="dumbbell"></i></span><span class="style-card-bottom"><span><strong>STRENGTH</strong><small>Improve strength through structured resistance training.</small></span><i data-lucide="arrow-up-right"></i></span></a>
+            <a class="style-card style-card-mobility" href="#workouts"><span class="style-index">03 / RESET</span><span class="style-icon"><i data-lucide="move"></i></span><span class="style-card-bottom"><span><strong>MOBILITY</strong><small>Stretch, move comfortably and support recovery.</small></span><i data-lucide="arrow-up-right"></i></span></a>
+            <a class="style-card style-card-hiit" href="#workouts"><span class="style-index">04 / GO</span><span class="style-icon"><i data-lucide="zap"></i></span><span class="style-card-bottom"><span><strong>HIIT</strong><small>Short, energetic interval-based workouts.</small></span><i data-lucide="arrow-up-right"></i></span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="workouts-section section-wrap" id="workouts">
+        <div class="section-heading"><div><p class="eyebrow">A GOOD PLACE TO START</p><h2>FIND YOUR<br /><span>WORKOUT.</span></h2></div><div class="workout-heading-right"><p>Pick a session that feels right for today. Every workout is a fresh start.</p><a class="text-link" href="#workouts-grid">BROWSE SESSIONS <i data-lucide="arrow-down"></i></a></div></div>
+        <div class="workout-grid" id="workouts-grid">
+          <article class="workout-card" data-workout="Full Body"><div class="workout-image workout-image-1"><span class="workout-category">STRENGTH</span><span class="workout-img-icon"><i data-lucide="dumbbell"></i></span></div><div class="workout-info"><div><h3>Full Body</h3><p><span>Beginner</span><b></b><span>30 min</span><b></b><span>6 moves</span></p></div><button class="workout-open" aria-label="View Full Body workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+          <article class="workout-card" data-workout="Upper Body"><div class="workout-image workout-image-2"><span class="workout-category">STRENGTH</span><span class="workout-img-icon"><i data-lucide="dumbbell"></i></span></div><div class="workout-info"><div><h3>Upper Body</h3><p><span>Intermediate</span><b></b><span>25 min</span><b></b><span>5 moves</span></p></div><button class="workout-open" aria-label="View Upper Body workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+          <article class="workout-card" data-workout="Lower Body"><div class="workout-image workout-image-3"><span class="workout-category">STRENGTH</span><span class="workout-img-icon"><i data-lucide="activity"></i></span></div><div class="workout-info"><div><h3>Lower Body</h3><p><span>Intermediate</span><b></b><span>35 min</span><b></b><span>6 moves</span></p></div><button class="workout-open" aria-label="View Lower Body workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+          <article class="workout-card" data-workout="Core"><div class="workout-image workout-image-4"><span class="workout-category">CORE</span><span class="workout-img-icon"><i data-lucide="circle-dot"></i></span></div><div class="workout-info"><div><h3>Core</h3><p><span>Beginner</span><b></b><span>18 min</span><b></b><span>4 moves</span></p></div><button class="workout-open" aria-label="View Core workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+          <article class="workout-card" data-workout="Cardio"><div class="workout-image workout-image-5"><span class="workout-category">CARDIO</span><span class="workout-img-icon"><i data-lucide="heart-pulse"></i></span></div><div class="workout-info"><div><h3>Cardio</h3><p><span>All levels</span><b></b><span>22 min</span><b></b><span>5 moves</span></p></div><button class="workout-open" aria-label="View Cardio workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+          <article class="workout-card" data-workout="Mobility"><div class="workout-image workout-image-6"><span class="workout-category">RECOVERY</span><span class="workout-img-icon"><i data-lucide="wind"></i></span></div><div class="workout-info"><div><h3>Mobility</h3><p><span>All levels</span><b></b><span>15 min</span><b></b><span>5 moves</span></p></div><button class="workout-open" aria-label="View Mobility workout"><i data-lucide="arrow-up-right"></i></button></div></article>
+        </div>
+      </section>
+
+      <section class="progress-section" id="progress">
+        <div class="section-wrap progress-layout"><div class="progress-copy"><p class="eyebrow">PROGRESS, NOT PRESSURE</p><h2>SHOW UP.<br /><span>SEE IT ADD UP.</span></h2><p>Every session counts. Keep an eye on your activity and celebrate the consistency you’re building, one week at a time.</p><a class="button" href="#workouts">Log a workout <i data-lucide="arrow-up-right"></i></a><div class="progress-note"><i data-lucide="sparkles"></i><span><strong>Consistency looks good on you.</strong><br />Small steps make a strong routine.</span></div></div>
+          <div class="dashboard" aria-label="Example activity dashboard"><div class="dashboard-top"><div><span class="dashboard-overline">YOUR ACTIVITY</span><h3>A steady week.</h3></div><div class="period-switch" role="group" aria-label="Chart time period"><button class="period-button is-active" type="button" data-period="week" aria-pressed="true">Week</button><button class="period-button" type="button" data-period="month" aria-pressed="false">Month</button></div></div>
+            <div class="stat-grid"><div class="stat-tile"><span>WORKOUTS</span><strong data-stat="workouts">04</strong><small><i data-lucide="trending-up"></i> sessions</small></div><div class="stat-tile"><span>ACTIVE MIN</span><strong data-stat="minutes">186</strong><small><i data-lucide="trending-up"></i> this week</small></div><div class="stat-tile"><span>STREAK</span><strong data-stat="streak">03</strong><small><i data-lucide="flame"></i> weeks</small></div><div class="stat-tile stat-highlight"><span>CONSISTENCY</span><strong data-stat="consistency">86%</strong><small>you’re showing up</small></div></div>
+            <div class="chart-area"><div class="chart-heading"><span>ACTIVE MINUTES</span><span class="chart-key"><i></i> Movement</span></div><div class="bar-chart" role="img" aria-label="Weekly active minutes chart"><div class="chart-guides"><i>60</i><i>40</i><i>20</i><i>0</i></div><div class="chart-bars" data-chart-bars></div></div></div>
+            <div class="dashboard-bottom"><span><i data-lucide="circle-check"></i> Looking good. Keep your rhythm.</span><span>UPDATED TODAY</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="nutrition-section section-wrap" id="nutrition"><div class="section-heading"><div><p class="eyebrow">FUEL FOR THE FEELING</p><h2>EAT TO SUPPORT<br /><span>YOUR TRAINING.</span></h2></div><p class="section-aside">Good nutrition is about care, not rules. A few balanced basics can support the way you move and recover.</p></div>
+        <div class="nutrition-grid"><article class="nutrition-card nutrition-meals"><div class="nutrition-icon"><i data-lucide="salad"></i></div><span class="nutrition-count">01 / NOURISH</span><h3>Balanced meals</h3><p>Build satisfying plates with a mix of colorful produce, grains and foods you enjoy.</p><a href="#about" aria-label="Learn about balanced meals"><i data-lucide="arrow-up-right"></i></a></article><article class="nutrition-card nutrition-hydration"><div class="nutrition-icon"><i data-lucide="droplets"></i></div><span class="nutrition-count">02 / REFRESH</span><h3>Hydration</h3><p>Keep water close and drink regularly, especially around your activity.</p><a href="#about" aria-label="Learn about hydration"><i data-lucide="arrow-up-right"></i></a></article><article class="nutrition-card nutrition-protein"><div class="nutrition-icon"><i data-lucide="bean"></i></div><span class="nutrition-count">03 / REPLENISH</span><h3>Protein & nutrients</h3><p>Varied foods help your body get the nutrients it needs to feel its best.</p><a href="#about" aria-label="Learn about protein and nutrients"><i data-lucide="arrow-up-right"></i></a></article><article class="nutrition-card nutrition-recovery"><div class="nutrition-icon"><i data-lucide="moon"></i></div><span class="nutrition-count">04 / RESTORE</span><h3>Recovery</h3><p>Rest, sleep and gentle movement are all part of a well-rounded routine.</p><a href="#about" aria-label="Learn about recovery"><i data-lucide="arrow-up-right"></i></a></article></div>
+      </section>
+
+      <section class="about-section" id="about"><div class="about-image"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1100&q=85" alt="Person stretching during a mindful movement session" loading="lazy" /><span class="about-image-tag"><i data-lucide="sun"></i> MADE FOR REAL LIFE</span></div><div class="about-copy"><p class="eyebrow">A HEALTHIER KIND OF HUSTLE</p><h2>FITNESS SHOULD<br />FEEL <span>SIMPLE.</span></h2><p>FitSync is designed to help you organize workouts, monitor your progress and develop sustainable fitness habits. No all-or-nothing plans. Just a clearer way to make movement part of your life.</p><a class="text-link" href="#how-it-works">A LITTLE MORE ABOUT US <i data-lucide="arrow-up-right"></i></a><div class="about-signoff">YOUR PACE. YOUR PROGRESS. <span>✳</span></div></div></section>
+
+      <section class="account-section section-wrap" id="account" hidden aria-labelledby="account-title">
+        <div class="account-heading"><div><p class="eyebrow">YOUR FITSYNC ACCOUNT</p><h2 id="account-title">YOUR PROFILE.<br /><span>YOUR PACE.</span></h2></div><button class="button button-outline" type="button" data-logout>Log out <i data-lucide="log-out"></i></button></div>
+        <div class="account-cards">
+          <article class="account-card account-profile-card"><p class="account-card-label">YOUR PROFILE</p><div class="account-summary"><span class="account-avatar" data-profile-initials>FS</span><div><h3 data-profile-name></h3><p data-profile-email></p></div></div><dl class="account-details"><div><dt>Age</dt><dd data-profile-age></dd></div><div><dt>Fitness goal</dt><dd data-profile-goal></dd></div><div><dt>Current activity</dt><dd data-profile-activity></dd></div><div><dt>Training days</dt><dd data-profile-days></dd></div><div><dt>Member since</dt><dd data-profile-created></dd></div></dl></article>
+          <article class="account-card account-measurement-card"><p class="account-card-label">YOUR STARTING POINT</p><h3>Body measurements</h3><div class="measurement-grid"><div><span>Height</span><strong data-profile-height></strong></div><div><span>Weight</span><strong data-profile-weight></strong></div></div><div class="bmi-summary"><span>BMI estimate</span><strong data-profile-bmi></strong><small data-profile-bmi-category></small></div><p class="account-card-note">BMI is a rough estimate, not medical advice.</p></article>
+          <article class="account-card account-plan-card"><p class="account-card-label">BUILT AROUND YOU</p><h3 data-profile-plan-title></h3><p data-profile-plan></p></article>
+          <article class="account-card account-calorie-card"><p class="account-card-label">TODAY'S TRACKER</p><div class="calorie-card-heading"><div><h3>Daily calorie balance</h3><p>Entries reset at midnight.</p></div><span data-calorie-date></span></div><div class="calorie-stat-grid"><div><span>DAILY TARGET</span><strong data-calorie-target></strong><small>kcal</small></div><div><span>CONSUMED</span><strong data-calorie-consumed></strong><small>kcal</small></div><div><span>BURNED</span><strong data-calorie-burned></strong><small>kcal</small></div><div><span>NET</span><strong data-calorie-net></strong><small>kcal</small></div></div><p class="calorie-status" data-calorie-status aria-live="polite"></p><div class="calorie-entry-forms"><form id="food-entry-form"><h4>Log food</h4><label for="food-calories">Calories consumed</label><input id="food-calories" name="calories" type="number" min="0.01" max="999999.99" step="0.01" inputmode="decimal" required /><label for="food-note">Food or note <span>optional</span></label><input id="food-note" name="note" type="text" maxlength="120" /><button class="button button-small" type="submit">Add food <i data-lucide="plus"></i></button><p class="entry-form-message" aria-live="polite"></p></form><form id="activity-entry-form"><h4>Log activity</h4><label for="activity-calories">Calories burned</label><input id="activity-calories" name="calories" type="number" min="0.01" max="999999.99" step="0.01" inputmode="decimal" required /><label for="activity-note">Activity or note <span>optional</span></label><input id="activity-note" name="note" type="text" maxlength="120" /><button class="button button-small" type="submit">Add activity <i data-lucide="plus"></i></button><p class="entry-form-message" aria-live="polite"></p></form></div><div class="entry-list-heading"><h4>Today's entries</h4><span data-entry-count>0 entries</span></div><ul class="today-entries" data-today-entries></ul></article>
+        </div>
+        <p class="account-note">Your password is never shown on your profile.</p>
+      </section>
+    </main>
+
+    <template id="registration-questions">
+      <fieldset class="registration-questions">
+        <legend>Your training setup</legend>
+        <p class="registration-question-note">Used for your BMI and daily estimate. This is not medical advice.</p>
+        <label for="register-age">Age</label>
+        <input id="register-age" name="age" type="number" min="1" max="120" step="1" inputmode="numeric" required />
+        <div class="measurement-fields">
+          <label for="register-height">Height (cm)<input id="register-height" name="heightCm" type="number" min="0.01" max="250" step="0.1" inputmode="decimal" required /></label>
+          <label for="register-weight">Weight (kg)<input id="register-weight" name="weightKg" type="number" min="0.01" max="500" step="0.1" inputmode="decimal" required /></label>
+        </div>
+        <label for="register-days">How many days can you train each week?</label>
+        <select id="register-days" name="daysPerWeek" required>
+          <option value="">Choose weekly days</option>
+          <option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option>
+          <option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option><option value="7">7 days</option>
+        </select>
+      </fieldset>
+    </template>
+
+    <footer class="site-footer"><div class="footer-main section-wrap"><div class="footer-brand"><a class="brand" href="#home" aria-label="FitSync home"><span class="brand-mark"><i data-lucide="activity"></i></span><span>FIT<span>SYNC</span></span></a><p>A straightforward way to plan, track and understand your fitness.</p><a class="footer-social" href="https://instagram.com" aria-label="Instagram"><i data-lucide="camera"></i></a></div><div class="footer-column"><h2>PRODUCT</h2><a href="#workouts">Workouts</a><a href="#progress">Progress</a><a href="#nutrition">Nutrition</a></div><div class="footer-column"><h2>COMPANY</h2><a href="#about">About</a><a href="#about">Blog</a><a href="#about">Careers</a></div><div class="footer-column"><h2>SUPPORT</h2><a href="mailto:hello@fitsync.example">FAQ</a><a href="mailto:hello@fitsync.example">Contact</a><a href="#about">Privacy</a></div><div class="footer-column"><h2>FOLLOW</h2><a href="https://instagram.com">Instagram</a><a href="https://twitter.com">Twitter</a><a href="https://youtube.com">YouTube</a></div></div><div class="footer-bottom section-wrap"><span>© 2026 FitSync. All rights reserved.</span><span>MADE TO MOVE WITH YOU <i data-lucide="heart"></i></span></div></footer>
+
+    <dialog class="app-dialog" id="login-dialog" aria-labelledby="login-title"><button class="dialog-close icon-button" type="button" aria-label="Close login"><i data-lucide="x"></i></button><div class="dialog-mark"><i data-lucide="activity"></i></div><p class="eyebrow">GOOD TO HAVE YOU BACK</p><h2 id="login-title">LET'S GET<br /><span>IN SYNC.</span></h2><form id="login-form"><label for="login-email">Email address</label><input id="login-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required /><label for="login-password">Password</label><input id="login-password" name="password" type="password" placeholder="Your password" autocomplete="current-password" required /><button class="button dialog-submit" type="submit">Log in <i data-lucide="arrow-up-right"></i></button><p class="dialog-message" aria-live="polite"></p></form><p class="dialog-footnote">New here? <button type="button" class="text-button" data-signup>Register</button></p><p class="auth-storage-note">Your sign-in token stays in memory and expires after 30 minutes.</p></dialog>
+
+    <dialog class="app-dialog" id="register-dialog" aria-labelledby="register-title"><button class="dialog-close icon-button" type="button" aria-label="Close registration"><i data-lucide="x"></i></button><div class="dialog-mark"><i data-lucide="activity"></i></div><p class="eyebrow">START WHERE YOU ARE</p><h2 id="register-title">CREATE YOUR<br /><span>ACCOUNT.</span></h2><form id="register-form"><label for="register-name">Full name</label><input id="register-name" name="name" type="text" placeholder="Your name" autocomplete="name" required /><label for="register-email">Email address</label><input id="register-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required /><label for="register-goal">Fitness goal</label><select id="register-goal" name="goal" required><option value="">Choose a goal</option><option>Build strength</option><option>Improve endurance</option><option>Move more often</option><option>Support flexibility</option><option>Feel healthier</option></select><label for="register-activity">Current activity</label><select id="register-activity" name="activity" required><option value="">Choose your activity level</option><option>Just getting started</option><option>Active 1-2 days a week</option><option>Active 3-4 days a week</option><option>Active 5+ days a week</option></select><label for="register-password">Password</label><input id="register-password" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" minlength="8" required /><label for="register-confirm-password">Confirm password</label><input id="register-confirm-password" name="confirmPassword" type="password" placeholder="Enter your password again" autocomplete="new-password" minlength="8" required /><button class="button dialog-submit" type="submit">Create account <i data-lucide="arrow-up-right"></i></button><p class="dialog-message" aria-live="polite"></p></form><p class="dialog-footnote">Already registered? <button type="button" class="text-button" data-show-login>Log in</button></p><p class="auth-storage-note">Demo account data is saved in this browser.</p></dialog>
+
+    <dialog class="app-dialog workout-dialog" id="workout-dialog" aria-labelledby="workout-title"><button class="dialog-close icon-button" type="button" aria-label="Close workout"><i data-lucide="x"></i></button><p class="eyebrow">YOUR NEXT SESSION</p><h2 id="workout-title">FULL BODY</h2><p class="workout-dialog-intro">A balanced session to help you build strength at your own pace. Take breaks when you need them and focus on good form.</p><div class="dialog-workout-meta"><span><i data-lucide="clock-3"></i> 30 minutes</span><span><i data-lucide="signal"></i> Beginner friendly</span></div><ol class="exercise-list"><li><span>01</span> Bodyweight squats <small>3 × 10</small></li><li><span>02</span> Incline push-ups <small>3 × 8</small></li><li><span>03</span> Glute bridges <small>3 × 12</small></li><li><span>04</span> Bent-over rows <small>3 × 10</small></li><li><span>05</span> Dead bugs <small>3 × 8</small></li></ol><button class="button dialog-submit" type="button" data-start-workout>Start session <i data-lucide="arrow-up-right"></i></button><p class="workout-start-message" aria-live="polite"></p></dialog>
+    <div class="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
