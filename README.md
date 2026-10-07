@@ -36,6 +36,17 @@ The defaults connect to `localhost:3306/fitsync` as `fitsync_app`. Override `DB_
 
 The API is stateless and does not use session cookies or CSRF tokens. The browser keeps the JWT in memory, so reloading the page signs out. Passwords are stored as BCrypt hashes. Profiles and calorie entries are kept in MySQL. Keep `DB_PASSWORD` and `JWT_SECRET` out of source control.
 
+## Assignment 4: JPA Repository database operations
+
+This project implements the assignment requirement to perform database operations using Spring Data JPA repositories with MySQL persistence:
+
+- `UserProfileRepository` provides CRUD-style lookup and uniqueness checks for user profiles.
+- `CalorieEntryRepository` provides profile-scoped queries for daily calorie entries.
+- `UserProfile` and `CalorieEntry` are mapped as JPA entities and persisted through Spring Boot.
+- The REST API exposes create, read, and aggregate operations for profile management and calorie tracking.
+
+Verification: `mvn test` passes successfully with 5 tests and 0 failures.
+
 ## Fitness estimates
 
 BMI and calorie targets are educational estimates, not medical advice. The calorie-target formula mirrors the supplied console example: body weight in kilograms times 24, adjusted by 400 calories for weight-loss or weight-gain goals, with a 1,200 calorie minimum.
