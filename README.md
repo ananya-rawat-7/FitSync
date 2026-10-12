@@ -200,3 +200,539 @@ The API is stateless and does not use session cookies or CSRF tokens. The browse
 ## Fitness estimates
 
 BMI and calorie targets are educational estimates, not medical advice. The calorie-target formula mirrors the supplied console example: body weight in kilograms times 24, adjusted by 400 calories for weight-loss or weight-gain goals, with a 1,200 calorie minimum.
+
+
+## Ananya's idea
+
+# Fitness Web App --- Product Requirements and Development Plan
+
+## 1. Project Overview
+
+**Project type:** Fitness and nutrition tracking web application\
+**Frontend:** React\
+**Backend:** Java (Spring Boot recommended)\
+**Database:** MySQL
+
+### Purpose
+
+The app helps users understand their current fitness situation, set a
+realistic goal, track the food they eat, and plan workouts or other
+activities. It should make calorie and nutrition tracking simple,
+including for common Indian foods and foods that are not already in the
+app's database.
+
+## 2. Main Features
+
+1.  **User profile and measurements**
+2.  **Fitness status and BMI calculator**
+3.  **Goal setting**
+4.  **Food and calorie tracker**
+5.  **Daily dashboard**
+6.  **Workout and activity planner**
+7.  **Progress tracking**
+
+------------------------------------------------------------------------
+
+## 3. User Profile and Measurements
+
+Collect the information needed to estimate a user's current fitness
+status.
+
+### 3.1 Basic details
+
+-   Name or display name
+-   Age or date of birth
+-   Gender, if the selected calculation or recommendation requires it
+-   Height
+-   Current weight
+-   Preferred units (kg/cm or lb/ft-in)
+-   Activity level (sedentary, lightly active, moderately active, very
+    active)
+
+### 3.2 Optional measurements
+
+Allow users to add any measurements they know. Do not require every
+measurement to use the app.
+
+-   Waist circumference
+-   Hip circumference
+-   Neck circumference
+-   Chest circumference
+-   Arm circumference
+-   Thigh circumference
+-   Body-fat percentage, if the user has a reliable measurement
+-   Resting heart rate, if known
+
+The app should show which values are user-entered and which are
+calculated estimates. More measurements do not automatically make every
+estimate accurate; results depend on the method and quality of the
+input.
+
+------------------------------------------------------------------------
+
+## 4. Current Fitness Status
+
+### 4.1 BMI calculator
+
+Calculate Body Mass Index (BMI) using height and weight.
+
+**Metric formula:**
+
+`BMI = weight in kilograms / (height in metres × height in metres)`
+
+Display:
+
+-   Current BMI
+-   A plain-language explanation of the result
+-   The height and weight used in the calculation
+-   A note that BMI is a screening measure and does not directly measure
+    body fat or overall health
+
+Use appropriate interpretation for the user's age. Adult BMI categories
+should not automatically be applied to children or teenagers.
+
+### 4.2 Other status indicators
+
+Where enough information is available, the app may display:
+
+-   Current weight
+-   Waist-to-height ratio
+-   Estimated daily maintenance calories
+-   Optional body-fat estimate, clearly labelled as an estimate
+-   Recent weight trend
+
+Do not present estimates as medical diagnoses.
+
+------------------------------------------------------------------------
+
+## 5. Goal Setting
+
+Ask the user what they want to achieve. Use clear, respectful options
+rather than labels such as "get fatter" or "stay fat."
+
+### 5.1 Goal options
+
+-   **Lose weight / reduce body fat**
+-   **Gain weight**
+-   **Maintain current weight**
+-   **Improve fitness or build strength** (optional goal)
+
+### 5.2 Goal details
+
+Ask the user to provide:
+
+-   Target weight, if relevant
+-   Target date or duration
+-   Preferred pace of progress, where appropriate
+-   Main focus: weight, body measurements, strength, or general activity
+
+The app should check that the goal and duration are plausible, show an
+estimate rather than a guarantee, and encourage professional advice when
+a goal may be unsafe. Avoid extreme calorie targets or rapid
+weight-change recommendations.
+
+------------------------------------------------------------------------
+
+## 6. Food and Nutrition Tracker
+
+### 6.1 Food database
+
+Include a searchable database of common Indian foods and popular foods
+from other cuisines.
+
+Possible categories:
+
+-   Rice and roti
+-   Dal, beans, and legumes
+-   Vegetables and salads
+-   Fruits
+-   Dairy products
+-   Snacks and street food
+-   Breakfast foods
+-   Indian meals and curries
+-   Meat, fish, and eggs
+-   Packaged foods and drinks
+-   Popular international foods
+
+Food nutrition values should be stored with a clear serving basis, such
+as per 100 g, per serving, or per item. Where possible, distinguish raw
+and cooked foods because their nutrition values can differ.
+
+### 6.2 Add a food entry
+
+Users should be able to:
+
+1.  Search for and select a food from the database.
+2.  Choose a portion size in grams, millilitres, or a familiar unit such
+    as one roti or one bowl.
+3.  See the estimated calories and nutrition for that portion.
+4.  Add the entry to a meal and save it to the daily log.
+
+For foods not in the database, provide a custom-food option:
+
+-   Food name
+-   Calories per 100 g (recommended default basis)
+-   Protein per 100 g
+-   Carbohydrates per 100 g
+-   Fat per 100 g
+-   Portion amount and unit
+
+The original idea of entering calories per 10 g can be supported, but
+the app should clearly show the chosen basis. A consistent per-100-g
+basis is easier to compare and calculate.
+
+### 6.3 Calculation
+
+For a food with nutrition values stored per 100 g:
+
+`Nutrition for portion = (portion in grams / 100) × nutrition per 100 g`
+
+For example, if a food has 200 kcal per 100 g and the portion is 150 g:
+
+`Calories = (150 / 100) × 200 = 300 kcal`
+
+For packaged foods, users may enter the nutrition values from the
+product label. Make clear that user-entered values may be approximate.
+
+### 6.4 Meal organisation
+
+Allow users to organise food entries by:
+
+-   Breakfast
+-   Lunch
+-   Dinner
+-   Snacks
+-   Other
+
+Users should be able to edit or remove an entry and view their food log
+by date.
+
+------------------------------------------------------------------------
+
+## 7. Daily Dashboard
+
+The dashboard should give users a quick summary of their daily intake,
+activity, and goal.
+
+### 7.1 Nutrition summary
+
+Display:
+
+-   Total calories consumed
+-   Protein consumed (g)
+-   Carbohydrates consumed (g)
+-   Fat consumed (g)
+-   Daily targets, where available
+-   Remaining amount against each target
+
+### 7.2 Calorie balance
+
+Display the difference between estimated calorie intake and the user's
+estimated daily calorie target.
+
+-   For a weight-loss goal, show progress against the planned intake
+    target.
+-   For a weight-gain goal, show progress against the planned intake
+    target.
+-   For maintenance, show progress against the maintenance estimate.
+
+Also show calories recorded as burned through exercise separately.
+Exercise-calorie estimates can be inaccurate, so label them as estimates
+and avoid implying that they are exact.
+
+**Important:** Do not treat "calories to burn or gain" as a single exact
+number. Show intake targets, activity estimates, and progress in clearly
+labelled sections.
+
+### 7.3 Dashboard visualisations
+
+Useful components include:
+
+-   Calorie progress bar
+-   Protein, carbohydrate, and fat summary
+-   Food entries grouped by meal
+-   Activity and exercise summary
+-   Weight history chart
+-   Daily and weekly progress view
+
+------------------------------------------------------------------------
+
+## 8. Workout and Activity Planner
+
+### 8.1 Activity selection
+
+Provide a searchable list of exercises and everyday activities, for
+example:
+
+-   Walking
+-   Running
+-   Cycling
+-   Swimming
+-   Strength training
+-   Yoga
+-   Stretching
+-   Dancing
+-   Sports
+-   Other custom activity
+
+### 8.2 Record an activity
+
+Let the user enter:
+
+-   Activity name
+-   Duration
+-   Date and time
+-   Optional distance, steps, or intensity
+-   Optional notes
+
+Estimate calories burned using an appropriate method and, where
+relevant, the user's weight, activity intensity, and duration. Show the
+result as an estimate.
+
+### 8.3 Workout planning
+
+Users should be able to:
+
+-   Create a workout plan
+-   Add activities or exercises to a plan
+-   Set duration, repetitions, sets, or distance when relevant
+-   Schedule activities for a date
+-   Mark a planned activity as completed
+-   View completed and planned activities
+
+Start with a simple activity log and planner. More advanced personalised
+workout recommendations can be added later.
+
+------------------------------------------------------------------------
+
+## 9. Progress Tracking
+
+Track changes over time so users can see whether they are moving toward
+their goals.
+
+-   Record weight by date
+-   Record optional body measurements
+-   Compare current measurements with previous measurements
+-   Show weekly and monthly trends
+-   Show food and activity history
+-   Show progress toward the selected goal
+
+Users should be able to correct or delete their own entries.
+
+------------------------------------------------------------------------
+
+## 10. Main User Flow
+
+1.  The user opens the app and creates a profile.
+2.  The user enters height, weight, age, activity level, and any
+    optional measurements.
+3.  The app calculates BMI and displays the current fitness summary.
+4.  The user chooses a goal and enters a target and duration, where
+    relevant.
+5.  The app estimates suitable daily targets and explains that they are
+    estimates.
+6.  The user records meals and portion sizes throughout the day.
+7.  The user records workouts and other physical activities.
+8.  The dashboard updates the daily nutrition and activity summaries.
+9.  The user checks their progress over time and updates measurements or
+    goals when needed.
+
+------------------------------------------------------------------------
+
+## 11. Suggested Pages
+
+1.  **Sign up / Login** --- account access
+2.  **Profile Setup** --- personal details and measurements
+3.  **Fitness Overview** --- BMI and current status
+4.  **Goal Setup** --- goal, target, and duration
+5.  **Dashboard** --- daily calories, macros, and activity
+6.  **Food Tracker** --- search, portions, custom foods, and meal log
+7.  **Workout Planner** --- planned and completed activities
+8.  **Progress** --- weight and measurement charts
+9.  **Settings** --- units, profile, and account preferences
+
+------------------------------------------------------------------------
+
+## 12. Suggested Technical Architecture
+
+### Frontend: React
+
+Responsibilities:
+
+-   User interface and forms
+-   Food search and portion calculator
+-   Dashboard and charts
+-   Workout planner
+-   Input validation and error messages
+-   Calling the backend through HTTP APIs
+
+### Backend: Java with Spring Boot
+
+Responsibilities:
+
+-   REST API endpoints
+-   Business logic and nutrition calculations
+-   Authentication and authorisation
+-   Input validation
+-   Reading and writing application data
+-   Ensuring each user can access only their own private records
+
+### Database: MySQL
+
+Suggested main tables:
+
+  -----------------------------------------------------------------------
+  Table                               Purpose
+  ----------------------------------- -----------------------------------
+  `users`                             Account and login-related
+                                      information
+
+  `user_profiles`                     Age or birth date, height, units,
+                                      activity level, and profile details
+
+  `body_measurements`                 Weight and optional measurements
+                                      recorded over time
+
+  `goals`                             Goal type, target, start date,
+                                      target date, and status
+
+  `foods`                             Shared food database and nutrition
+                                      values
+
+  `food_logs`                         Foods eaten, portions, meals, and
+                                      timestamps
+
+  `activities`                        Shared activity and exercise
+                                      catalogue
+
+  `activity_logs`                     User-recorded activities and
+                                      estimated calories
+
+  `workout_plans`                     Workout plan details and schedules
+
+  `workout_plan_items`                Exercises or activities included in
+                                      a plan
+  -----------------------------------------------------------------------
+
+Use foreign keys and appropriate indexes. Store dates and numeric values
+with suitable database types. Passwords must be securely hashed; never
+store plain-text passwords.
+
+------------------------------------------------------------------------
+
+## 13. Example REST API Endpoints
+
+These are suggested endpoint names, not implemented APIs.
+
+  ----------------------------------------------------------------------------------
+  Method                  Endpoint                           Purpose
+  ----------------------- ---------------------------------- -----------------------
+  `POST`                  `/api/auth/register`               Register a user
+
+  `POST`                  `/api/auth/login`                  Log in
+
+  `GET`                   `/api/profile`                     Get the user's profile
+
+  `PUT`                   `/api/profile`                     Update the user's
+                                                             profile
+
+  `POST`                  `/api/measurements`                Save a measurement
+
+  `GET`                   `/api/measurements`                View measurement
+                                                             history
+
+  `POST`                  `/api/goals`                       Create a goal
+
+  `GET`                   `/api/foods`                       Search the food
+                                                             catalogue
+
+  `POST`                  `/api/foods/custom`                Add a custom food
+
+  `POST`                  `/api/food-logs`                   Record a meal item
+
+  `GET`                   `/api/food-logs?date=YYYY-MM-DD`   Get food entries for a
+                                                             date
+
+  `DELETE`                `/api/food-logs/{id}`              Delete a food entry
+
+  `GET`                   `/api/dashboard?date=YYYY-MM-DD`   Get daily summary
+
+  `GET`                   `/api/activities`                  Search activities
+
+  `POST`                  `/api/activity-logs`               Record an activity
+
+  `GET`                   `/api/activity-logs`               View activity history
+
+  `POST`                  `/api/workout-plans`               Create a workout plan
+  ----------------------------------------------------------------------------------
+
+Protect private endpoints with authentication and verify ownership for
+every record.
+
+------------------------------------------------------------------------
+
+## 14. Development Phases
+
+### Phase 1 --- Basic working app
+
+-   Set up React, Spring Boot, and MySQL
+-   Create the profile and measurement forms
+-   Calculate BMI
+-   Allow users to set a goal
+-   Create a basic dashboard
+
+### Phase 2 --- Food tracking
+
+-   Add a starter Indian-food catalogue
+-   Add search and portion-size calculations
+-   Support custom foods
+-   Calculate daily calories, protein, carbohydrates, and fat
+-   Save and edit meal logs
+
+### Phase 3 --- Activity tracking
+
+-   Add a starter exercise and activity catalogue
+-   Record activity duration and optional intensity
+-   Estimate calories burned
+-   Create and manage workout plans
+
+### Phase 4 --- Progress and improvements
+
+-   Add weight and measurement charts
+-   Add weekly summaries
+-   Improve food search and serving-size options
+-   Add authentication, privacy controls, validation, and tests
+-   Improve accessibility and mobile responsiveness
+
+------------------------------------------------------------------------
+
+## 15. Important Product Rules
+
+-   Clearly label nutrition and calorie-burn values as estimates when
+    appropriate.
+-   Use a consistent nutrition basis and show the serving unit.
+-   Do not claim BMI or any single measurement gives a complete picture
+    of health.
+-   Use respectful, goal-focused language.
+-   Do not recommend extreme dieting or unsafe weight-change targets.
+-   Keep personal health and account data private.
+-   Validate user inputs in both React and the Java backend.
+-   Make the main tasks easy on mobile screens as well as desktop
+    screens.
+
+## 16. Initial MVP Scope
+
+For the first release, focus on these essentials:
+
+1.  User profile with height, weight, and activity level
+2.  BMI calculator and fitness overview
+3.  Goal setting
+4.  Searchable common-food list
+5.  Portion-size calorie and macro calculations
+6.  Custom food entry
+7.  Daily nutrition dashboard
+8.  Activity log with estimated calories burned
+9.  Weight history
+
+Workout schedules, advanced recommendations, and more detailed analytics
+can follow after the core tracking flow works reliably.
