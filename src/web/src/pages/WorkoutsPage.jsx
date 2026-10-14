@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import WeeklyBarChart from "../components/WeeklyBarChart.jsx";
 import { workoutApi } from "../services/api.js";
+import { getWeeklyChartData } from "../utils/weeklyChart.js";
 
 function localDateTimeValue(date = new Date()) {
   const pad = (number) => String(number).padStart(2, "0");
@@ -10,23 +11,6 @@ function localDateTimeValue(date = new Date()) {
 }
 
 const blankForm = () => ({ id: "", name: "", category: "Strength", durationMinutes: "30", performedAt: localDateTimeValue(), notes: "" });
-
-function getWeeklyWorkoutMinutes(workouts) {
-  return Array.from({ length: 7 }, (_, index) => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - 6 + index);
-    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-
-    return {
-      key: dateKey,
-      label: date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1),
-      value: workouts
-        .filter((workout) => new Date(workout.performedAt).toDateString() === date.toDateString())
-        .reduce((total, workout) => total + Number(workout.durationMinutes), 0),
-    };
-  });
-}
 
 export default function WorkoutsPage() {
   const search = useSearch({ from: "/_protected/workouts" });
@@ -36,7 +20,11 @@ export default function WorkoutsPage() {
   const [error, setError] = useState("");
   const [status, setStatus] = useState("Loading your workouts…");
   const [saving, setSaving] = useState(false);
-  const weeklyWorkoutMinutes = getWeeklyWorkoutMinutes(workouts);
+  const weeklyWorkoutMinutes = getWeeklyChartData(
+    workouts,
+    (workout) => workout.performedAt,
+    (workout) => workout.durationMinutes,
+  );
 
   const loadWorkouts = useCallback(async () => {
     setError("");

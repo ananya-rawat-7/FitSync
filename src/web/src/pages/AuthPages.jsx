@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Activity, ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../auth/AuthContext.jsx";
 import { authApi } from "../services/api.js";
 
@@ -57,29 +58,24 @@ export function LoginPage() {
     && !requestedPath.startsWith("//")
     ? requestedPath
     : "/dashboard";
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [navigationError, setNavigationError] = useState("");
+  const loginMutation = useMutation({ mutationFn: login });
 
-  useEffect(async () => {
+  useEffect(() => {
     if (isAuthenticated) {
-      await navigate({ to: redirectTo, replace: true });
+      navigate({ to: redirectTo, replace: true }).catch((failure) => {
+        setNavigationError(failure.message);
+      });
     }
   }, [isAuthenticated, navigate, redirectTo]);
 
   if (isAuthenticated) return null;
 
-  const submit = async (event) => {
+  const submit = (event) => {
     event.preventDefault();
-    setError("");
-    setSubmitting(true);
     const form = new FormData(event.currentTarget);
-    try {
-      await login({ email: form.get("email"), password: form.get("password") });
-    } catch (failure) {
-      setError(failure.message);
-    } finally {
-      setSubmitting(false);
-    }
+    setNavigationError("");
+    loginMutation.mutate({ email: form.get("email"), password: form.get("password") });
   };
 
   return <AuthCard eyebrow="GOOD TO HAVE YOU BACK" title={<>LET'S GET<br /><span>IN SYNC.</span></>}>
@@ -87,8 +83,8 @@ export function LoginPage() {
     <form onSubmit={submit}>
       <label htmlFor="login-email">Email address</label><input id="login-email" name="email" type="email" autoComplete="email" maxLength="254" required />
       <PasswordField id="login-password" name="password" label="Password" autoComplete="current-password" />
-      {error && <p className="form-message is-error" role="alert">{error}</p>}
-      <button className="button dialog-submit" type="submit" disabled={submitting}>{submitting ? "Signing in…" : "Log in"} <ArrowUpRight /></button>
+      {(navigationError || loginMutation.error) && <p className="form-message is-error" role="alert">{navigationError || loginMutation.error.message}</p>}
+      <button className="button dialog-submit" type="submit" disabled={loginMutation.isPending}>{loginMutation.isPending ? "Signing in…" : "Log in"} <ArrowUpRight /></button>
     </form>
     <p className="dialog-footnote">New to FitSync? <Link className="text-button" to="/register">Create an account</Link></p>
   </AuthCard>;
@@ -98,44 +94,46 @@ export function RegisterPage() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const registerMutation = useMutation({
+    mutationFn: authApi.register,
+    onSuccess: async () => {
+      try {
+        await navigate({ to: "/login", replace: true, state: { registered: true } });
+      } catch (failure) {
+        setError(failure.message);
+      }
+    },
+  });
 
-  useEffect(async () => {
+  useEffect(() => {
     if (isAuthenticated) {
-      await navigate({ to: "/dashboard", replace: true });
+      navigate({ to: "/dashboard", replace: true }).catch((failure) => {
+        setError(failure.message);
+      });
     }
   }, [isAuthenticated, navigate]);
 
   if (isAuthenticated) return null;
 
-  const submit = async (event) => {
+  const submit = (event) => {
     event.preventDefault();
     setError("");
-    setSubmitting(true);
     const form = new FormData(event.currentTarget);
     const password = String(form.get("password"));
     if (password !== form.get("confirmPassword")) {
       setError("The passwords do not match.");
-      setSubmitting(false);
       return;
     }
-    try {
-      await authApi.register({
-        displayName: form.get("displayName"),
-        email: form.get("email"),
-        password,
-        weightKg: form.get("weightKg") ? Number(form.get("weightKg")) : null,
-        heightCm: form.get("heightCm") ? Number(form.get("heightCm")) : null,
-        age: form.get("age") ? Number(form.get("age")) : null,
-        gender: form.get("gender") || null,
-        fitnessGoal: form.get("fitnessGoal") || null,
-      });
-      navigate({ to: "/login", replace: true, state: { registered: true } });
-    } catch (failure) {
-      setError(failure.message);
-    } finally {
-      setSubmitting(false);
-    }
+    registerMutation.mutate({
+      displayName: form.get("displayName"),
+      email: form.get("email"),
+      password,
+      weightKg: form.get("weightKg") ? Number(form.get("weightKg")) : null,
+      heightCm: form.get("heightCm") ? Number(form.get("heightCm")) : null,
+      age: form.get("age") ? Number(form.get("age")) : null,
+      gender: form.get("gender") || null,
+      fitnessGoal: form.get("fitnessGoal") || null,
+    });
   };
 
   return <AuthCard className="auth-card-register" eyebrow="A FRESH START, YOUR WAY" title={<>MAKE IT<br /><span>YOUR FIT.</span></>}>
@@ -174,8 +172,8 @@ export function RegisterPage() {
           </label>
         </div>
       </fieldset>
-      {error && <p className="form-message is-error" role="alert">{error}</p>}
-      <button className="button dialog-submit" type="submit" disabled={submitting}>{submitting ? "Creating account…" : "Create account"} <ArrowUpRight /></button>
+      {(error || registerMutation.error) && <p className="form-message is-error" role="alert">{error || registerMutation.error.message}</p>}
+      <button className="button dialog-submit" type="submit" disabled={registerMutation.isPending}>{registerMutation.isPending ? "Creating account…" : "Create account"} <ArrowUpRight /></button>
     </form>
     <p className="dialog-footnote">Already have an account? <Link className="text-button" to="/login">Log in</Link></p>
   </AuthCard>;

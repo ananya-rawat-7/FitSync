@@ -1,21 +1,7 @@
-import { Activity, ArrowDown, ArrowUpRight, CalendarDays, ChartNoAxesColumnIncreasing, HeartHandshake, ListChecks, Move, Play, Salad, Sparkles, Sun, Wind, Zap } from "lucide-react";
+import { Activity, ArrowDown, ArrowUpRight, CalendarDays, ChartNoAxesColumnIncreasing, HeartHandshake, ListChecks, Move, Play, Salad, Sparkles, Sun, Zap } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-
-const templates = [
-  { name: "Full Body", category: "STRENGTH", level: "Beginner", minutes: 30, moves: 6, image: "workout-image-1", icon: "strength" },
-  { name: "Upper Body", category: "STRENGTH", level: "Intermediate", minutes: 25, moves: 5, image: "workout-image-2", icon: "strength" },
-  { name: "Lower Body", category: "STRENGTH", level: "Intermediate", minutes: 35, moves: 6, image: "workout-image-3", icon: "activity" },
-  { name: "Core", category: "CORE", level: "Beginner", minutes: 18, moves: 4, image: "workout-image-4", icon: "core" },
-  { name: "Cardio", category: "CARDIO", level: "All levels", minutes: 22, moves: 5, image: "workout-image-5", icon: "cardio" },
-  { name: "Mobility", category: "RECOVERY", level: "All levels", minutes: 15, moves: 5, image: "workout-image-6", icon: "mobility" },
-];
-
-function TemplateIcon({ kind }) {
-  if (kind === "cardio") return <Activity />;
-  if (kind === "mobility") return <Wind />;
-  if (kind === "core") return <span className="template-symbol">◎</span>;
-  return <span className="template-symbol">↗</span>;
-}
+import TemplateIcon from "../components/TemplateIcon.jsx";
+import { workoutTemplates } from "../constants/home.js";
 
 export default function HomePage() {
   return (
@@ -60,7 +46,7 @@ export default function HomePage() {
 
       <section className="workouts-section section-wrap" id="workouts">
         <div className="section-heading"><div><p className="eyebrow">A GOOD PLACE TO START</p><h2>FIND YOUR<br /><span>WORKOUT.</span></h2></div><div className="workout-heading-right"><p>Pick a session that feels right for today. Every workout is a fresh start.</p><Link className="text-link" to="/workouts">BROWSE SESSIONS <ArrowDown /></Link></div></div>
-        <div className="workout-grid" id="workouts-grid">{templates.map((workout) => (
+        <div className="workout-grid" id="workouts-grid">{workoutTemplates.map((workout) => (
           <Link className="workout-card" to="/workouts" search={{ name: workout.name }} key={workout.name}>
             <div className={`workout-image ${workout.image}`}><span className="workout-category">{workout.category}</span><span className="workout-img-icon"><TemplateIcon kind={workout.icon} /></span></div>
             <div className="workout-info"><div><h3>{workout.name}</h3><p><span>{workout.level}</span><b /><span>{workout.minutes} min</span><b /><span>{workout.moves} moves</span></p></div><span className="workout-open" aria-hidden="true"><ArrowUpRight /></span></div>

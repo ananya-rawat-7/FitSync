@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight, Flame, Trash2 } from "lucide-react";
 import WeeklyBarChart from "./WeeklyBarChart.jsx";
 import { calorieApi } from "../services/api.js";
+import { getWeeklyChartData } from "../utils/weeklyChart.js";
 
 const today = () => {
   const date = new Date();
@@ -122,18 +123,11 @@ export default function FoodJournal({ profile }) {
     : null;
   const adultBmi = Number(profile?.age) >= 20 ? bmi : null;
   const calorieEstimate = getCalorieEstimate(profile, adultBmi);
-  const calorieChart = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - 6 + index);
-    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-    return {
-      key,
-      label: date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1),
-      value: entries.filter((entry) => entry.consumedOn === key)
-        .reduce((sum, entry) => sum + entry.calories, 0),
-    };
-  });
+  const calorieChart = getWeeklyChartData(
+    entries,
+    (entry) => entry.consumedOn,
+    (entry) => entry.calories,
+  );
   const calorieChartMax = Math.max(calorieEstimate?.maximum || 0, ...calorieChart.map((day) => day.value), 1);
   const calorieTargetMarker = calorieEstimate
     ? Math.min(100, Math.max(0, ((calorieEstimate.minimum + calorieEstimate.maximum) / 2) / calorieChartMax * 100))

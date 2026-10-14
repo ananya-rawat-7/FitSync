@@ -1,26 +1,18 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../auth/AuthContext.jsx";
 import FoodJournal from "../components/FoodJournal.jsx";
 import { authApi } from "../services/api.js";
 
 export default function FoodJournalPage() {
   const { user } = useAuth();
-  const [profile, setProfile] = useState(user);
-  const [profileError, setProfileError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    authApi.me()
-      .then((currentProfile) => {
-        if (active) setProfile(currentProfile);
-      })
-      .catch((failure) => {
-        if (active) setProfileError(failure.message);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
+  const accountKey = user?.id ?? user?.email ?? "current";
+  const profileQuery = useQuery({
+    queryKey: ["dashboard", accountKey, "profile"],
+    queryFn: authApi.me,
+    initialData: user,
+    retry: false,
+  });
+  const profile = profileQuery.data ?? user;
 
   return (
     <main className="page-main section-wrap">
@@ -31,7 +23,7 @@ export default function FoodJournalPage() {
           <p>Log meals and drinks, review recent entries, and see your seven-day calorie history.</p>
         </div>
       </div>
-      {profileError && <p className="form-message is-error" role="alert">{profileError}</p>}
+      {profileQuery.error && <p className="form-message is-error" role="alert">{profileQuery.error.message}</p>}
       <FoodJournal profile={profile} />
     </main>
   );

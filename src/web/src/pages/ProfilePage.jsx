@@ -1,84 +1,70 @@
 import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../auth/AuthContext.jsx";
+import { emptyFitnessProfile, fitnessGoalLabels, genderLabels } from "../constants/profile.js";
 import { ApiError, authApi } from "../services/api.js";
 
-const emptyFitnessProfile = {
-  weightKg: "",
-  heightCm: "",
-  age: "",
-  gender: "",
-  fitnessGoal: "",
-};
-
-const genderLabels = {
-  FEMALE: "Female",
-  MALE: "Male",
-  NON_BINARY: "Non-binary",
-  SELF_DESCRIBED: "Another identity",
-  PREFER_NOT_TO_SAY: "Prefer not to say",
-};
-
-const fitnessGoalLabels = {
-  BUILD_STRENGTH: "Build strength",
-  LOSE_WEIGHT: "Lose weight",
-  IMPROVE_ENDURANCE: "Improve endurance",
-  IMPROVE_FLEXIBILITY: "Improve flexibility",
-  MAINTAIN_FITNESS: "Maintain my fitness",
-  OTHER: "Other",
-};
+function getProfileError(queryError, mutationError) {
+  if (queryError) return queryError.message;
+  if (!mutationError) return "";
+  if (mutationError instanceof ApiError) return mutationError.message;
+  return "Could not save your fitness details. Please try again.";
+}
 
 export default function ProfilePage() {
   const { user, updateProfile } = useAuth();
-  const [profile, setProfile] = useState(user);
   const [fitnessProfile, setFitnessProfile] = useState(emptyFitnessProfile);
-  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [loadingProfile, setLoadingProfile] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const queryClient = useQueryClient();
+  const accountKey = user?.id ?? user?.email ?? "current";
+  const profileQueryKey = ["dashboard", accountKey, "profile"];
+  const profileQuery = useQuery({
+    queryKey: profileQueryKey,
+    queryFn: authApi.me,
+    initialData: user,
+    retry: false,
+  });
+  const profile = profileQuery.data ?? user;
+  const updateProfileMutation = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (updatedProfile) => {
+      queryClient.setQueryData(profileQueryKey, updatedProfile);
+      setMessage("Your fitness details have been saved.");
+    },
+  });
+  const loadingProfile = profileQuery.isFetching;
+  const error = getProfileError(profileQuery.error, updateProfileMutation.error);
 
   useEffect(() => {
-    authApi.me().then((currentProfile) => {
-      setProfile(currentProfile);
-      setFitnessProfile({
-        weightKg: currentProfile.weightKg ?? "",
-        heightCm: currentProfile.heightCm ?? "",
-        age: currentProfile.age ?? "",
-        gender: currentProfile.gender ?? "",
-        fitnessGoal: currentProfile.fitnessGoal ?? "",
-      });
-    }).catch((failure) => setError(failure.message))
-      .finally(() => setLoadingProfile(false));
-  }, []);
+    if (!profile) return;
+    setFitnessProfile({
+      weightKg: profile.weightKg ?? "",
+      heightCm: profile.heightCm ?? "",
+      age: profile.age ?? "",
+      gender: profile.gender ?? "",
+      fitnessGoal: profile.fitnessGoal ?? "",
+    });
+  }, [profile]);
 
   const updateField = (event) => {
     const { name, value } = event.target;
     setFitnessProfile((current) => ({ ...current, [name]: value }));
     setMessage("");
-    setError("");
+    updateProfileMutation.reset();
   };
 
-  const saveProfile = async (event) => {
+  const saveProfile = (event) => {
     event.preventDefault();
-    setSaving(true);
-    setError("");
     setMessage("");
     const form = new FormData(event.currentTarget);
     const numericValue = (key) => form.get(key) ? Number(form.get(key)) : null;
-    try {
-      const updatedProfile = await updateProfile({
-        weightKg: numericValue("weightKg"),
-        heightCm: numericValue("heightCm"),
-        age: numericValue("age"),
-        gender: form.get("gender") || null,
-        fitnessGoal: form.get("fitnessGoal") || null,
-      });
-      setProfile(updatedProfile);
-      setMessage("Your fitness details have been saved.");
-    } catch (failure) {
-      setError(failure instanceof ApiError ? failure.message : "Could not save your fitness details. Please try again.");
-    } finally {
-      setSaving(false);
-    }
+    updateProfileMutation.mutate({
+      weightKg: numericValue("weightKg"),
+      heightCm: numericValue("heightCm"),
+      age: numericValue("age"),
+      gender: form.get("gender") || null,
+      fitnessGoal: form.get("fitnessGoal") || null,
+    });
   };
 
   return (
@@ -121,7 +107,7 @@ export default function ProfilePage() {
           </label>
           {error && <p className="form-message is-error" role="alert">{error}</p>}
           {message && <p className="form-message" role="status">{message}</p>}
-          <button className="button fitness-profile-submit" type="submit" disabled={saving || loadingProfile}>{saving ? "Saving…" : "Save fitness details"}</button>
+          <button className="button fitness-profile-submit" type="submit" disabled={updateProfileMutation.isPending || loadingProfile}>{updateProfileMutation.isPending ? "Saving…" : "Save fitness details"}</button>
         </form>
       </section>
     </main>
