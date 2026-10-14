@@ -6,22 +6,24 @@ FitSync is a React single-page fitness application backed by a Spring Boot REST 
 
 ```text
 FitSync/
-├── src/
-│   ├── auth/                 # Authentication context and protected routes
-│   ├── components/           # Shared React layout
-│   ├── pages/                # Landing, login, registration, dashboard, workouts, profile
-│   ├── services/api.js       # Shared authenticated REST client
-│   ├── App.jsx               # React Router routes
-│   └── main.jsx              # React entry point
-├── backend/
-│   └── src/main/java/com/fitsync/api/
-│       ├── auth/             # Registration, login, profile, account model/repository
-│       ├── config/           # CORS and API error responses
-│       ├── security/         # JWT creation, validation, and Spring Security
-│       └── workout/          # JPA workout entity, repository, service, and REST controller
-├── index.html
-├── styles.css
-└── package.json
+└── src/
+    ├── web/
+    │   ├── src/
+    │   │   ├── auth/         # Authentication context and protected routes
+    │   │   ├── components/   # Shared React layout
+    │   │   ├── pages/        # Landing, login, registration, dashboard, workouts, profile
+    │   │   ├── services/     # Shared authenticated REST client
+    │   │   └── App.jsx       # React Router routes and entry point
+    │   ├── index.html
+    │   └── package.json
+    ├── database/
+    │   └── schema.sql
+    └── backend/
+        ├── src/main/java/com/fitsync/api/
+        │   ├── auth/         # Registration, login, profile, account model/repository
+        │   ├── config/        # CORS and API error responses
+        │   ├── security/     # JWT creation, validation, and Spring Security
+        │   └── workout/      # JPA workout entity, repository, service, and REST controller
 ```
 
 ## Requirements
@@ -32,32 +34,57 @@ FitSync/
 
 ## Configuration and startup
 
-Start MySQL and create a database user with access to `fitsync`. The default JDBC URL creates that database if needed. Set these environment variables in the terminal that will run Spring Boot; replace the sample values with your local settings:
+MySQL 8+ must be running. The schema for accounts, workouts, and calorie entries is documented in `src/database/schema.sql`; Hibernate updates the schema on startup. Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder MySQL password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes. `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes), and the local MySQL URL and user have defaults in `application.properties`.
+
+### Development
+
+Open two PowerShell terminals from the repository root. Start the backend in the first:
 
 ```powershell
-$env:MYSQL_URL = "jdbc:mysql://localhost:3306/fitsync?createDatabaseIfNotExist=true"
-$env:MYSQL_USER = "root"
-$env:MYSQL_PASSWORD = "<your-mysql-password>"
-$env:JWT_SECRET = "<at-least-32-random-characters>"
+cd src\backend
+mvn.cmd spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-`JWT_SECRET` is required, is never returned by an endpoint, and must be at least 32 UTF-8 bytes. Generate a strong random value for local development and keep it out of source control. `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes). `CORS_ALLOWED_ORIGINS` defaults to `http://localhost:5173,http://127.0.0.1:5173`. `MYSQL_URL`, `MYSQL_USER`, and `MYSQL_PASSWORD` can be omitted only when the local MySQL defaults are appropriate.
-
-In one terminal, start the backend:
+Start the web app in the second:
 
 ```powershell
-cd backend
-mvn spring-boot:run
+cd src\web
+npm.cmd install
+npm.cmd run dev
 ```
 
-In a second terminal, install and start the React frontend:
+The Vite development server uses `http://localhost:5173`; the Spring Boot API uses `http://localhost:8080`. The backend `dev` profile logs API requests and SQL statements without logging secrets or request bodies. `npm.cmd install` is only needed the first time or after dependencies change.
+
+### Production build and run
+
+The project does not define a separate Spring `prod` profile. For a production-mode local run, build the backend and launch its JAR without the `dev` profile. Set these environment variables in the backend terminal (use your real database details, a unique strong secret, and the exact HTTPS origin where the web app will be hosted):
 
 ```powershell
-npm install
-npm run dev
+$env:MYSQL_URL = "jdbc:mysql://<mysql-host>:3306/fitsync?createDatabaseIfNotExist=true"
+$env:MYSQL_USER = "<mysql-user>"
+$env:MYSQL_PASSWORD = "<mysql-password>"
+$env:JWT_SECRET = "<unique-random-secret-of-at-least-32-characters>"
+$env:FITSYNC_CORS_ALLOWED_ORIGINS = "https://<your-frontend-host>"
+cd src\backend
+mvn.cmd clean package
+java -jar .\target\fitsync-api-1.0.0.jar
 ```
 
-The Vite server uses `http://localhost:5173`; the Spring Boot API uses `http://localhost:8080`. To point the frontend at a different backend, set `VITE_API_BASE_URL` (for example, `http://localhost:8080/api`) before running Vite.
+For a local production-mode check, set the API URL before building so Vite includes the local backend address. For deployment, replace it with the public HTTPS API URL:
+
+```powershell
+cd src\web
+$env:VITE_API_BASE_URL = "http://localhost:8080/api"
+npm.cmd run build
+```
+
+This creates the static production site in `src\web\dist`. Deploy that directory to a static web host or web server. To inspect the production build locally (not as a production web server), run:
+
+```powershell
+npm.cmd run preview -- --host localhost
+```
+
+The preview is available at `http://localhost:4173`. Keep production credentials in your hosting platform's secret/environment-variable settings, use HTTPS, and allow only the deployed frontend origin through `FITSYNC_CORS_ALLOWED_ORIGINS`. This project currently uses Hibernate `ddl-auto=update`; use a managed schema migration process before production database changes.
 
 ## Browser routes
 
@@ -72,7 +99,7 @@ The Vite server uses `http://localhost:5173`; the Spring Boot API uses `http://l
 
 ## API and access rules
 
-The frontend calls `http://localhost:8080/api` through the shared `src/services/api.js` helper. It sends JSON, adds `Authorization: Bearer <JWT>` to requests when signed in, translates network failures to a user-friendly message, and clears the local session after an HTTP 401.
+The frontend calls `http://localhost:8080/api` through the shared `src/web/src/services/api.js` helper. It sends JSON, adds `Authorization: Bearer <JWT>` to requests when signed in, translates network failures to a user-friendly message, and clears the local session after an HTTP 401.
 
 Only registration and login are public. Every other API route requires a valid, unexpired bearer token.
 
@@ -140,14 +167,15 @@ The existing MySQL datasource, `workout_sessions` table, JPA repository, and CRU
 Backend integration tests use an in-memory H2 database and a test-only JWT key; they do not need MySQL:
 
 ```powershell
-cd backend
+cd src\backend
 mvn test
 ```
 
 Build the frontend:
 
 ```powershell
-npm run build
+cd src\web
+npm.cmd run build
 ```
 
 Register an account in the app and use those credentials to test login. No shared or hard-coded test account is configured.
@@ -166,43 +194,7 @@ Register an account in the app and use those credentials to test login. No share
 
 ## Security note
 
-The configured CORS origins are restricted to the two local Vite development origins, not `*`. For a production deployment, use HTTPS, set a strong secret in a secret manager, set the exact production frontend origin in `CORS_ALLOWED_ORIGINS`, and review browser token storage against the deployment's XSS threat model.
-FitSync is a Spring Boot REST API and fitness dashboard. It keeps account and calorie-entry data in MySQL and serves the existing frontend from the same origin.
-
-## Run
-
-Install Java 17 or later, Maven 3.9 or later, and MySQL Server 8 or later. Create the database and an app user in MySQL:
-
-```sql
-CREATE DATABASE fitsync CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'fitsync_app'@'localhost' IDENTIFIED BY 'your-local-password';
-GRANT ALL PRIVILEGES ON fitsync.* TO 'fitsync_app'@'localhost';
-```
-
-Set the connection password and a random 256-bit Base64 JWT signing key in the current PowerShell session, then run from this directory:
-
-```powershell
-$env:DB_PASSWORD = "your-local-password"
-$jwtKey = New-Object byte[] 32
-[Security.Cryptography.RandomNumberGenerator]::Fill($jwtKey)
-$env:JWT_SECRET = [Convert]::ToBase64String($jwtKey)
-mvn spring-boot:run
-```
-
-The defaults connect to `localhost:3306/fitsync` as `fitsync_app`. Override `DB_URL` or `DB_USERNAME` if your local MySQL configuration differs. Open <http://localhost:8080>. To run the calculator tests, use `mvn test`.
-
-## API
-
-- `POST /api/auth/register` creates a profile and returns a signed JWT with its dashboard.
-- `POST /api/auth/login` validates credentials and returns a signed JWT with its dashboard.
-- Send the JWT as `Authorization: Bearer <token>` to access protected `/api/**` endpoints. Tokens expire after 30 minutes by default; set `JWT_EXPIRATION_MS` to change this.
-- `GET /api/profile` and `GET /api/dashboard` return the signed-in user's profile and today's calorie entries.
-- `POST /api/food-entries` logs positive calories consumed.
-- `POST /api/activity-entries` logs positive calories burned.
-- `GET /api/health` checks that the service is running.
-
-The API is stateless and does not use session cookies or CSRF tokens. The browser keeps the JWT in memory, so reloading the page signs out. Passwords are stored as BCrypt hashes. Profiles and calorie entries are kept in MySQL. Keep `DB_PASSWORD` and `JWT_SECRET` out of source control.
-
+The configured CORS origins are restricted to the two local Vite development origins, not `*`. For a production deployment, use HTTPS, set a strong secret in a secret manager, set the exact production frontend origin in `FITSYNC_CORS_ALLOWED_ORIGINS`, and review browser token storage against the deployment's XSS threat model.
 ## Fitness estimates
 
 BMI and calorie targets are educational estimates, not medical advice. The calorie-target formula mirrors the supplied console example: body weight in kilograms times 24, adjusted by 400 calories for weight-loss or weight-gain goals, with a 1,200 calorie minimum.
@@ -254,7 +246,7 @@ status.
 -   Preferred units (kg/cm or lb/ft-in)
 -   Activity level (sedentary, lightly active, moderately active, very
     active)
-
+b bb 
 ### 3.2 Optional measurements
 
 Allow users to add any measurements they know. Do not require every
