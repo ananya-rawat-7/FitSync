@@ -42,9 +42,6 @@ MySQL 8+ must be running. The schema for accounts, workouts, and calorie entries
 
 The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret:
 
-```powershell
-Copy-Item src\backend\.env.example src\backend\.env
-```
 
 Open two PowerShell terminals from the repository root. In the first, start the backend:
 
@@ -59,8 +56,8 @@ In the second terminal, run the web app in Vite development mode:
 
 ```powershell
 cd src\web
-npm.cmd install
-npm.cmd run dev
+npm install
+npm run dev
 ```
 
 The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The VS Code **FitSync Backend** task starts the backend with the same default configuration and clears inherited database/JWT variables so Spring loads the local `.env`. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
@@ -185,7 +182,7 @@ Build the frontend:
 
 ```powershell
 cd src\web
-npm.cmd run build
+npm run build
 ```
 
 Register an account in the app and use those credentials to test login. No shared or hard-coded test account is configured.
