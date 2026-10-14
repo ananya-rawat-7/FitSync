@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Activity, ArrowUpRight, Eye, EyeOff } from "lucide-react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "../auth/AuthContext.jsx";
 import { authApi } from "../services/api.js";
 
@@ -51,9 +51,22 @@ export function LoginPage() {
   const { login, isAuthenticated } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const requestedPath = location.state?.from ?? window.history.state?.from;
+  const redirectTo = typeof requestedPath === "string"
+    && requestedPath.startsWith("/")
+    && !requestedPath.startsWith("//")
+    ? requestedPath
+    : "/dashboard";
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+
+  useEffect(async () => {
+    if (isAuthenticated) {
+      await navigate({ to: redirectTo, replace: true });
+    }
+  }, [isAuthenticated, navigate, redirectTo]);
+
+  if (isAuthenticated) return null;
 
   const submit = async (event) => {
     event.preventDefault();
@@ -62,7 +75,6 @@ export function LoginPage() {
     const form = new FormData(event.currentTarget);
     try {
       await login({ email: form.get("email"), password: form.get("password") });
-      navigate(location.state?.from?.pathname || "/dashboard", { replace: true });
     } catch (failure) {
       setError(failure.message);
     } finally {
@@ -87,7 +99,14 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+
+  useEffect(async () => {
+    if (isAuthenticated) {
+      await navigate({ to: "/dashboard", replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (isAuthenticated) return null;
 
   const submit = async (event) => {
     event.preventDefault();
@@ -111,7 +130,7 @@ export function RegisterPage() {
         gender: form.get("gender") || null,
         fitnessGoal: form.get("fitnessGoal") || null,
       });
-      navigate("/login", { replace: true, state: { registered: true } });
+      navigate({ to: "/login", replace: true, state: { registered: true } });
     } catch (failure) {
       setError(failure.message);
     } finally {

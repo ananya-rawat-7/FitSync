@@ -1,10 +1,17 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "./AuthContext.jsx";
 
 export default function ProtectedRoute() {
   const { isAuthenticated } = useAuth();
-  const location = useLocation();
-  return isAuthenticated
-    ? <Outlet />
-    : <Navigate to="/login" replace state={{ from: location }} />;
+  const pathname = useLocation({ select: (location) => location.pathname });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated && pathname !== "/login") {
+      navigate({ to: "/login", replace: true, state: { from: pathname } });
+    }
+  }, [isAuthenticated, navigate, pathname]);
+
+  return isAuthenticated ? <Outlet /> : null;
 }

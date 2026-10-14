@@ -162,8 +162,11 @@ h1 span, h2 span { color: var(--orange); }
 .stat-highlight { border-color: transparent; background: var(--blue); }
 .chart-area { margin-top: 20px; }
 .chart-heading { display: flex; align-items: center; justify-content: space-between; color: #65717a; font-size: 8px; font-weight: 700; letter-spacing: .7px; }
-.chart-key { display: flex; align-items: center; gap: 5px; font-weight: 500; letter-spacing: 0; }
-.chart-key i { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+.chart-key { display: flex; align-items: center; gap: 12px; font-weight: 500; letter-spacing: 0; }
+.chart-key > span { display: inline-flex; align-items: center; gap: 5px; }
+.chart-key i { display: inline-block; flex: 0 0 auto; }
+.chart-key-bar { width: 8px; height: 8px; background: var(--orange); }
+.chart-key-marker { width: 17px; height: 0; border-top: 2px dashed var(--navy); }
 .bar-chart { height: 123px; display: flex; margin-top: 10px; position: relative; }
 .chart-guides { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; color: #9aa2a7; font-size: 7px; }
 .chart-guides i { height: 1px; padding-left: 23px; border-bottom: 1px dashed rgba(18, 48, 74, .12); font-style: normal; }

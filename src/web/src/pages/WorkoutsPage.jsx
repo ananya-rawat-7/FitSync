@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import WeeklyBarChart from "../components/WeeklyBarChart.jsx";
 import { workoutApi } from "../services/api.js";
 
 function localDateTimeValue(date = new Date()) {
@@ -10,13 +11,32 @@ function localDateTimeValue(date = new Date()) {
 
 const blankForm = () => ({ id: "", name: "", category: "Strength", durationMinutes: "30", performedAt: localDateTimeValue(), notes: "" });
 
+function getWeeklyWorkoutMinutes(workouts) {
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - 6 + index);
+    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+    return {
+      key: dateKey,
+      label: date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1),
+      value: workouts
+        .filter((workout) => new Date(workout.performedAt).toDateString() === date.toDateString())
+        .reduce((total, workout) => total + Number(workout.durationMinutes), 0),
+    };
+  });
+}
+
 export default function WorkoutsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const search = useSearch({ from: "/_protected/workouts" });
+  const navigate = useNavigate({ from: "/_protected/workouts" });
   const [workouts, setWorkouts] = useState([]);
-  const [form, setForm] = useState(() => ({ ...blankForm(), name: searchParams.get("name") || "" }));
+  const [form, setForm] = useState(() => ({ ...blankForm(), name: search.name || "" }));
   const [error, setError] = useState("");
   const [status, setStatus] = useState("Loading your workouts…");
   const [saving, setSaving] = useState(false);
+  const weeklyWorkoutMinutes = getWeeklyWorkoutMinutes(workouts);
 
   const loadWorkouts = useCallback(async () => {
     setError("");
@@ -32,10 +52,14 @@ export default function WorkoutsPage() {
   useEffect(() => { loadWorkouts(); }, [loadWorkouts]);
 
   const change = (event) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
-  const resetForm = () => {
+  const resetForm = async () => {
     setForm(blankForm());
-    setSearchParams({}, { replace: true });
     setError("");
+    try {
+      await navigate({ search: {}, replace: true });
+    } catch (failure) {
+      setError(failure.message);
+    }
   };
 
   const submit = async (event) => {
@@ -52,8 +76,8 @@ export default function WorkoutsPage() {
     try {
       if (form.id) await workoutApi.update(form.id, payload);
       else await workoutApi.create(payload);
-      resetForm();
       await loadWorkouts();
+      await resetForm();
       setStatus(form.id ? "Workout updated." : "Workout saved.");
     } catch (failure) {
       setError(failure.message);
@@ -79,8 +103,8 @@ export default function WorkoutsPage() {
     setError("");
     try {
       await workoutApi.remove(workout.id);
-      if (String(form.id) === String(workout.id)) resetForm();
       await loadWorkouts();
+      if (String(form.id) === String(workout.id)) await resetForm();
       setStatus("Workout deleted.");
     } catch (failure) {
       setError(failure.message);
@@ -102,6 +126,14 @@ export default function WorkoutsPage() {
           <div className="activity-form-actions"><button className="button button-small" type="submit" disabled={saving}>{saving ? "Saving…" : form.id ? "Update workout" : "Save workout"} <ArrowUpRight /></button>{form.id && <button className="button button-small button-outline" type="button" onClick={resetForm}>Cancel edit</button>}</div>
         </form>
       </section>
+      <WeeklyBarChart
+        eyebrow="YOUR LAST SEVEN DAYS"
+        title="Weekly workout minutes."
+        legend="Active minutes"
+        ariaLabel="Workout minutes per day for the last seven days"
+        data={weeklyWorkoutMinutes}
+        note="Minutes are totaled by the date each workout was logged."
+      />
       <section className="dashboard recent-panel">
         <div className="dashboard-top"><div><span className="dashboard-overline">PRIVATE TO YOUR ACCOUNT</span><h2>Workout sessions</h2></div><span>{workouts.length} {workouts.length === 1 ? "session" : "sessions"}</span></div>
         {workouts.length === 0 ? <p className="activity-empty">{error ? "Your workout list is unavailable until the server reconnects." : "No workouts logged yet. Save a session above to get started."}</p> : (
