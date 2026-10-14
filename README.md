@@ -36,16 +36,24 @@ FitSync/
 
 MySQL 8+ must be running. The schema for accounts, workouts, and calorie entries is documented in `src/database/schema.sql`; Hibernate updates the schema on startup. Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder MySQL password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes. `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes), and the local MySQL URL and user have defaults in `application.properties`.
 
-### Development
+### Run locally
 
-Open two PowerShell terminals from the repository root. Start the backend in the first:
+The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret:
+
+```powershell
+Copy-Item src\backend\.env.example src\backend\.env
+```
+
+Open two PowerShell terminals from the repository root. In the first, start the backend:
 
 ```powershell
 cd src\backend
-mvn.cmd spring-boot:run -Dspring-boot.run.profiles=dev
+# Clear inherited values so Spring loads the local settings from .env.
+Remove-Item Env:MYSQL_URL, Env:MYSQL_USER, Env:MYSQL_PASSWORD, Env:JWT_SECRET -ErrorAction SilentlyContinue
+mvn.cmd spring-boot:run
 ```
 
-Start the web app in the second:
+In the second terminal, run the web app in Vite development mode:
 
 ```powershell
 cd src\web
@@ -53,11 +61,11 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-The Vite development server uses `http://localhost:5173`; the Spring Boot API uses `http://localhost:8080`. The backend `dev` profile logs API requests and SQL statements without logging secrets or request bodies. `npm.cmd install` is only needed the first time or after dependencies change.
+The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The VS Code **FitSync Backend** task starts the backend with the same default configuration and clears inherited database/JWT variables so Spring loads the local `.env`. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
 
 ### Production build and run
 
-The project does not define a separate Spring `prod` profile. For a production-mode local run, build the backend and launch its JAR without the `dev` profile. Set these environment variables in the backend terminal (use your real database details, a unique strong secret, and the exact HTTPS origin where the web app will be hosted):
+For deployment, build the backend and launch its JAR. Set these environment variables in the backend terminal (use your real database details, a unique strong secret, and the exact HTTPS origin where the web app will be hosted):
 
 ```powershell
 $env:MYSQL_URL = "jdbc:mysql://<mysql-host>:3306/fitsync?createDatabaseIfNotExist=true"

@@ -4,7 +4,7 @@
 		{
 			"label": "FitSync Backend",
 			"type": "shell",
-			"command": "foreach ($name in @('MYSQL_URL','MYSQL_USER','MYSQL_PASSWORD','JWT_SECRET')) { $value = [Environment]::GetEnvironmentVariable($name, 'User'); if ($value) { Set-Item -Path \"Env:$name\" -Value $value } }; mvn.cmd spring-boot:run -Dspring-boot.run.profiles=dev",
+			"command": "foreach ($name in @('MYSQL_URL','MYSQL_USER','MYSQL_PASSWORD','JWT_SECRET')) { Remove-Item -Path \"Env:$name\" -ErrorAction SilentlyContinue }; mvn.cmd spring-boot:run",
 			"options": {
 				"cwd": "${workspaceFolder}\\src\\backend"
 			},
