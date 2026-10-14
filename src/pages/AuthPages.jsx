@@ -4,10 +4,10 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 import { authApi } from "../services/api.js";
 
-function AuthCard({ title, eyebrow, children }) {
+function AuthCard({ title, eyebrow, className = "", children }) {
   return (
     <main className="auth-page section-wrap">
-      <section className="auth-card">
+      <section className={`auth-card ${className}`.trim()}>
         <div className="dialog-mark"><Activity /></div>
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
@@ -75,6 +75,11 @@ export function RegisterPage() {
         displayName: form.get("displayName"),
         email: form.get("email"),
         password,
+        weightKg: form.get("weightKg") ? Number(form.get("weightKg")) : null,
+        heightCm: form.get("heightCm") ? Number(form.get("heightCm")) : null,
+        age: form.get("age") ? Number(form.get("age")) : null,
+        gender: form.get("gender") || null,
+        fitnessGoal: form.get("fitnessGoal") || null,
       });
       navigate("/login", { replace: true, state: { registered: true } });
     } catch (failure) {
@@ -84,12 +89,42 @@ export function RegisterPage() {
     }
   };
 
-  return <AuthCard eyebrow="A FRESH START, YOUR WAY" title={<>MAKE IT<br /><span>YOUR FIT.</span></>}>
+  return <AuthCard className="auth-card-register" eyebrow="A FRESH START, YOUR WAY" title={<>MAKE IT<br /><span>YOUR FIT.</span></>}>
     <form onSubmit={submit}>
       <label htmlFor="register-name">Your name</label><input id="register-name" name="displayName" autoComplete="name" maxLength="80" required />
       <label htmlFor="register-email">Email address</label><input id="register-email" name="email" type="email" autoComplete="email" maxLength="254" required />
       <label htmlFor="register-password">Password (at least 8 characters)</label><input id="register-password" name="password" type="password" autoComplete="new-password" minLength="8" maxLength="72" required />
       <label htmlFor="register-confirm">Confirm password</label><input id="register-confirm" name="confirmPassword" type="password" autoComplete="new-password" minLength="8" maxLength="72" required />
+      <fieldset className="fitness-details">
+        <legend>Fitness details <span>(optional)</span></legend>
+        <p>You can add or update these details later from your profile.</p>
+        <div className="fitness-fields">
+          <label htmlFor="register-weight">Weight (kg)<input id="register-weight" name="weightKg" type="number" min="0.1" max="500" step="0.1" inputMode="decimal" /></label>
+          <label htmlFor="register-height">Height (cm)<input id="register-height" name="heightCm" type="number" min="0.1" max="300" step="0.1" inputMode="decimal" /></label>
+          <label htmlFor="register-age">Age<input id="register-age" name="age" type="number" min="13" max="120" step="1" inputMode="numeric" /></label>
+          <label htmlFor="register-gender">Gender
+            <select id="register-gender" name="gender" defaultValue="">
+              <option value="">Select (optional)</option>
+              <option value="FEMALE">Female</option>
+              <option value="MALE">Male</option>
+              <option value="NON_BINARY">Non-binary</option>
+              <option value="SELF_DESCRIBED">Another identity</option>
+              <option value="PREFER_NOT_TO_SAY">Prefer not to say</option>
+            </select>
+          </label>
+          <label className="fitness-goal-field" htmlFor="register-goal">Fitness target
+            <select id="register-goal" name="fitnessGoal" defaultValue="">
+              <option value="">Select a target (optional)</option>
+              <option value="BUILD_STRENGTH">Build strength</option>
+              <option value="LOSE_WEIGHT">Lose weight</option>
+              <option value="IMPROVE_ENDURANCE">Improve endurance</option>
+              <option value="IMPROVE_FLEXIBILITY">Improve flexibility</option>
+              <option value="MAINTAIN_FITNESS">Maintain my fitness</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
       {error && <p className="form-message is-error" role="alert">{error}</p>}
       <button className="button dialog-submit" type="submit" disabled={submitting}>{submitting ? "Creating account…" : "Create account"} <ArrowUpRight /></button>
     </form>

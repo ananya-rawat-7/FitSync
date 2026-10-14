@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "FitSync Backend",
+			"type": "shell",
+			"command": "$bytes = New-Object byte[] 48; $rng = [Security.Cryptography.RandomNumberGenerator]::Create(); $rng.GetBytes($bytes); $env:JWT_SECRET = [Convert]::ToBase64String($bytes); $env:SPRING_DATASOURCE_URL = 'jdbc:h2:mem:fitsync-local;DB_CLOSE_DELAY=-1'; $env:SPRING_DATASOURCE_DRIVER_CLASS_NAME = 'org.h2.Driver'; $env:SPRING_DATASOURCE_USERNAME = 'sa'; $env:SPRING_DATASOURCE_PASSWORD = ''; $env:SPRING_JPA_DATABASE_PLATFORM = 'org.hibernate.dialect.H2Dialect'; mvn.cmd '-Dspring-boot.run.useTestClasspath=true' -f backend\\pom.xml spring-boot:run",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "FitSync Frontend",
+			"type": "shell",
+			"command": "npm.cmd run dev -- --host localhost",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

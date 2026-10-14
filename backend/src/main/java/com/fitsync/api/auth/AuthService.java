@@ -38,7 +38,12 @@ public class AuthService implements UserDetailsService {
         UserAccount account = repository.save(new UserAccount(
                 email,
                 request.displayName().trim(),
-                passwordEncoder.encode(request.password())));
+                passwordEncoder.encode(request.password()),
+                request.weightKg(),
+                request.heightCm(),
+                request.age(),
+                emptyToNull(request.gender()),
+                emptyToNull(request.fitnessGoal())));
         return UserResponse.from(account);
     }
 
@@ -60,6 +65,15 @@ public class AuthService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User account not found"));
     }
 
+    @Transactional
+    public UserResponse updateFitnessProfile(String email, FitnessProfileRequest request) {
+        UserAccount account = repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User account not found"));
+        account.updateFitnessProfile(request.weightKg(), request.heightCm(), request.age(),
+                emptyToNull(request.gender()), emptyToNull(request.fitnessGoal()));
+        return UserResponse.from(account);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
@@ -73,5 +87,9 @@ public class AuthService implements UserDetailsService {
 
     private String normalizeEmail(String email) {
         return email.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private String emptyToNull(String value) {
+        return value == null || value.isBlank() ? null : value;
     }
 }

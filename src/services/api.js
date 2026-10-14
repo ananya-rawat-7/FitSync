@@ -49,6 +49,7 @@ export const authApi = {
   register: (details) => request("/auth/register", json("POST", details)),
   login: (credentials) => request("/auth/login", json("POST", credentials)),
   me: () => request("/auth/me"),
+  updateProfile: (details) => request("/auth/me", json("PUT", details)),
 };
 
 export const workoutApi = {
@@ -56,4 +57,10 @@ export const workoutApi = {
   create: (workout) => request("/workouts", json("POST", workout)),
   update: (id, workout) => request(`/workouts/${id}`, json("PUT", workout)),
   remove: (id) => request(`/workouts/${id}`, { method: "DELETE" }),
+};
+
+export const calorieApi = {
+  list: () => request("/calories"),
+  create: (entry) => request("/calories", json("POST", entry)),
+  remove: (id) => request(`/calories/${id}`, { method: "DELETE" }),
 };

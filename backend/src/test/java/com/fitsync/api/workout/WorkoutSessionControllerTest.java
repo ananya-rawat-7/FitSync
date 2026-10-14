@@ -142,7 +142,8 @@ class WorkoutSessionControllerTest {
     private void register(String email) throws Exception {
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new RegisterRequest("Workout Tester", email, "password123"))))
+                        .content(objectMapper.writeValueAsString(new RegisterRequest(
+                                "Workout Tester", email, "password123", null, null, null, null, null))))
                 .andExpect(status().isCreated());
     }
 

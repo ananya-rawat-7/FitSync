@@ -68,7 +68,7 @@ The Vite server uses `http://localhost:5173`; the Spring Boot API uses `http://l
 | `http://localhost:5173/login` | Public | Sign in |
 | `http://localhost:5173/dashboard` | Protected | Account-specific activity totals and recent workouts |
 | `http://localhost:5173/workouts` | Protected | Create, read, update, and delete the signed-in user's workouts |
-| `http://localhost:5173/profile` | Protected | View the current account profile |
+| `http://localhost:5173/profile` | Protected | View account details and update optional fitness details |
 
 ## API and access rules
 
@@ -81,13 +81,19 @@ Only registration and login are public. Every other API route requires a valid, 
 | `POST` | `/api/auth/register` | Public | Creates an account; returns safe profile fields (`201`) |
 | `POST` | `/api/auth/login` | Public | Verifies the password and returns a bearer JWT and safe profile (`200`) |
 | `GET` | `/api/auth/me` | JWT | Returns the authenticated user's profile |
+| `PUT` | `/api/auth/me` | JWT | Updates the authenticated user's optional fitness details |
 | `GET` | `/api/workouts` | JWT | Lists only the authenticated user's workouts |
 | `GET` | `/api/workouts/{id}` | JWT | Reads an owned workout; another user's ID returns `404` |
 | `POST` | `/api/workouts` | JWT | Creates a workout for the authenticated user (`201`) |
 | `PUT` | `/api/workouts/{id}` | JWT | Updates an owned workout |
 | `DELETE` | `/api/workouts/{id}` | JWT | Deletes an owned workout (`204`) |
+| `GET` | `/api/calories` | JWT | Lists only the authenticated user's food calorie entries |
+| `POST` | `/api/calories` | JWT | Logs a food or drink entry with meal, calories, and date |
+| `DELETE` | `/api/calories/{id}` | JWT | Deletes an owned calorie entry (`204`) |
 
-Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 15-minute expiry.
+Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 15-minute expiry.
+
+The dashboard includes a per-account food journal and seven-day calorie chart. Users supply estimated calories; the app does not validate food nutrition data. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
 
 Registration and login example:
 

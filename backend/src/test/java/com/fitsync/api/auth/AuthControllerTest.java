@@ -11,12 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,9 +43,16 @@ class AuthControllerTest {
         String email = "auth-" + UUID.randomUUID() + "@example.com";
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new RegisterRequest("Fit Tester", email, "password123"))))
+                        .content(objectMapper.writeValueAsString(new RegisterRequest(
+                                "Fit Tester", email, "password123", new BigDecimal("72.5"),
+                                new BigDecimal("175.2"), 28, "NON_BINARY", "BUILD_STRENGTH"))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.weightKg").value(72.5))
+                .andExpect(jsonPath("$.heightCm").value(175.2))
+                .andExpect(jsonPath("$.age").value(28))
+                .andExpect(jsonPath("$.gender").value("NON_BINARY"))
+                .andExpect(jsonPath("$.fitnessGoal").value("BUILD_STRENGTH"))
                 .andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$.passwordHash").doesNotExist());
 
@@ -60,7 +69,22 @@ class AuthControllerTest {
 
         mockMvc.perform(get("/api/auth/me").header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value(email));
+                .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.weightKg").value(72.5))
+                .andExpect(jsonPath("$.fitnessGoal").value("BUILD_STRENGTH"));
+
+        mockMvc.perform(put("/api/auth/me")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new FitnessProfileRequest(
+                                new BigDecimal("70.3"), new BigDecimal("175.2"), 29,
+                                "PREFER_NOT_TO_SAY", "IMPROVE_ENDURANCE"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.weightKg").value(70.3))
+                .andExpect(jsonPath("$.age").value(29))
+                .andExpect(jsonPath("$.gender").value("PREFER_NOT_TO_SAY"))
+                .andExpect(jsonPath("$.fitnessGoal").value("IMPROVE_ENDURANCE"))
+                .andExpect(jsonPath("$.passwordHash").doesNotExist());
     }
 
     @Test
@@ -93,6 +117,21 @@ class AuthControllerTest {
         mockMvc.perform(get("/api/auth/me"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.message").value("Authentication required"));
+        mockMvc.perform(put("/api/auth/me")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new FitnessProfileRequest(
+                                null, null, null, null, null))))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void rejectsOutOfRangeFitnessDetails() throws Exception {
+        String email = "invalid-profile-" + UUID.randomUUID() + "@example.com";
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new RegisterRequest(
+                                "Fit Tester", email, "password123", new BigDecimal("0"), null, null, null, null))))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

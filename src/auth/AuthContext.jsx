@@ -36,12 +36,20 @@ export function AuthProvider({ children }) {
     setUser(result.user);
   };
 
+  const updateProfile = async (details) => {
+    const updatedUser = await authApi.updateProfile(details);
+    sessionStorage.setItem("fitsync-user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    return updatedUser;
+  };
+
   const value = useMemo(() => ({
     token,
     user,
     isAuthenticated: Boolean(token && user),
     login,
     logout,
+    updateProfile,
   }), [token, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
