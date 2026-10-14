@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $repoPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$trackedFiles = @("app.js", "index.html", "styles.css")
+$trackedFiles = @("src/web/app.js", "src/web/index.html", "src/web/styles.css")
 $logDirectory = Join-Path $env:LOCALAPPDATA "FitSync"
 $logPath = Join-Path $logDirectory "auto-push.log"
 
