@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import WeeklyBarChart from "../components/WeeklyBarChart.jsx";
@@ -20,6 +20,7 @@ export default function WorkoutsPage() {
   const [error, setError] = useState("");
   const [status, setStatus] = useState("Loading your workouts…");
   const [saving, setSaving] = useState(false);
+  const sessionsRef = useRef(null);
   const weeklyWorkoutMinutes = getWeeklyChartData(
     workouts,
     (workout) => workout.performedAt,
@@ -44,7 +45,7 @@ export default function WorkoutsPage() {
     setForm(blankForm());
     setError("");
     try {
-      await navigate({ search: {}, replace: true });
+      await navigate({ to: "/workouts", search: {}, replace: true });
     } catch (failure) {
       setError(failure.message);
     }
@@ -67,6 +68,7 @@ export default function WorkoutsPage() {
       await loadWorkouts();
       await resetForm();
       setStatus(form.id ? "Workout updated." : "Workout saved.");
+      sessionsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (failure) {
       setError(failure.message);
     } finally {
@@ -122,7 +124,7 @@ export default function WorkoutsPage() {
         data={weeklyWorkoutMinutes}
         note="Minutes are totaled by the date each workout was logged."
       />
-      <section className="dashboard recent-panel">
+      <section className="dashboard recent-panel" id="workout-sessions" ref={sessionsRef}>
         <div className="dashboard-top"><div><span className="dashboard-overline">PRIVATE TO YOUR ACCOUNT</span><h2>Workout sessions</h2></div><span>{workouts.length} {workouts.length === 1 ? "session" : "sessions"}</span></div>
         {workouts.length === 0 ? <p className="activity-empty">{error ? "Your workout list is unavailable until the server reconnects." : "No workouts logged yet. Save a session above to get started."}</p> : (
           <ul className="activity-list">{workouts.map((workout) => <li className="activity-item" key={workout.id}><div className="activity-details"><strong>{workout.name}</strong><span>{workout.category} · {workout.durationMinutes} min · {new Date(workout.performedAt).toLocaleString()}{workout.notes ? ` · ${workout.notes}` : ""}</span></div><div className="activity-actions"><button type="button" onClick={() => editWorkout(workout)}>Edit</button><button type="button" onClick={() => deleteWorkout(workout)}>Delete</button></div></li>)}</ul>

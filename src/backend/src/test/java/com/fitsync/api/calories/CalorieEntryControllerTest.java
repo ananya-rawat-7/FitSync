@@ -86,7 +86,7 @@ class CalorieEntryControllerTest {
     @Test
     void rejectsInvalidAndUnauthenticatedCalorieEntries() throws Exception {
         String invalidRequest = objectMapper.writeValueAsString(
-                new CalorieEntryRequest("Snack", MealType.SNACK, 0, LocalDate.now()));
+                new CalorieEntryRequest("Snack", MealType.SNACK, -1, LocalDate.now()));
         mockMvc.perform(post("/api/calories")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -95,6 +95,17 @@ class CalorieEntryControllerTest {
 
         mockMvc.perform(get("/api/calories"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void allowsZeroCalorieFoods() throws Exception {
+        mockMvc.perform(post("/api/calories")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new CalorieEntryRequest(
+                                "Water", MealType.SNACK, 0, LocalDate.now()))))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.calories").value(0));
     }
 
     @Test

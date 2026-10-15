@@ -486,6 +486,7 @@ h1 span, h2 span { color: var(--orange); }
 .dashboard-stats { margin-bottom: 20px; }
 .dashboard-stats .stat-tile { min-height: 118px; }
 .chart-panel, .recent-panel, .workout-editor { margin-top: 20px; padding: 25px; }
+#workout-sessions { scroll-margin-top: 96px; }
 .chart-panel h2, .recent-panel h2, .workout-editor h2, .profile-card h2 { margin: 5px 0 0; color: var(--navy); font-family: var(--display); font-size: 27px; line-height: 1; }
 .dashboard-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .dashboard-chart { height: 210px; margin-top: 22px; }
@@ -554,9 +555,16 @@ h1 span, h2 span { color: var(--orange); }
 .calorie-summary span { color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .6px; }
 .calorie-summary strong { color: var(--navy); font-family: var(--display); font-size: 27px; line-height: 1; }
 .calorie-summary strong small { color: var(--muted); font-family: var(--body); font-size: 10px; }
-.calorie-entry-form { display: grid; grid-template-columns: minmax(130px, 1.5fr) repeat(3, minmax(100px, 1fr)) auto; align-items: end; gap: 10px; }
+.calorie-entry-form { display: grid; grid-template-columns: minmax(190px, 1.6fr) repeat(3, minmax(100px, 1fr)) auto; align-items: end; gap: 10px; }
 .calorie-entry-form label, .fitness-profile-form label { display: flex; flex-direction: column; gap: 5px; min-width: 0; color: var(--navy); font-size: 9px; font-weight: 700; }
 .calorie-entry-form input, .calorie-entry-form select { width: 100%; min-height: 40px; padding: 0 9px; border: 1px solid var(--line); border-radius: 0; background: white; color: var(--ink); font: inherit; font-size: 10px; }
+.calorie-food-picker { display: flex; min-width: 0; gap: 6px; }
+.calorie-food-picker input { min-width: 0; }
+.food-mode-toggle { flex: 0 0 auto; padding: 0 9px; border: 1px solid var(--line); background: white; color: var(--navy); font: inherit; font-size: 9px; cursor: pointer; }
+.food-mode-toggle:hover { border-color: var(--orange); color: var(--orange); }
+.calorie-manual-entry { grid-column: 1 / 3; }
+.calorie-estimate { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.calorie-estimate strong { color: var(--navy); }
 .calorie-entry-form .button { min-height: 40px; }
 .calorie-entry-list { margin: 17px 0 0; padding: 0; list-style: none; }
 .calorie-entry-list li { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 47px; padding: 7px 0; border-top: 1px solid var(--line); }
@@ -611,7 +619,7 @@ h1 span, h2 span { color: var(--orange); }
 
 @media (max-width: 640px) {
   .calorie-entry-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-  .calorie-entry-form > label:first-child, .calorie-entry-form > .button { grid-column: 1 / -1; }
+  .calorie-entry-form > label:first-child, .calorie-entry-form > .button, .calorie-manual-entry, .calorie-estimate { grid-column: 1 / -1; }
   .calorie-entry-form > * { min-width: 0; }
   .health-report-grid, .suggestion-columns { grid-template-columns: 1fr; }
 }

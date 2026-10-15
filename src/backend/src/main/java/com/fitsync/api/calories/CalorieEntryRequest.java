@@ -12,6 +12,6 @@ import java.time.LocalDate;
 public record CalorieEntryRequest(
         @NotBlank @Size(max = 100) String foodName,
         @NotNull MealType mealType,
-        @Min(1) @Max(10000) int calories,
+        @Min(0) @Max(10000) int calories,
         @NotNull @PastOrPresent LocalDate consumedOn) {
 }

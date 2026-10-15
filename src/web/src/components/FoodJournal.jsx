@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight, Flame, Trash2 } from "lucide-react";
 import WeeklyBarChart from "./WeeklyBarChart.jsx";
 import { calorieApi } from "../services/api.js";
+import { foodCalories } from "../constants/foodCalories.js";
 import { getWeeklyChartData } from "../utils/weeklyChart.js";
 
 const today = () => {
@@ -9,7 +10,7 @@ const today = () => {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 };
 
-const blankFoodForm = () => ({ foodName: "", mealType: "BREAKFAST", calories: "", consumedOn: today() });
+const blankFoodForm = () => ({ foodName: "", mealType: "BREAKFAST", grams: "", calories: "", consumedOn: today() });
 
 export function getCalorieEstimate(profile, bmi) {
   if (!profile?.weightKg || !profile?.heightCm || !profile?.age || profile.age < 18) return null;
@@ -56,16 +57,17 @@ export function useFoodJournal() {
     loadEntries();
   }, [loadEntries]);
 
-  const submitFood = async (event) => {
+  const submitFood = async (event, { foodName, calories }) => {
     event.preventDefault();
     setSaving(true);
     setError("");
     setStatus("");
     try {
       const created = await calorieApi.create({
-        ...foodForm,
-        foodName: foodForm.foodName.trim(),
-        calories: Number(foodForm.calories),
+        foodName: foodName.trim(),
+        mealType: foodForm.mealType,
+        calories,
+        consumedOn: foodForm.consumedOn,
       });
       setEntries((current) => [created, ...current]);
       setFoodForm((current) => ({ ...blankFoodForm(), consumedOn: current.consumedOn }));
@@ -114,7 +116,19 @@ function FoodEntryList({ entries, loading, todayKey, deletingEntry, onRemove }) 
 
 export default function FoodJournal({ profile }) {
   const { entries, foodForm, error, status, loading, saving, deletingEntry, submitFood, deleteFood, changeFoodField } = useFoodJournal();
+  const [otherFood, setOtherFood] = useState(false);
   const todayKey = today();
+  const selectedFood = foodCalories.find(
+    (food) => food.name.toLowerCase() === foodForm.foodName.trim().toLowerCase(),
+  );
+  const grams = Number(foodForm.grams);
+  const calculatedCalories = selectedFood && grams > 0
+    ? Math.round(selectedFood.caloriesPer100g * grams / 100)
+    : null;
+  const caloriesToLog = otherFood ? Number(foodForm.calories) : calculatedCalories;
+  const canSubmit = otherFood
+    ? foodForm.foodName.trim().length > 0 && foodForm.calories !== "" && caloriesToLog >= 0 && caloriesToLog <= 10000
+    : Boolean(selectedFood && grams > 0 && calculatedCalories >= 0 && calculatedCalories <= 10000);
   const todaysCalories = entries
     .filter((entry) => entry.consumedOn === todayKey)
     .reduce((total, entry) => total + entry.calories, 0);
@@ -141,12 +155,59 @@ export default function FoodJournal({ profile }) {
           <div><span>LOGGED TODAY</span><strong>{todaysCalories.toLocaleString()} <small>kcal</small></strong></div>
           <div><span>ESTIMATED RANGE</span><strong>{calorieEstimate ? `${calorieEstimate.minimum.toLocaleString()}–${calorieEstimate.maximum.toLocaleString()}` : "—"} <small>kcal</small></strong></div>
         </div>
-        <form className="calorie-entry-form" onSubmit={submitFood}>
-          <label>Food or drink<input name="foodName" value={foodForm.foodName} onChange={changeFoodField} maxLength="100" required placeholder="e.g. oatmeal and berries" /></label>
+        <form className="calorie-entry-form" onSubmit={(event) => submitFood(event, {
+          foodName: foodForm.foodName,
+          calories: caloriesToLog,
+        })}>
+          <label className="calorie-food-field">{otherFood ? "Food or drink" : "Search foods"}
+            <span className="calorie-food-picker">
+              <input
+                name="foodName"
+                type={otherFood ? "text" : "search"}
+                list={otherFood ? undefined : "fitsync-food-calories"}
+                value={foodForm.foodName}
+                onChange={changeFoodField}
+                maxLength="100"
+                required
+                placeholder={otherFood ? "Enter a food not listed" : "Search the food list"}
+              />
+              <datalist id="fitsync-food-calories">
+                {foodCalories.map((food) => (
+                  <option
+                    key={food.name}
+                    value={food.name}
+                    label={`${food.category} · ${food.caloriesPer100g} kcal / 100 g`}
+                  />
+                ))}
+              </datalist>
+              <button
+                className="food-mode-toggle"
+                type="button"
+                aria-pressed={otherFood}
+                onClick={() => setOtherFood((current) => !current)}
+              >
+                {otherFood ? "Search list" : "Other food"}
+              </button>
+            </span>
+          </label>
           <label>Meal<select name="mealType" value={foodForm.mealType} onChange={changeFoodField}><option value="BREAKFAST">Breakfast</option><option value="LUNCH">Lunch</option><option value="DINNER">Dinner</option><option value="SNACK">Snack</option></select></label>
-          <label>Calories (kcal)<input name="calories" type="number" min="1" max="10000" step="1" inputMode="numeric" value={foodForm.calories} onChange={changeFoodField} required /></label>
+          <label>Amount (g)<input name="grams" type="number" min="1" max="10000" step="1" inputMode="numeric" value={foodForm.grams} onChange={changeFoodField} required /></label>
           <label>Date<input name="consumedOn" type="date" max={todayKey} value={foodForm.consumedOn} onChange={changeFoodField} required /></label>
-          <button className="button button-small" type="submit" disabled={saving}>{saving ? "Adding…" : "Add food"} <ArrowUpRight /></button>
+          {otherFood && <label className="calorie-manual-entry">Calories (kcal)<input name="calories" type="number" min="0" max="10000" step="1" inputMode="numeric" value={foodForm.calories} onChange={changeFoodField} required /></label>}
+          <button className="button button-small" type="submit" disabled={saving || !canSubmit}>{saving ? "Adding…" : "Add food"} <ArrowUpRight /></button>
+          {!otherFood && selectedFood && calculatedCalories !== null && (
+            calculatedCalories <= 10000 ? (
+              <p className="calorie-estimate" role="status">
+                Estimated calories: <strong>{calculatedCalories.toLocaleString()} kcal</strong>
+                {" "}· {selectedFood.caloriesPer100g} kcal per 100 g
+              </p>
+            ) : (
+              <p className="calorie-estimate" role="alert">Reduce the amount; a single entry cannot exceed 10,000 kcal.</p>
+            )
+          )}
+          {!otherFood && !selectedFood && foodForm.foodName.trim() && (
+            <p className="calorie-estimate">Select a food from the list, or choose “Other food” to enter calories manually.</p>
+          )}
         </form>
         {error && <p className="form-message is-error" role="alert">{error}</p>}
         {status && <p className="form-message" role="status">{status}</p>}
@@ -160,7 +221,7 @@ export default function FoodJournal({ profile }) {
             onRemove={deleteFood}
           />
         </ul>
-        <p className="calorie-note">Calories are user-entered estimates. Use food labels or a reliable nutrition source; this journal does not verify nutrition values.</p>
+        <p className="calorie-note">Catalog calories are estimates from the provided food list and are calculated per 100 g. For foods not listed, enter the amount and calories from a food label or reliable nutrition source.</p>
       </section>
 
       <WeeklyBarChart
