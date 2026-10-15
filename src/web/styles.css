@@ -483,7 +483,7 @@ h1 span, h2 span { color: var(--orange); }
 .page-heading h1, .auth-card h1 { margin: 0; font-size: clamp(52px, 7vw, 78px); }
 .page-heading h1 span, .auth-card h1 span { color: var(--orange); }
 .page-heading p:not(.eyebrow) { margin: 13px 0 0; color: var(--muted); font-size: 12px; }
-.dashboard-stats { margin-bottom: 20px; }
+.dashboard-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 20px; }
 .dashboard-stats .stat-tile { min-height: 118px; }
 .chart-panel, .recent-panel, .workout-editor { margin-top: 20px; padding: 25px; }
 #workout-sessions { scroll-margin-top: 96px; }
@@ -544,6 +544,22 @@ h1 span, h2 span { color: var(--orange); }
 .bmi-category { display: inline-block; margin-top: 9px; padding: 6px 9px; background: #edf2ee; color: #3f7657; font-size: 9px; font-weight: 700; }
 .bmi-category.bmi-low { background: #f8eee0; color: #916028; }
 .bmi-category.bmi-raised, .bmi-category.bmi-high { background: #f8e9e2; color: #a34c33; }
+.bmi-scale { margin-top: 36px; }
+.bmi-scale-track { height: 12px; position: relative; display: flex; border-radius: 10px; }
+.bmi-scale-segment { display: block; height: 100%; }
+.bmi-scale-low { width: 14%; border-radius: 10px 0 0 10px; background: #e9be78; }
+.bmi-scale-standard { width: 26%; background: #7db890; }
+.bmi-scale-raised { width: 20%; background: #e6a16f; }
+.bmi-scale-high { width: 40%; border-radius: 0 10px 10px 0; background: #d87566; }
+.bmi-scale-marker { width: 2px; height: 24px; position: absolute; top: -6px; transform: translateX(-50%); background: var(--navy); }
+.bmi-scale-marker > span { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); padding: 4px 6px; border-radius: 2px; background: var(--navy); color: white; font-size: 8px; font-weight: 700; white-space: nowrap; }
+.bmi-scale-labels, .bmi-scale-categories { display: flex; margin-top: 7px; color: var(--muted); font-size: 7px; text-align: center; }
+.bmi-scale-labels > span, .bmi-scale-categories > span { display: block; }
+.bmi-scale-labels > span:nth-child(1), .bmi-scale-categories > span:nth-child(1) { width: 14%; }
+.bmi-scale-labels > span:nth-child(2), .bmi-scale-categories > span:nth-child(2) { width: 26%; }
+.bmi-scale-labels > span:nth-child(3), .bmi-scale-categories > span:nth-child(3) { width: 20%; }
+.bmi-scale-labels > span:nth-child(4), .bmi-scale-categories > span:nth-child(4) { width: 40%; }
+.bmi-scale-categories { margin-top: 3px; font-size: 7px; }
 .bmi-report > p, .calorie-target-report > p { margin: 12px 0 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
 .calorie-target-report > strong { display: block; margin-top: 13px; color: var(--navy); font-family: var(--display); font-size: clamp(25px, 4vw, 37px); line-height: 1; }
 .calorie-target-report > strong small { color: var(--muted); font-family: var(--body); font-size: 11px; }

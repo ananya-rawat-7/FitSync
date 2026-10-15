@@ -3,7 +3,7 @@ import { Activity, ArrowUpRight, Check, HeartPulse } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "../auth/AuthContext.jsx";
-import FoodJournal, { getCalorieEstimate } from "../components/FoodJournal.jsx";
+import { getCalorieEstimate } from "../components/FoodJournal.jsx";
 import WeeklyBarChart from "../components/WeeklyBarChart.jsx";
 import {
   fitnessGoalLabels,
@@ -65,6 +65,7 @@ export default function DashboardPage() {
   const bmi = getAdultBmi(Number(profile?.weightKg), Number(profile?.heightCm));
   const adultBmi = Number(profile?.age) >= 20 ? bmi : null;
   const bmiCategory = adultBmi === null ? null : getBmiCategory(adultBmi);
+  const bmiScalePosition = adultBmi === null ? null : Math.min(100, Math.max(0, ((adultBmi - 15) / 25) * 100));
   const calorieEstimate = getCalorieEstimate(profile, adultBmi);
   const dietPlan = useMemo(() => getDietPlan(profile?.fitnessGoal, adultBmi), [profile?.fitnessGoal, adultBmi]);
   const dietGuidance = getDietGuidance(profile?.fitnessGoal, adultBmi);
@@ -77,7 +78,7 @@ export default function DashboardPage() {
 
   return (
     <main className="page-main section-wrap">
-      <div className="page-heading"><div><p className="eyebrow">PROGRESS, NOT PRESSURE</p><h1>YOUR <span>ACTIVITY.</span></h1><p>Your private workout, nutrition, and progress reports.</p></div><Link className="button" to="/workouts">Log a workout <ArrowUpRight /></Link></div>
+      <div className="page-heading"><div><p className="eyebrow">PROGRESS, NOT PRESSURE</p><h1>YOUR <span>ACTIVITY.</span></h1><p>Your private workout and personal progress reports.</p></div><Link className="button" to="/workouts">Log a workout <ArrowUpRight /></Link></div>
       {error && <p className="form-message is-error" role="alert">{error}</p>}
       {loading ? <p className="status-message" role="status">Loading your reports…</p> : (
         <>
@@ -85,7 +86,6 @@ export default function DashboardPage() {
             <div className="stat-tile"><span>WORKOUTS</span><strong>{String(stats.recent.length).padStart(2, "0")}</strong><small>last 7 days</small></div>
             <div className="stat-tile"><span>ACTIVE MIN</span><strong>{stats.minutes}</strong><small>last 7 days</small></div>
             <div className="stat-tile"><span>ACTIVE DAYS</span><strong>{stats.activeDays}</strong><small>last 7 days</small></div>
-            <Link className="stat-tile stat-highlight" to="/food-journal"><span>FOOD JOURNAL</span><strong>OPEN</strong><small>log meals and drinks</small></Link>
           </section>
 
           <section className="dashboard health-report">
@@ -101,6 +101,27 @@ export default function DashboardPage() {
                   <>
                     <strong className="bmi-value">{adultBmi.toFixed(1)}</strong>
                     <span className={`bmi-category ${bmiCategory.className}`}>{bmiCategory.label}</span>
+                    <div
+                      className="bmi-scale"
+                      role="img"
+                      aria-label={`Adult BMI reference scale, BMI ${adultBmi.toFixed(1)}, ${bmiCategory.label}. Scale shown from 15 to 40.`}
+                    >
+                      <div className="bmi-scale-track" aria-hidden="true">
+                        <span className="bmi-scale-segment bmi-scale-low" />
+                        <span className="bmi-scale-segment bmi-scale-standard" />
+                        <span className="bmi-scale-segment bmi-scale-raised" />
+                        <span className="bmi-scale-segment bmi-scale-high" />
+                        <span className="bmi-scale-marker" style={{ left: `${bmiScalePosition}%` }}>
+                          <span>{adultBmi.toFixed(1)}</span>
+                        </span>
+                      </div>
+                      <div className="bmi-scale-labels" aria-hidden="true">
+                        <span>&lt;18.5</span><span>18.5–24.9</span><span>25–29.9</span><span>30+</span>
+                      </div>
+                      <div className="bmi-scale-categories" aria-hidden="true">
+                        <span>Below</span><span>Reference</span><span>Above</span><span>High</span>
+                      </div>
+                    </div>
                     <p>BMI is a rough screening measure based on height and weight, not a diagnosis or a complete health assessment.</p>
                   </>
                 )}
@@ -121,8 +142,6 @@ export default function DashboardPage() {
             </div>
             <p className="health-disclaimer">BMI and calorie figures are general educational estimates only. They may not be suitable during pregnancy, for young people, or with medical conditions or a history of disordered eating. Ask a qualified health professional for personal advice.</p>
           </section>
-
-          <FoodJournal profile={profile} />
 
           <WeeklyBarChart
             eyebrow="MOVEMENT REPORT"
