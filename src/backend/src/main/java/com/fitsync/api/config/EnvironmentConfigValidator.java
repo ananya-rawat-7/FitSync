@@ -33,17 +33,17 @@ public final class EnvironmentConfigValidator {
         boolean isH2 = datasourceUrl.startsWith("jdbc:h2:");
 
         if (datasourceUrl.isEmpty()) {
-            errors.add("MYSQL_URL is missing or empty.");
+            errors.add("FITSYNC_DB_URL is missing or empty.");
         } else if (!isH2 && !isValidMySqlUrl(datasourceUrl)) {
-            errors.add("MYSQL_URL must be a valid MySQL JDBC URL beginning with jdbc:mysql:// and include a host.");
+            errors.add("FITSYNC_DB_URL must be a valid MySQL JDBC URL beginning with jdbc:mysql:// and include a host.");
         }
 
         if (!isH2) {
             if (environment.getProperty("spring.datasource.username", "").isBlank()) {
-                errors.add("MYSQL_USER is missing or empty.");
+                errors.add("FITSYNC_DB_USER is missing or empty.");
             }
             if (environment.getProperty("spring.datasource.password", "").isBlank()) {
-                errors.add("MYSQL_PASSWORD is missing or empty.");
+                errors.add("FITSYNC_DB_PASSWORD is missing or empty.");
             }
         }
 

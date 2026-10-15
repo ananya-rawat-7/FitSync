@@ -4,7 +4,7 @@
 		{
 			"label": "FitSync Backend",
 			"type": "shell",
-			"command": "foreach ($name in @('MYSQL_URL','MYSQL_USER','MYSQL_PASSWORD','JWT_SECRET')) { Remove-Item -Path \"Env:$name\" -ErrorAction SilentlyContinue }; mvn.cmd spring-boot:run",
+			"command": "mvn.cmd spring-boot:run",
 			"options": {
 				"cwd": "${workspaceFolder}\\src\\backend"
 			},

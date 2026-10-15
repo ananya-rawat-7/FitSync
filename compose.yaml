@@ -7,8 +7,8 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: fitsync
-      MYSQL_USER: ${MYSQL_USER:?Set MYSQL_USER in src/backend/.env}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in src/backend/.env}
+      MYSQL_USER: ${FITSYNC_DB_USER:?Set FITSYNC_DB_USER in src/backend/.env}
+      MYSQL_PASSWORD: ${FITSYNC_DB_PASSWORD:?Set FITSYNC_DB_PASSWORD in src/backend/.env}
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     ports:
       - "127.0.0.1:3307:3306"

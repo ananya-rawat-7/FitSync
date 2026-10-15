@@ -36,9 +36,9 @@ class EnvironmentConfigValidatorTest {
         List<String> errors = EnvironmentConfigValidator.findConfigurationErrors(environment);
 
         assertThat(errors)
-                .anyMatch(error -> error.startsWith("MYSQL_URL"))
-                .anyMatch(error -> error.startsWith("MYSQL_USER"))
-                .anyMatch(error -> error.startsWith("MYSQL_PASSWORD"))
+                .anyMatch(error -> error.startsWith("FITSYNC_DB_URL"))
+                .anyMatch(error -> error.startsWith("FITSYNC_DB_USER"))
+                .anyMatch(error -> error.startsWith("FITSYNC_DB_PASSWORD"))
                 .anyMatch(error -> error.startsWith("JWT_SECRET"))
                 .anyMatch(error -> error.startsWith("JWT_EXPIRATION_MS"))
                 .anyMatch(error -> error.startsWith("PORT"))

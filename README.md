@@ -40,15 +40,13 @@ FitSync/
 
 MySQL runs in the official MySQL 8.4 Docker image built from `src/database/Dockerfile`. On first initialization, the container loads `src/database/schema.sql`; Hibernate continues to update tables on backend startup. The Compose configuration publishes MySQL on `127.0.0.1:3307` so it does not conflict with an existing local MySQL server on port `3306`, and stores database files in the persistent `fitsync-mysql-data` volume.
 
-Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder MySQL password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes, and `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes). The Compose database uses `MYSQL_USER` and `MYSQL_PASSWORD` from this same file.
+Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder database password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes, and `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes). Database settings use the project-specific `FITSYNC_DB_*` names so unrelated machine-wide `MYSQL_*` variables cannot override the local database configuration. Compose maps the FitSync username/password to the variables expected by the official MySQL image.
 
 ### Run locally
 
 The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret. From the repository root, start the database and wait for its health check:
 
 ```powershell
-# Ensure inherited shell settings do not override src/backend/.env.
-Remove-Item Env:MYSQL_URL, Env:MYSQL_USER, Env:MYSQL_PASSWORD -ErrorAction SilentlyContinue
 docker compose --env-file src/backend/.env up -d --build database
 docker compose --env-file src/backend/.env ps
 ```
@@ -57,8 +55,6 @@ Then open two PowerShell terminals from the repository root. In the first, start
 
 ```powershell
 cd src\backend
-# Clear inherited values so Spring loads the local settings from .env.
-Remove-Item Env:MYSQL_URL, Env:MYSQL_USER, Env:MYSQL_PASSWORD, Env:JWT_SECRET -ErrorAction SilentlyContinue
 mvn.cmd spring-boot:run
 ```
 
@@ -70,7 +66,7 @@ npm install
 npm run dev
 ```
 
-The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The backend's default local database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task starts the backend with the same default configuration and clears inherited database/JWT variables so Spring loads the local `.env`. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
+The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The backend's default local database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task and the manual Maven command both load the same local `.env` settings. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
 
 Stop the database container while retaining its data with:
 
@@ -85,9 +81,9 @@ Database files persist in the named Docker volume across container restarts and 
 For deployment, build the backend and launch its JAR. Set these environment variables in the backend terminal (use your real database details, a unique strong secret, and the exact HTTPS origin where the web app will be hosted):
 
 ```powershell
-$env:MYSQL_URL = "jdbc:mysql://<mysql-host>:3306/fitsync?createDatabaseIfNotExist=true"
-$env:MYSQL_USER = "<mysql-user>"
-$env:MYSQL_PASSWORD = "<mysql-password>"
+$env:FITSYNC_DB_URL = "jdbc:mysql://<mysql-host>:3306/fitsync?createDatabaseIfNotExist=true"
+$env:FITSYNC_DB_USER = "<mysql-user>"
+$env:FITSYNC_DB_PASSWORD = "<mysql-password>"
 $env:JWT_SECRET = "<unique-random-secret-of-at-least-32-characters>"
 $env:FITSYNC_CORS_ALLOWED_ORIGINS = "https://<your-frontend-host>"
 cd src\backend
