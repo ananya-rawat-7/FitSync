@@ -191,9 +191,9 @@ export default function FoodJournal({ profile }) {
             </span>
           </label>
           <label>Meal<select name="mealType" value={foodForm.mealType} onChange={changeFoodField}><option value="BREAKFAST">Breakfast</option><option value="LUNCH">Lunch</option><option value="DINNER">Dinner</option><option value="SNACK">Snack</option></select></label>
-          <label>Amount (g)<input name="grams" type="number" min="1" max="10000" step="1" inputMode="numeric" value={foodForm.grams} onChange={changeFoodField} required /></label>
+          {!otherFood && <label>Amount (g)<input name="grams" type="number" min="1" max="10000" step="1" inputMode="numeric" value={foodForm.grams} onChange={changeFoodField} required /></label>}
           <label>Date<input name="consumedOn" type="date" max={todayKey} value={foodForm.consumedOn} onChange={changeFoodField} required /></label>
-          {otherFood && <label className="calorie-manual-entry">Calories (kcal)<input name="calories" type="number" min="0" max="10000" step="1" inputMode="numeric" value={foodForm.calories} onChange={changeFoodField} required /></label>}
+          {otherFood && <label className="calorie-manual-entry">Total estimated calories (kcal)<input name="calories" type="number" min="0" max="10000" step="1" inputMode="numeric" value={foodForm.calories} onChange={changeFoodField} required /></label>}
           <button className="button button-small" type="submit" disabled={saving || !canSubmit}>{saving ? "Adding…" : "Add food"} <ArrowUpRight /></button>
           {!otherFood && selectedFood && calculatedCalories !== null && (
             calculatedCalories <= 10000 ? (
@@ -221,7 +221,7 @@ export default function FoodJournal({ profile }) {
             onRemove={deleteFood}
           />
         </ul>
-        <p className="calorie-note">Catalog calories are estimates from the provided food list and are calculated per 100 g. For foods not listed, enter the amount and calories from a food label or reliable nutrition source.</p>
+        <p className="calorie-note">{otherFood ? "For other foods, enter the estimated calories for the total amount you ate or drank, not per 100 g." : "Catalog calories are estimates from the provided food list and are calculated per 100 g. For foods not listed, choose “Other food” and enter the calories for your total amount."}</p>
       </section>
 
       <WeeklyBarChart

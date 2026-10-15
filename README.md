@@ -6,6 +6,7 @@ FitSync is a React single-page fitness application backed by a Spring Boot REST 
 
 ```text
 FitSync/
+├── compose.yaml
 └── src/
     ├── web/
     │   ├── src/
@@ -19,6 +20,7 @@ FitSync/
     │   ├── index.html
     │   └── package.json
     ├── database/
+    │   ├── Dockerfile
     │   └── schema.sql
     └── backend/
         ├── src/main/java/com/fitsync/api/
@@ -32,18 +34,26 @@ FitSync/
 
 - Node.js 20.19+ (or 22.12+) and npm
 - Java 17+ and Maven 3.6+
-- MySQL 8+ (the existing `fitsync` schema is reused; Hibernate updates its tables)
+- Docker Engine with Docker Compose
 
 ## Configuration and startup
 
-MySQL 8+ must be running. The schema for accounts, workouts, and calorie entries is documented in `src/database/schema.sql`; Hibernate updates the schema on startup. Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder MySQL password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes. `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes), and the local MySQL URL and user have defaults in `application.properties`.
+MySQL runs in the official MySQL 8.4 Docker image built from `src/database/Dockerfile`. On first initialization, the container loads `src/database/schema.sql`; Hibernate continues to update tables on backend startup. The Compose configuration publishes MySQL on `127.0.0.1:3307` so it does not conflict with an existing local MySQL server on port `3306`, and stores database files in the persistent `fitsync-mysql-data` volume.
+
+Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder MySQL password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes, and `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes). The Compose database uses `MYSQL_USER` and `MYSQL_PASSWORD` from this same file.
 
 ### Run locally
 
-The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret:
+The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret. From the repository root, start the database and wait for its health check:
 
+```powershell
+# Ensure inherited shell settings do not override src/backend/.env.
+Remove-Item Env:MYSQL_URL, Env:MYSQL_USER, Env:MYSQL_PASSWORD -ErrorAction SilentlyContinue
+docker compose --env-file src/backend/.env up -d --build database
+docker compose --env-file src/backend/.env ps
+```
 
-Open two PowerShell terminals from the repository root. In the first, start the backend:
+Then open two PowerShell terminals from the repository root. In the first, start the backend:
 
 ```powershell
 cd src\backend
@@ -60,7 +70,15 @@ npm install
 npm run dev
 ```
 
-The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The VS Code **FitSync Backend** task starts the backend with the same default configuration and clears inherited database/JWT variables so Spring loads the local `.env`. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
+The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The backend's default local database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task starts the backend with the same default configuration and clears inherited database/JWT variables so Spring loads the local `.env`. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
+
+Stop the database container while retaining its data with:
+
+```powershell
+docker compose --env-file src/backend/.env down
+```
+
+Database files persist in the named Docker volume across container restarts and rebuilds. The SQL initialization script only runs when this data volume is first created; changing `schema.sql` later does not reinitialize an existing database. Removing the volume with `docker compose --env-file src/backend/.env down --volumes` permanently deletes the local database contents.
 
 ### Production build and run
 
