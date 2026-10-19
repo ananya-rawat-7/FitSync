@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,14 @@ public class WorkoutPlanController {
             @Valid @RequestBody WorkoutPlan plan,
             Authentication authentication) {
         return ResponseEntity.ok(service.create(plan, authentication.getName()));
+    }
+
+    @PostMapping("/generate-week")
+    public List<WorkoutPlan> generateWeek(
+            @RequestBody(required = false) GenerateWeekRequest request,
+            Authentication authentication) {
+        LocalDate startDate = request == null ? null : request.startDate();
+        return service.generateWeek(authentication.getName(), startDate);
     }
 
     @PutMapping("/{id}")

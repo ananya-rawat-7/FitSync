@@ -75,7 +75,12 @@ export const workoutPlanApi = {
   create: (plan) => request("/workout-plans", json("POST", plan)),
   update: (id, plan) => request(`/workout-plans/${id}`, json("PUT", plan)),
   complete: (id) => request(`/workout-plans/${id}/complete`, { method: "POST" }),
+  generateWeek: (startDate) => request("/workout-plans/generate-week", json("POST", startDate ? { startDate } : {})),
   remove: (id) => request(`/workout-plans/${id}`, { method: "DELETE" }),
+};
+
+export const exerciseApi = {
+  list: (goal) => request(`/exercises${goal ? `?goal=${encodeURIComponent(goal)}` : ""}`),
 };
 
 export const calorieApi = {

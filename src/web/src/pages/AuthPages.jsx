@@ -164,6 +164,7 @@ export function RegisterPage() {
               <option value="">Select a target (optional)</option>
               <option value="BUILD_STRENGTH">Build strength</option>
               <option value="LOSE_WEIGHT">Lose weight</option>
+              <option value="GAIN_WEIGHT">Gain weight</option>
               <option value="IMPROVE_ENDURANCE">Improve endurance</option>
               <option value="IMPROVE_FLEXIBILITY">Improve flexibility</option>
               <option value="MAINTAIN_FITNESS">Maintain my fitness</option>

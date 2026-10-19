@@ -13,5 +13,5 @@ public record FitnessProfileRequest(
         @DecimalMin("0.1") @DecimalMax("300") BigDecimal heightCm,
         @Min(13) @Max(120) Integer age,
         @Pattern(regexp = "^(|FEMALE|MALE|NON_BINARY|SELF_DESCRIBED|PREFER_NOT_TO_SAY)$") String gender,
-        @Pattern(regexp = "^(|BUILD_STRENGTH|LOSE_WEIGHT|IMPROVE_ENDURANCE|IMPROVE_FLEXIBILITY|MAINTAIN_FITNESS|OTHER)$") String fitnessGoal) {
+        @Pattern(regexp = "^(|BUILD_STRENGTH|LOSE_WEIGHT|GAIN_WEIGHT|IMPROVE_ENDURANCE|IMPROVE_FLEXIBILITY|MAINTAIN_FITNESS|OTHER)$") String fitnessGoal) {
 }

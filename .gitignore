@@ -7,3 +7,4 @@ dist/
 /fitsync-data.mv.db
 /fitsync-data.trace.db
 /fitsync-data.lock.db
+/.commandcode/*

@@ -17,6 +17,7 @@ export const genderLabels = {
 export const fitnessGoalLabels = {
   BUILD_STRENGTH: "Build strength",
   LOSE_WEIGHT: "Lose weight",
+  GAIN_WEIGHT: "Gain weight",
   IMPROVE_ENDURANCE: "Improve endurance",
   IMPROVE_FLEXIBILITY: "Improve flexibility",
   MAINTAIN_FITNESS: "Maintain my fitness",

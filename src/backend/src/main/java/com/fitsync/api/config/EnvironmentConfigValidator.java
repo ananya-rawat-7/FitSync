@@ -31,8 +31,8 @@ public final class EnvironmentConfigValidator {
 
     static void validate(Environment environment) {
         List<String> errors = new ArrayList<>();
-        if (!isH2Datasource(environment)) {
-            errors.addAll(findEnvFileErrors(Path.of("..", "..", ".env").toAbsolutePath().normalize()));
+        if (!isH2Datasource(environment) && !hasRequiredValues(environment)) {
+            errors.addAll(findEnvFileErrors(findEnvFile()));
         }
         errors.addAll(findConfigurationErrors(environment));
         if (errors.isEmpty()) {
@@ -42,6 +42,24 @@ public final class EnvironmentConfigValidator {
         logger.error("Backend configuration is invalid:");
         errors.forEach(error -> logger.error(" - {}", error));
         throw new IllegalStateException("Correct the environment configuration errors listed above.");
+    }
+
+    private static boolean hasRequiredValues(Environment environment) {
+        return REQUIRED_ENV_KEYS.stream()
+                .map(key -> environment.getProperty(key))
+                .allMatch(value -> value != null && !value.isBlank());
+    }
+
+    private static Path findEnvFile() {
+        Path backendRelative = Path.of("..", "..", ".env").toAbsolutePath().normalize();
+        if (Files.isRegularFile(backendRelative)) {
+            return backendRelative;
+        }
+        Path workingDirectoryRelative = Path.of(".env").toAbsolutePath().normalize();
+        if (Files.isRegularFile(workingDirectoryRelative)) {
+            return workingDirectoryRelative;
+        }
+        return backendRelative;
     }
 
     static List<String> findEnvFileErrors(Path envFile) {

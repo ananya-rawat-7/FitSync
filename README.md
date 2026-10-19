@@ -6,7 +6,7 @@ FitSync is a React single-page fitness application backed by a Spring Boot REST 
 
 ```text
 FitSync/
-├── compose.yaml
+├── docker-compose.yml
 └── src/
     ├── web/
     │   ├── src/
@@ -27,7 +27,7 @@ FitSync/
         │   ├── auth/         # Registration, login, profile, account model/repository
         │   ├── config/        # CORS and API error responses
         │   ├── security/     # JWT creation, validation, and Spring Security
-        │   └── workout/      # JPA workout plans and sessions, repositories, services, and REST controllers
+        │   └── workout/      # Sessions, goal-based plans, exercise catalog, repositories, services, and controllers
 ```
 
 ## Requirements
@@ -66,7 +66,7 @@ npm install
 npm run dev
 ```
 
-The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080` as configured in the example `.env`. The example database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task and the manual Maven command both load the same root `.env` settings. At startup, the backend validates the env file, required keys, database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
+The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080` as configured in the example `.env`. The frontend reads the API location from `VITE_API_BASE_URL`; copy `src/web/.env.example` to `src/web/.env` if you need a different address. The Compose file passes `FITSYNC_DB_USER` and `FITSYNC_DB_PASSWORD` to MySQL as `MYSQL_USER` and `MYSQL_PASSWORD`, so the application account is created on first database initialization. If the `fitsync-mysql-data` volume was created by an older Compose configuration that did not create the application user, recreate it once with `docker compose down --volumes` (this deletes the local database contents) before starting the database again. The example database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task and the manual Maven command both load the same root `.env` settings. At startup, the backend validates the env file, required keys, database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
 
 Stop the database container while retaining its data with:
 
@@ -115,7 +115,7 @@ The preview is available at `http://localhost:4173`. Keep production credentials
 | `http://localhost:5173/register` | Public | Create an account |
 | `http://localhost:5173/login` | Public | Sign in |
 | `http://localhost:5173/dashboard` | Protected | Account-specific activity totals and recent workouts |
-| `http://localhost:5173/workouts` | Protected | Create, read, update, and delete the signed-in user's workouts |
+| `http://localhost:5173/workouts` | Protected | Build a goal-based week, browse exercises, and manage planned and completed workouts |
 | `http://localhost:5173/profile` | Protected | View account details and update optional fitness details |
 
 ## API and access rules
@@ -138,10 +138,18 @@ Only registration and login are public. Every other API route requires a valid, 
 | `GET` | `/api/calories` | JWT | Lists only the authenticated user's food calorie entries |
 | `POST` | `/api/calories` | JWT | Logs a food or drink entry with meal, calories, and date |
 | `DELETE` | `/api/calories/{id}` | JWT | Deletes an owned calorie entry (`204`) |
+| `GET` | `/api/workout-plans` | JWT | Lists the authenticated user's planned sessions, including exercises |
+| `POST` | `/api/workout-plans` | JWT | Creates a manual plan for the authenticated user |
+| `PUT` | `/api/workout-plans/{id}` | JWT | Updates an owned plan; existing exercises are preserved |
+| `POST` | `/api/workout-plans/generate-week` | JWT | Builds a 7-day exercise plan from the profile goal; accepts optional `startDate` |
+| `POST` | `/api/workout-plans/{id}/complete` | JWT | Logs a plan as a completed session and removes the plan |
+| `DELETE` | `/api/workout-plans/{id}` | JWT | Removes an owned plan (`204`) |
+| `GET` | `/api/exercises?goal=...` | JWT | Returns the exercise library, optionally filtered by fitness goal |
+| `GET` | `/api/health` | Public | Returns `{"status":"ok"}` when the API is reachable |
 
-Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 24-hour expiry.
+Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. Supported targets are `BUILD_STRENGTH`, `LOSE_WEIGHT`, `GAIN_WEIGHT`, `IMPROVE_ENDURANCE`, `IMPROVE_FLEXIBILITY`, `MAINTAIN_FITNESS`, and `OTHER`. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 24-hour expiry.
 
-The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
+The Workouts page can build a complete week from the profile goal. `POST /api/workout-plans/generate-week` returns seven planned sessions (tomorrow through day 7) with named exercises, sets, reps, rest periods, and short instructions. `LOSE_WEIGHT` emphasizes cardio, HIIT, full-body strength, and recovery; `GAIN_WEIGHT` emphasizes four progressive strength sessions with light cardio and recovery. Regenerating a week replaces only the auto-generated plans in that range, so manually added plans remain. The exercise library is exposed by `GET /api/exercises` and filtered by the same goal. The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
 
 Registration and login example:
 
@@ -203,7 +211,7 @@ Register an account in the app and use those credentials to test login. No share
 
 ## Viva explanation
 
-- **SPA:** A Single-Page Application loads one HTML shell and changes the view in the browser as the user navigates. FitSync uses React Router, so dashboard, workout, profile, login, and registration routes change without a full page reload.
+- **SPA:** A Single-Page Application loads one HTML shell and changes the view in the browser as the user navigates. FitSync uses TanStack Router, so dashboard, workout, profile, login, and registration routes change without a full page reload.
 - **React.js:** A JavaScript UI library for composing interactive interfaces from reusable components. FitSync pages, forms, navigation, and workout lists are React components.
 - **REST API:** An HTTP interface that exposes resources through routes and methods such as `GET`, `POST`, `PUT`, and `DELETE`. FitSync's Spring controllers expose account and workout resources as JSON.
 - **Secure API endpoint:** A server-side endpoint that verifies the caller's identity and authorization before returning or changing protected data. Hiding a page in React alone is not security; Spring Security enforces it on every request.

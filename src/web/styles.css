@@ -648,3 +648,60 @@ h1 span, h2 span { color: var(--orange); }
  .workout-plan-list .activity-item { align-items: flex-start; flex-direction: column; }
  .workout-plan-list .activity-actions { justify-content: flex-start; }
 }
+
+.weekly-board-panel, .exercise-library-panel { margin-top: 20px; padding: 25px; }
+.week-builder { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 16px 0 20px; padding: 16px; border-left: 3px solid var(--orange); background: white; }
+.week-builder > div { min-width: 0; }
+.week-builder-goal { margin: 0 0 5px; color: var(--navy); font-size: 11px; }
+.week-builder-goal strong { color: var(--navy); }
+.week-builder-note { margin: 5px 0 0; color: var(--muted); font-size: 9px; line-height: 1.6; }
+.week-builder-note a { color: var(--orange); font-weight: 700; }
+.week-builder .button { flex-shrink: 0; }
+.week-board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.week-day { min-width: 0; display: flex; flex-direction: column; gap: 9px; padding: 11px 9px; border: 1px solid var(--line); background: white; }
+.week-day.is-today { border-color: var(--orange); box-shadow: inset 0 3px 0 var(--orange); }
+.week-day-header { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.week-day-header span { color: var(--navy); font-family: var(--display); font-size: 14px; font-weight: 700; line-height: 1; }
+.week-day-header small { color: var(--muted); font-size: 8px; white-space: nowrap; }
+.week-day-empty { margin: 4px 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.planned-workout { display: grid; gap: 7px; padding: 9px; background: var(--paper); }
+.planned-workout + .planned-workout { margin-top: 2px; }
+.planned-workout-heading { display: grid; gap: 3px; }
+.planned-workout-heading strong { color: var(--navy); font-size: 10px; line-height: 1.3; }
+.planned-workout-heading span { color: var(--muted); font-size: 8px; }
+.planned-workout-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.plan-exercises { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.plan-exercises li { display: grid; gap: 2px; padding-top: 5px; border-top: 1px solid var(--line); }
+.plan-exercises strong { color: var(--navy); font-size: 9px; line-height: 1.3; }
+.plan-exercises span { color: #41835f; font-size: 8px; }
+.plan-exercises small { color: var(--muted); font-size: 8px; line-height: 1.5; }
+.planned-workout .activity-actions { flex-wrap: wrap; justify-content: flex-start; gap: 6px; }
+.planned-workout .activity-actions button { font-size: 8px; }
+.exercise-group { margin-top: 18px; }
+.exercise-group h3 { margin: 0 0 10px; color: var(--navy); font-family: var(--display); font-size: 21px; line-height: 1; }
+.exercise-library { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 9px; }
+.exercise-card { display: grid; gap: 5px; min-width: 0; padding: 12px; border: 1px solid var(--line); background: white; }
+.exercise-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.exercise-card-top strong { color: var(--navy); font-size: 10px; line-height: 1.3; }
+.exercise-card-top span { color: var(--orange); font-size: 8px; font-weight: 700; white-space: nowrap; }
+.exercise-meta { margin: 0; color: var(--muted); font-size: 8px; }
+.exercise-dose { color: #41835f; font-size: 8px; font-weight: 700; }
+.exercise-card small { color: var(--muted); font-size: 8px; line-height: 1.5; }
+
+@media (max-width: 1100px) {
+  .week-board { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .week-builder { align-items: flex-start; flex-direction: column; }
+  .week-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .weekly-board-panel, .exercise-library-panel { padding: 17px 13px; }
+}
+
+@media (max-width: 480px) {
+  .week-board { grid-template-columns: 1fr; }
+  .exercise-library { grid-template-columns: 1fr; }
+}

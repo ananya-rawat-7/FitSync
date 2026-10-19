@@ -24,6 +24,7 @@ export function getCalorieEstimate(profile, bmi) {
   let goalAdjustment = 0;
 
   if (profile.fitnessGoal === "LOSE_WEIGHT" && bmi !== null && bmi >= 25) goalAdjustment = -300;
+  if (profile.fitnessGoal === "GAIN_WEIGHT" && bmi !== null && bmi < 25) goalAdjustment = 300;
   if (profile.fitnessGoal === "BUILD_STRENGTH") goalAdjustment = 150;
 
   const estimates = [

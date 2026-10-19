@@ -1,6 +1,7 @@
 export const fitnessGoalLabels = {
   BUILD_STRENGTH: "build strength",
   LOSE_WEIGHT: "lose weight gradually",
+  GAIN_WEIGHT: "gain weight steadily",
   IMPROVE_ENDURANCE: "improve endurance",
   IMPROVE_FLEXIBILITY: "improve flexibility",
   MAINTAIN_FITNESS: "maintain fitness",
@@ -31,6 +32,12 @@ export function getDietPlan(goal, bmi) {
     plan[0].example = "Oats or whole-grain toast with fruit and eggs, yogurt, or another protein";
     plan[2].example = "A convenient protein food with fruit or whole grains";
   }
+  if (goal === "GAIN_WEIGHT") {
+    plan[0].example = "Oats with milk, fruit, nuts, and eggs or yogurt for a higher-energy start";
+    plan[1].example = "A generous plate of grains, beans or lean protein, vegetables, and healthy fats";
+    plan[2].example = "A protein-rich snack such as yogurt, nuts, or a sandwich with fruit";
+    plan[3].example = "A balanced dinner with protein, grains, vegetables, and an extra healthy fat";
+  }
   if (goal === "IMPROVE_ENDURANCE") {
     plan[0].example = "Oats, whole-grain toast, or another carbohydrate-rich choice with fruit";
     plan[2].example = "Fruit, yogurt, or another snack that suits your training schedule";
@@ -53,6 +60,9 @@ export function getDietGuidance(goal, bmi) {
   if (goal === "LOSE_WEIGHT") {
     return "These are balanced meal ideas, not a weight-loss diet. Add your details in Profile for an adult reference estimate before discussing personal goals with a professional.";
   }
+  if (goal === "GAIN_WEIGHT") {
+    return "For steady weight gain, these ideas add energy-dense, nutrient-rich foods and a protein source across meals instead of relying on rapid gains or supplements.";
+  }
   return "Flexible, balanced meal ideas shaped by your selected focus and profile—not a prescriptive diet or medical nutrition plan.";
 }
 
@@ -61,6 +71,8 @@ export function getFitnessPlan(goal, bmi) {
     IMPROVE_FLEXIBILITY: "Try 3 gentle mobility sessions and 2 comfortable walks this week.",
     IMPROVE_ENDURANCE: "Try 3 easy-to-moderate cardio sessions, with rest or gentle movement between them.",
     BUILD_STRENGTH: "Try 2 or 3 full-body strength sessions, with recovery days between sessions.",
+    LOSE_WEIGHT: "Try 3 cardio or HIIT sessions, 2 full-body strength sessions, and 1–2 easy recovery days this week.",
+    GAIN_WEIGHT: "Try 4 strength sessions focused on progressive overload, plus 1 easy cardio and 1 mobility day. Eat enough protein and take recovery days.",
   };
   const sessions = sessionsByGoal[goal] || "Try 2 strength sessions and a few comfortable walks, then build up at your own pace.";
 
