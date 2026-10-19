@@ -21,7 +21,7 @@ public class JwtService {
 
     public JwtService(
             @Value("${fitsync.jwt.secret}") String secret,
-            @Value("${fitsync.jwt.expiration-ms:900000}") long expirationMs) {
+            @Value("${fitsync.jwt.expiration-ms}") long expirationMs) {
         this.secret = secret;
         this.expirationMs = expirationMs;
     }

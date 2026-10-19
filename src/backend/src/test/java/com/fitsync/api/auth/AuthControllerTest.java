@@ -22,10 +22,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(properties = "fitsync.jwt.secret=01234567890123456789012345678901")
+@SpringBootTest(properties = {
+        "FITSYNC_DB_URL=jdbc:h2:mem:fitsync-test;DB_CLOSE_DELAY=-1",
+        "FITSYNC_DB_USER=sa",
+        "FITSYNC_DB_PASSWORD=test",
+        "JWT_SECRET=01234567890123456789012345678901",
+        "JWT_EXPIRATION_MS=900000",
+        "PORT=8080",
+        "FITSYNC_CORS_ALLOWED_ORIGINS=http://localhost:5173"
+})
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {
-        "spring.datasource.url=jdbc:h2:mem:fitsync-test;DB_CLOSE_DELAY=-1",
         "spring.datasource.driver-class-name=org.h2.Driver",
         "spring.datasource.username=sa",
         "spring.jpa.hibernate.ddl-auto=create-drop"

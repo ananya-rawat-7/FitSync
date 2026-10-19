@@ -1,23 +1,30 @@
 package com.fitsync.api.config;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.springframework.mock.env.MockEnvironment;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EnvironmentConfigValidatorTest {
 
+    @TempDir
+    Path temporaryDirectory;
+
     @Test
     void acceptsValidMySqlAndApplicationConfiguration() {
         MockEnvironment environment = new MockEnvironment()
-                .withProperty("spring.datasource.url", "jdbc:mysql://localhost:3306/fitsync")
-                .withProperty("spring.datasource.username", "fitsync_app")
-                .withProperty("spring.datasource.password", "local-test-password")
-                .withProperty("fitsync.jwt.secret", "a-secret-with-at-least-32-utf8-bytes")
-                .withProperty("fitsync.jwt.expiration-ms", "900000")
-                .withProperty("server.port", "8080");
+                .withProperty("FITSYNC_DB_URL", "jdbc:mysql://localhost:3306/fitsync")
+                .withProperty("FITSYNC_DB_USER", "fitsync_app")
+                .withProperty("FITSYNC_DB_PASSWORD", "local-test-password")
+                .withProperty("JWT_SECRET", "a-secret-with-at-least-32-utf8-bytes")
+                .withProperty("JWT_EXPIRATION_MS", "900000")
+                .withProperty("PORT", "8080")
+                .withProperty("FITSYNC_CORS_ALLOWED_ORIGINS", "http://localhost:5173");
 
         assertThat(EnvironmentConfigValidator.findConfigurationErrors(environment)).isEmpty();
     }
@@ -25,13 +32,13 @@ class EnvironmentConfigValidatorTest {
     @Test
     void reportsEachInvalidSettingByItsEnvironmentVariableName() {
         MockEnvironment environment = new MockEnvironment()
-                .withProperty("spring.datasource.url", "not-a-jdbc-url")
-                .withProperty("spring.datasource.username", "")
-                .withProperty("spring.datasource.password", "")
-                .withProperty("fitsync.jwt.secret", "short")
-                .withProperty("fitsync.jwt.expiration-ms", "not-a-number")
-                .withProperty("server.port", "70000")
-                .withProperty("fitsync.cors.allowed-origins", "ftp://example.com");
+                .withProperty("FITSYNC_DB_URL", "not-a-jdbc-url")
+                .withProperty("FITSYNC_DB_USER", "")
+                .withProperty("FITSYNC_DB_PASSWORD", "")
+                .withProperty("JWT_SECRET", "short")
+                .withProperty("JWT_EXPIRATION_MS", "not-a-number")
+                .withProperty("PORT", "70000")
+                .withProperty("FITSYNC_CORS_ALLOWED_ORIGINS", "ftp://example.com");
 
         List<String> errors = EnvironmentConfigValidator.findConfigurationErrors(environment);
 
@@ -48,12 +55,37 @@ class EnvironmentConfigValidatorTest {
     @Test
     void allowsTheH2DatasourceUsedByIntegrationTests() {
         MockEnvironment environment = new MockEnvironment()
-                .withProperty("spring.datasource.url", "jdbc:h2:mem:fitsync-test")
-                .withProperty("spring.datasource.username", "sa")
-                .withProperty("fitsync.jwt.secret", "a-secret-with-at-least-32-utf8-bytes")
-                .withProperty("fitsync.jwt.expiration-ms", "900000")
-                .withProperty("server.port", "8080");
+                .withProperty("FITSYNC_DB_URL", "jdbc:h2:mem:fitsync-test")
+                .withProperty("JWT_SECRET", "a-secret-with-at-least-32-utf8-bytes")
+                .withProperty("JWT_EXPIRATION_MS", "900000")
+                .withProperty("PORT", "8080")
+                .withProperty("FITSYNC_CORS_ALLOWED_ORIGINS", "http://localhost:5173");
 
         assertThat(EnvironmentConfigValidator.findConfigurationErrors(environment)).isEmpty();
+    }
+
+    @Test
+    void reportsMissingRequiredEnvironmentValues() {
+        assertThat(EnvironmentConfigValidator.findConfigurationErrors(new MockEnvironment()))
+                .contains("FITSYNC_DB_URL is missing or empty.",
+                        "JWT_SECRET is missing or empty.",
+                        "JWT_EXPIRATION_MS is missing or empty.",
+                        "PORT is missing or empty.",
+                        "FITSYNC_CORS_ALLOWED_ORIGINS is missing or empty.");
+    }
+
+    @Test
+    void checksTheRootEnvFileExistsAndContainsRequiredKeys() throws Exception {
+        Path envFile = temporaryDirectory.resolve(".env");
+        assertThat(EnvironmentConfigValidator.findEnvFileErrors(envFile))
+                .singleElement()
+                .asString()
+                .contains("Required root .env file was not found");
+
+        Files.writeString(envFile, "FITSYNC_DB_URL=jdbc:mysql://localhost:3306/fitsync\n");
+        assertThat(EnvironmentConfigValidator.findEnvFileErrors(envFile))
+                .contains("FITSYNC_DB_USER is missing or empty in the root .env file.",
+                        "JWT_SECRET is missing or empty in the root .env file.",
+                        "FITSYNC_CORS_ALLOWED_ORIGINS is missing or empty in the root .env file.");
     }
 }

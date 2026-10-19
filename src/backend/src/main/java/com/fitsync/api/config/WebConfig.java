@@ -10,7 +10,7 @@ import java.util.Arrays;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${fitsync.cors.allowed-origins:http://localhost:5173,http://127.0.0.1:5173}")
+    @Value("${fitsync.cors.allowed-origins}")
     private String allowedOrigins;
 
     @Override

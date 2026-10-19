@@ -4,20 +4,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public final class EnvironmentConfigValidator {
 
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentConfigValidator.class);
+    private static final List<String> REQUIRED_ENV_KEYS = List.of(
+            "FITSYNC_DB_URL",
+            "FITSYNC_DB_USER",
+            "FITSYNC_DB_PASSWORD",
+            "JWT_SECRET",
+            "JWT_EXPIRATION_MS",
+            "PORT",
+            "FITSYNC_CORS_ALLOWED_ORIGINS");
 
     private EnvironmentConfigValidator() {
     }
 
     static void validate(Environment environment) {
-        List<String> errors = findConfigurationErrors(environment);
+        List<String> errors = new ArrayList<>();
+        if (!isH2Datasource(environment)) {
+            errors.addAll(findEnvFileErrors(Path.of("..", "..", ".env").toAbsolutePath().normalize()));
+        }
+        errors.addAll(findConfigurationErrors(environment));
         if (errors.isEmpty()) {
             return;
         }
@@ -27,9 +44,42 @@ public final class EnvironmentConfigValidator {
         throw new IllegalStateException("Correct the environment configuration errors listed above.");
     }
 
+    static List<String> findEnvFileErrors(Path envFile) {
+        if (!Files.isRegularFile(envFile)) {
+            return List.of("Required root .env file was not found at " + envFile
+                    + ". Create it from src/backend/.env.example.");
+        }
+
+        Properties properties = new Properties();
+        try (Reader reader = Files.newBufferedReader(envFile, StandardCharsets.UTF_8)) {
+            properties.load(reader);
+        } catch (IOException | IllegalArgumentException exception) {
+            return List.of("Could not read the root .env file at " + envFile
+                    + ". Check that it uses KEY=value entries.");
+        }
+
+        List<String> errors = new ArrayList<>();
+        for (String key : REQUIRED_ENV_KEYS) {
+            String value = properties.getProperty(key);
+            if (value == null || value.isBlank()) {
+                errors.add(key + " is missing or empty in the root .env file.");
+            }
+        }
+        return errors;
+    }
+
     static List<String> findConfigurationErrors(Environment environment) {
         List<String> errors = new ArrayList<>();
-        String datasourceUrl = environment.getProperty("spring.datasource.url", "").trim();
+        validateDatasource(environment, errors);
+        validateJwtSecret(environment, errors);
+        validateJwtExpiration(environment, errors);
+        validatePort(environment, errors);
+        validateCorsOrigins(environment, errors);
+        return errors;
+    }
+
+    private static void validateDatasource(Environment environment, List<String> errors) {
+        String datasourceUrl = environment.getProperty("FITSYNC_DB_URL", "").trim();
         boolean isH2 = datasourceUrl.startsWith("jdbc:h2:");
 
         if (datasourceUrl.isEmpty()) {
@@ -38,21 +88,32 @@ public final class EnvironmentConfigValidator {
             errors.add("FITSYNC_DB_URL must be a valid MySQL JDBC URL beginning with jdbc:mysql:// and include a host.");
         }
 
-        if (!isH2) {
-            if (environment.getProperty("spring.datasource.username", "").isBlank()) {
-                errors.add("FITSYNC_DB_USER is missing or empty.");
-            }
-            if (environment.getProperty("spring.datasource.password", "").isBlank()) {
-                errors.add("FITSYNC_DB_PASSWORD is missing or empty.");
-            }
+        if (isH2) {
+            return;
         }
+        if (environment.getProperty("FITSYNC_DB_USER", "").isBlank()) {
+            errors.add("FITSYNC_DB_USER is missing or empty.");
+        }
+        if (environment.getProperty("FITSYNC_DB_PASSWORD", "").isBlank()) {
+            errors.add("FITSYNC_DB_PASSWORD is missing or empty.");
+        }
+    }
 
-        String jwtSecret = environment.getProperty("fitsync.jwt.secret", "");
-        if (jwtSecret.getBytes(StandardCharsets.UTF_8).length < 32) {
+    private static void validateJwtSecret(Environment environment, List<String> errors) {
+        String jwtSecret = environment.getProperty("JWT_SECRET", "");
+        if (jwtSecret.isBlank()) {
+            errors.add("JWT_SECRET is missing or empty.");
+        } else if (jwtSecret.getBytes(StandardCharsets.UTF_8).length < 32) {
             errors.add("JWT_SECRET must contain at least 32 UTF-8 bytes.");
         }
+    }
 
-        String expirationValue = environment.getProperty("fitsync.jwt.expiration-ms", "900000");
+    private static void validateJwtExpiration(Environment environment, List<String> errors) {
+        String expirationValue = environment.getProperty("JWT_EXPIRATION_MS", "");
+        if (expirationValue.isBlank()) {
+            errors.add("JWT_EXPIRATION_MS is missing or empty.");
+            return;
+        }
         try {
             if (Long.parseLong(expirationValue) < 60_000) {
                 errors.add("JWT_EXPIRATION_MS must be at least 60000 milliseconds.");
@@ -60,8 +121,14 @@ public final class EnvironmentConfigValidator {
         } catch (NumberFormatException exception) {
             errors.add("JWT_EXPIRATION_MS must be a whole number of milliseconds.");
         }
+    }
 
-        String portValue = environment.getProperty("server.port", "8080");
+    private static void validatePort(Environment environment, List<String> errors) {
+        String portValue = environment.getProperty("PORT", "");
+        if (portValue.isBlank()) {
+            errors.add("PORT is missing or empty.");
+            return;
+        }
         try {
             int port = Integer.parseInt(portValue);
             if (port < 1 || port > 65_535) {
@@ -70,9 +137,10 @@ public final class EnvironmentConfigValidator {
         } catch (NumberFormatException exception) {
             errors.add("PORT must be a whole number between 1 and 65535.");
         }
+    }
 
-        validateCorsOrigins(environment, errors);
-        return errors;
+    private static boolean isH2Datasource(Environment environment) {
+        return environment.getProperty("FITSYNC_DB_URL", "").startsWith("jdbc:h2:");
     }
 
     private static boolean isValidMySqlUrl(String url) {
@@ -88,13 +156,16 @@ public final class EnvironmentConfigValidator {
     }
 
     private static void validateCorsOrigins(Environment environment, List<String> errors) {
-        String origins = environment.getProperty(
-                "fitsync.cors.allowed-origins",
-                "http://localhost:5173,http://127.0.0.1:5173");
-        for (String origin : origins.split(",")) {
+        String origins = environment.getProperty("FITSYNC_CORS_ALLOWED_ORIGINS", "");
+        if (origins.isBlank()) {
+            errors.add("FITSYNC_CORS_ALLOWED_ORIGINS is missing or empty.");
+            return;
+        }
+        for (String origin : origins.split(",", -1)) {
             try {
                 URI uri = URI.create(origin.trim());
-                if (!("http".equals(uri.getScheme()) || "https".equals(uri.getScheme()))
+                if (origin.isBlank()
+                        || !("http".equals(uri.getScheme()) || "https".equals(uri.getScheme()))
                         || uri.getHost() == null
                         || uri.getRawPath() != null && !uri.getRawPath().isEmpty()
                         || uri.getRawQuery() != null

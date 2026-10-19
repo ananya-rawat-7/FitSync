@@ -70,6 +70,14 @@ export const workoutApi = {
   remove: (id) => request(`/workouts/${id}`, { method: "DELETE" }),
 };
 
+export const workoutPlanApi = {
+  list: () => request("/workout-plans"),
+  create: (plan) => request("/workout-plans", json("POST", plan)),
+  update: (id, plan) => request(`/workout-plans/${id}`, json("PUT", plan)),
+  complete: (id) => request(`/workout-plans/${id}/complete`, { method: "POST" }),
+  remove: (id) => request(`/workout-plans/${id}`, { method: "DELETE" }),
+};
+
 export const calorieApi = {
   list: () => request("/calories"),
   create: (entry) => request("/calories", json("POST", entry)),

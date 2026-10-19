@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { ArrowUpRight, Flame, Trash2 } from "lucide-react";
+import { ArrowUpRight, Flame } from "lucide-react";
+import RecentFoodEntries from "./RecentFoodEntries.jsx";
 import WeeklyBarChart from "./WeeklyBarChart.jsx";
 import { calorieApi } from "../services/api.js";
 import { foodCalories } from "../constants/foodCalories.js";
@@ -102,18 +103,6 @@ export function useFoodJournal() {
   return { entries, foodForm, error, status, loading, saving, deletingEntry, submitFood, deleteFood, changeFoodField };
 }
 
-function FoodEntryList({ entries, loading, todayKey, deletingEntry, onRemove }) {
-  if (loading) return <li className="calorie-empty">Loading food entries…</li>;
-  if (entries.length === 0) return <li className="calorie-empty">No food logged yet.</li>;
-
-  return entries.slice(0, 10).map((entry) => (
-    <li key={entry.id}>
-      <span><strong>{entry.foodName}</strong><small>{entry.consumedOn === todayKey ? "" : `${entry.consumedOn} · `}{entry.mealType.toLowerCase()} · {entry.calories.toLocaleString()} kcal</small></span>
-      <button type="button" aria-label={`Remove ${entry.foodName}`} disabled={deletingEntry === entry.id} onClick={() => onRemove(entry)}><Trash2 /></button>
-    </li>
-  ));
-}
-
 export default function FoodJournal({ profile }) {
   const { entries, foodForm, error, status, loading, saving, deletingEntry, submitFood, deleteFood, changeFoodField } = useFoodJournal();
   const [otherFood, setOtherFood] = useState(false);
@@ -211,16 +200,6 @@ export default function FoodJournal({ profile }) {
         </form>
         {error && <p className="form-message is-error" role="alert">{error}</p>}
         {status && <p className="form-message" role="status">{status}</p>}
-        <h3 className="calorie-list-heading">Recent food entries</h3>
-        <ul className="calorie-entry-list">
-          <FoodEntryList
-            entries={entries}
-            loading={loading}
-            todayKey={todayKey}
-            deletingEntry={deletingEntry}
-            onRemove={deleteFood}
-          />
-        </ul>
         <p className="calorie-note">{otherFood ? "For other foods, enter the estimated calories for the total amount you ate or drank, not per 100 g." : "Catalog calories are estimates from the provided food list and are calculated per 100 g. For foods not listed, choose “Other food” and enter the calories for your total amount."}</p>
       </section>
 
@@ -234,6 +213,13 @@ export default function FoodJournal({ profile }) {
         maxValue={calorieChartMax}
         markerPercent={calorieTargetMarker}
         note="The horizontal reference is only a rough target estimate, when enough adult profile information is available."
+      />
+      <RecentFoodEntries
+        entries={entries}
+        loading={loading}
+        todayKey={todayKey}
+        deletingEntry={deletingEntry}
+        onRemove={deleteFood}
       />
     </>
   );

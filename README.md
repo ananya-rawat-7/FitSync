@@ -1,6 +1,6 @@
 # FitSync
 
-FitSync is a React single-page fitness application backed by a Spring Boot REST API. Workout sessions are persisted with Spring Data JPA in MySQL, and account and workout endpoints use stateless JWT authentication.
+FitSync is a React single-page fitness application backed by a Spring Boot REST API. Workout plans and completed workout sessions are persisted separately with Spring Data JPA in MySQL, and account and workout endpoints use stateless JWT authentication. A planned workout only enters workout history and progress after the user explicitly logs it as completed.
 
 ## Project structure
 
@@ -27,7 +27,7 @@ FitSync/
         │   ├── auth/         # Registration, login, profile, account model/repository
         │   ├── config/        # CORS and API error responses
         │   ├── security/     # JWT creation, validation, and Spring Security
-        │   └── workout/      # JPA workout entity, repository, service, and REST controller
+        │   └── workout/      # JPA workout plans and sessions, repositories, services, and REST controllers
 ```
 
 ## Requirements
@@ -40,15 +40,15 @@ FitSync/
 
 MySQL runs in the official MySQL 8.4 Docker image built from `src/database/Dockerfile`. On first initialization, the container loads `src/database/schema.sql`; Hibernate continues to update tables on backend startup. The Compose configuration publishes MySQL on `127.0.0.1:3307` so it does not conflict with an existing local MySQL server on port `3306`, and stores database files in the persistent `fitsync-mysql-data` volume.
 
-Configure the backend once by copying `src/backend/.env.example` to `src/backend/.env` and replacing the placeholder database password and JWT secret. Keep `.env` private; it is ignored by Git. `JWT_SECRET` must be at least 32 UTF-8 bytes, and `JWT_EXPIRATION_MS` defaults to `900000` (15 minutes). Database settings use the project-specific `FITSYNC_DB_*` names so unrelated machine-wide `MYSQL_*` variables cannot override the local database configuration. Compose maps the FitSync username/password to the variables expected by the official MySQL image.
+Configure the backend once by copying `src/backend/.env.example` to the repository-root `.env` and replacing the placeholder database password and JWT secret. Keep `.env` private; it is ignored by Git. The backend requires all seven keys shown in the example, including `FITSYNC_CORS_ALLOWED_ORIGINS`; it reports missing files, missing keys, and invalid values at startup instead of using fallback defaults. `JWT_SECRET` must be at least 32 UTF-8 bytes. `JWT_EXPIRATION_MS` is configured as `86400000` milliseconds (24 hours) in the example. Database settings use the project-specific `FITSYNC_DB_*` names so unrelated machine-wide `MYSQL_*` variables cannot override the local database configuration. Compose maps the FitSync username/password to the variables expected by the official MySQL image.
 
 ### Run locally
 
-The backend uses its normal Spring configuration (there is no separate development or production profile). First, create `src/backend/.env` from the example once and replace the placeholder MySQL password and JWT secret. From the repository root, start the database and wait for its health check:
+The backend uses its normal Spring configuration (there is no separate development or production profile). First, create the repository-root `.env` from the example once and replace the placeholder MySQL password and JWT secret. From the repository root, start the database and wait for its health check:
 
 ```powershell
-docker compose --env-file src/backend/.env up -d --build database
-docker compose --env-file src/backend/.env ps
+docker compose up -d --build database
+docker compose ps
 ```
 
 Then open two PowerShell terminals from the repository root. In the first, start the backend:
@@ -66,15 +66,15 @@ npm install
 npm run dev
 ```
 
-The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080`. The backend's default local database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task and the manual Maven command both load the same local `.env` settings. At startup, the backend validates the database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
+The Vite development server uses `http://localhost:5173`; the backend API uses `http://localhost:8080` as configured in the example `.env`. The example database URL points to the Docker-published port `3307`. The VS Code **FitSync Backend** task and the manual Maven command both load the same root `.env` settings. At startup, the backend validates the env file, required keys, database URL and credentials, JWT settings, port, and CORS origins; invalid settings produce errors naming the affected environment variable without printing secret values. `npm.cmd install` is only needed the first time or after dependencies change.
 
 Stop the database container while retaining its data with:
 
 ```powershell
-docker compose --env-file src/backend/.env down
+docker compose down
 ```
 
-Database files persist in the named Docker volume across container restarts and rebuilds. The SQL initialization script only runs when this data volume is first created; changing `schema.sql` later does not reinitialize an existing database. Removing the volume with `docker compose --env-file src/backend/.env down --volumes` permanently deletes the local database contents.
+Database files persist in the named Docker volume across container restarts and rebuilds. The SQL initialization script only runs when this data volume is first created; changing `schema.sql` later does not reinitialize an existing database. Removing the volume with `docker compose down --volumes` permanently deletes the local database contents.
 
 ### Production build and run
 
@@ -139,7 +139,7 @@ Only registration and login are public. Every other API route requires a valid, 
 | `POST` | `/api/calories` | JWT | Logs a food or drink entry with meal, calories, and date |
 | `DELETE` | `/api/calories/{id}` | JWT | Deletes an owned calorie entry (`204`) |
 
-Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 15-minute expiry.
+Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 24-hour expiry.
 
 The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
 

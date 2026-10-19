@@ -493,6 +493,13 @@ h1 span, h2 span { color: var(--orange); }
 .dashboard-chart .chart-guides { color: #879098; }
 .recent-panel > .activity-list { max-height: none; }
 .recent-panel .activity-item > svg { width: 17px; color: var(--orange); }
+.workout-plan-panel .workout-plan-note { margin: -7px 0 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.workout-plan-panel .workout-plan-form { margin-top: 18px; }
+.workout-plan-list { max-height: 340px; }
+.workout-plan-list .activity-details small { color: #41835f; font-size: 8px; }
+.workout-plan-list .activity-details .workout-plan-overdue { color: #b6422f; font-weight: 700; }
+.workout-plan-list .activity-actions { flex-wrap: wrap; justify-content: flex-end; }
+.workout-plan-list .activity-actions button:disabled { opacity: .6; cursor: wait; }
 .dashboard-preview { min-height: 285px; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 13px; padding: 39px; overflow: hidden; border: 1px solid var(--line); background: white; box-shadow: 0 18px 50px rgba(18, 48, 74, .08); }
 .dashboard-preview > strong { color: var(--navy); font-family: var(--display); font-size: clamp(36px, 5vw, 55px); line-height: 1; }
 .dashboard-preview > span:not(.dashboard-overline) { max-width: 310px; color: var(--muted); font-size: 12px; line-height: 1.8; }
@@ -638,4 +645,6 @@ h1 span, h2 span { color: var(--orange); }
   .calorie-entry-form > label:first-child, .calorie-entry-form > .button, .calorie-manual-entry, .calorie-estimate { grid-column: 1 / -1; }
   .calorie-entry-form > * { min-width: 0; }
   .health-report-grid, .suggestion-columns { grid-template-columns: 1fr; }
+ .workout-plan-list .activity-item { align-items: flex-start; flex-direction: column; }
+ .workout-plan-list .activity-actions { justify-content: flex-start; }
 }
