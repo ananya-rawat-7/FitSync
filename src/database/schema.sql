@@ -40,11 +40,11 @@ CREATE TABLE IF NOT EXISTS meal_templates (
     id BIGINT NOT NULL AUTO_INCREMENT,
     menu_group VARCHAR(32) NOT NULL,
     day_index INT NOT NULL,
-    meal_slot VARCHAR(20) NOT NULL,
+    meal_index INT NOT NULL,
     title VARCHAR(120) NOT NULL,
     note VARCHAR(500) DEFAULT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_meal_templates_group_day_slot (menu_group, day_index, meal_slot)
+    UNIQUE KEY uk_meal_templates_group_day_index (menu_group, day_index, meal_index)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS meal_template_items (
@@ -66,14 +66,13 @@ CREATE TABLE IF NOT EXISTS meal_plans (
     id BIGINT NOT NULL AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
     planned_date DATE NOT NULL,
-    meal_slot VARCHAR(20) NOT NULL,
+    position_in_day INT NOT NULL DEFAULT 0,
     title VARCHAR(120) NOT NULL,
     notes VARCHAR(500) DEFAULT NULL,
     auto_generated BOOLEAN NOT NULL DEFAULT FALSE,
     logged BOOLEAN NOT NULL DEFAULT FALSE,
     logged_at DATETIME(6) DEFAULT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_meal_plans_user_date_slot (user_id, planned_date, meal_slot),
     KEY idx_meal_plans_user_date (user_id, planned_date),
     CONSTRAINT fk_meal_plans_user
         FOREIGN KEY (user_id) REFERENCES user_accounts (id)
@@ -103,7 +102,7 @@ CREATE TABLE IF NOT EXISTS food_log_entries (
     id BIGINT NOT NULL AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
     logged_on DATE NOT NULL,
-    meal_slot VARCHAR(20) NOT NULL,
+    meal_title VARCHAR(120) NOT NULL,
     name VARCHAR(120) NOT NULL,
     grams DECIMAL(8, 2) NOT NULL,
     calories DECIMAL(8, 2) NOT NULL,

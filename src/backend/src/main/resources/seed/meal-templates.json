@@ -2,7 +2,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 0,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Lean protein breakfast",
     "note": "A light, protein-forward start.",
     "items": [
@@ -23,7 +23,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 1,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Egg and poha bowl",
     "note": "Comforting poha with eggs on the side.",
     "items": [
@@ -44,7 +44,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 2,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Upma with curd",
     "note": "A gentle savoury breakfast with fruit.",
     "items": [
@@ -65,7 +65,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 3,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Dhokla and sprouts",
     "note": "Steamed dhokla with a fresh sprout salad.",
     "items": [
@@ -86,7 +86,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 4,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Omelette and dosa",
     "note": "A protein omelette with a small dosa.",
     "items": [
@@ -107,7 +107,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 5,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Idli and curd",
     "note": "Steamed idli with curd and fruit.",
     "items": [
@@ -128,7 +128,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 6,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha and egg",
     "note": "A balanced start with a boiled egg.",
     "items": [
@@ -149,7 +149,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 0,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti, dal, and vegetables",
     "note": "A simple balanced plate.",
     "items": [
@@ -174,7 +174,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 1,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Brown rice and rajma",
     "note": "Slow carbs with a bean curry.",
     "items": [
@@ -195,7 +195,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 2,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti with chole",
     "note": "Chickpea curry with a green vegetable.",
     "items": [
@@ -216,7 +216,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 3,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice and fish curry",
     "note": "A lighter fish curry with rice.",
     "items": [
@@ -237,7 +237,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 4,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti, moong dal, and paneer",
     "note": "Protein from dal and paneer.",
     "items": [
@@ -258,7 +258,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 5,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice, chicken, and vegetables",
     "note": "A filling but moderate plate.",
     "items": [
@@ -279,7 +279,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 6,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti with dal makhani",
     "note": "A creamy dal with vegetables.",
     "items": [
@@ -304,7 +304,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 0,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and palak paneer",
     "note": "A cosy, protein-rich dinner.",
     "items": [
@@ -325,7 +325,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 1,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and grilled fish",
     "note": "A light grilled-fish dinner.",
     "items": [
@@ -346,7 +346,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 2,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Rice, dal, and bhindi",
     "note": "A simple home-style dinner.",
     "items": [
@@ -367,7 +367,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 3,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and paneer butter masala",
     "note": "A smaller portion of a rich curry.",
     "items": [
@@ -388,7 +388,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 4,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and curd",
     "note": "Easy-to-digest dinner with curd.",
     "items": [
@@ -409,7 +409,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 5,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and chicken curry",
     "note": "A balanced chicken dinner.",
     "items": [
@@ -430,7 +430,7 @@
   {
     "menuGroup": "FAT_LOSS",
     "dayIndex": 6,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Brown rice and rajma",
     "note": "A plant-forward dinner.",
     "items": [
@@ -451,7 +451,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 0,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha, egg, and milk",
     "note": "A high-energy breakfast.",
     "items": [
@@ -476,7 +476,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 1,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Omelette and paratha",
     "note": "Protein and slow carbs.",
     "items": [
@@ -497,7 +497,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 2,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Upma with paneer",
     "note": "A savoury breakfast with extra protein.",
     "items": [
@@ -518,7 +518,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 3,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Idli, egg, and milk",
     "note": "A filling South Indian start.",
     "items": [
@@ -539,7 +539,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 4,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Besan chilla and curd",
     "note": "Protein-rich chilla with curd.",
     "items": [
@@ -560,7 +560,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 5,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha, paneer, and papaya",
     "note": "A filling breakfast with fruit.",
     "items": [
@@ -581,7 +581,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 6,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Dosa and omelette",
     "note": "A larger breakfast for a training day.",
     "items": [
@@ -602,7 +602,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 0,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice, chicken, and curd",
     "note": "A strong protein and carb plate.",
     "items": [
@@ -623,7 +623,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 1,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and paneer curry",
     "note": "A rich vegetarian lunch.",
     "items": [
@@ -644,7 +644,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 2,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Brown rice and rajma",
     "note": "A filling plant-based lunch.",
     "items": [
@@ -665,7 +665,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 3,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and tandoori chicken",
     "note": "Lean protein with vegetables.",
     "items": [
@@ -686,7 +686,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 4,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice and fish curry",
     "note": "A balanced fish lunch.",
     "items": [
@@ -707,7 +707,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 5,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti, chole, and paneer",
     "note": "Protein from beans and paneer.",
     "items": [
@@ -728,7 +728,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 6,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Vegetable biryani and curd",
     "note": "A hearty rice lunch.",
     "items": [
@@ -749,7 +749,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 0,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and chicken breast",
     "note": "A lean, high-protein dinner.",
     "items": [
@@ -770,7 +770,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 1,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Rice and dal makhani",
     "note": "A calorie-dense vegetarian dinner.",
     "items": [
@@ -791,7 +791,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 2,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and grilled fish",
     "note": "A lighter training-day dinner.",
     "items": [
@@ -812,7 +812,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 3,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and paneer",
     "note": "Comforting and protein-rich.",
     "items": [
@@ -833,7 +833,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 4,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Brown rice and chicken",
     "note": "A balanced recovery dinner.",
     "items": [
@@ -854,7 +854,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 5,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti, rajma, and curd",
     "note": "Plant protein with curd.",
     "items": [
@@ -875,7 +875,7 @@
   {
     "menuGroup": "MUSCLE_GAIN",
     "dayIndex": 6,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Rice and moong dal",
     "note": "Easy carbs and protein.",
     "items": [
@@ -896,7 +896,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 0,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Idli and banana",
     "note": "Fast carbs before a session.",
     "items": [
@@ -917,7 +917,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 1,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha and egg",
     "note": "A steady-energy breakfast.",
     "items": [
@@ -938,7 +938,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 2,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Dosa and curd",
     "note": "A light carb-focused start.",
     "items": [
@@ -959,7 +959,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 3,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Upma and milk",
     "note": "Familiar carbs with protein.",
     "items": [
@@ -980,7 +980,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 4,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Uttapam and sprouts",
     "note": "A filling savoury breakfast.",
     "items": [
@@ -1001,7 +1001,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 5,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha and curd",
     "note": "Easy-to-digest carbs.",
     "items": [
@@ -1022,7 +1022,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 6,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Chilla and milk",
     "note": "Protein with a carb base.",
     "items": [
@@ -1043,7 +1043,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 0,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice, dal, and vegetables",
     "note": "A classic endurance lunch.",
     "items": [
@@ -1064,7 +1064,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 1,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and rajma",
     "note": "Slow carbs with beans.",
     "items": [
@@ -1085,7 +1085,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 2,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Brown rice and chicken",
     "note": "Protein and complex carbs.",
     "items": [
@@ -1106,7 +1106,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 3,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Pulao and curd",
     "note": "A lighter rice lunch.",
     "items": [
@@ -1127,7 +1127,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 4,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice and chole",
     "note": "Plant protein and carbs.",
     "items": [
@@ -1148,7 +1148,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 5,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and fish curry",
     "note": "A balanced fish lunch.",
     "items": [
@@ -1169,7 +1169,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 6,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Brown rice and dal",
     "note": "A comforting carb-forward lunch.",
     "items": [
@@ -1190,7 +1190,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 0,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and curd",
     "note": "Easy recovery dinner.",
     "items": [
@@ -1211,7 +1211,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 1,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and paneer",
     "note": "Protein with a light curry.",
     "items": [
@@ -1232,7 +1232,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 2,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Rice, dal, and palak paneer",
     "note": "A filling vegetarian dinner.",
     "items": [
@@ -1253,7 +1253,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 3,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and grilled fish",
     "note": "A lighter evening meal.",
     "items": [
@@ -1274,7 +1274,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 4,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Pulao and curd",
     "note": "Comforting carbs for recovery.",
     "items": [
@@ -1295,7 +1295,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 5,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and rajma",
     "note": "Plant protein and slow carbs.",
     "items": [
@@ -1316,7 +1316,7 @@
   {
     "menuGroup": "ENDURANCE",
     "dayIndex": 6,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Brown rice and chicken",
     "note": "A balanced recovery plate.",
     "items": [
@@ -1337,7 +1337,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 0,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Poha and egg",
     "note": "A simple balanced breakfast.",
     "items": [
@@ -1358,7 +1358,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 1,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Upma and curd",
     "note": "Savoury, filling, and easy.",
     "items": [
@@ -1379,7 +1379,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 2,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Chilla and milk",
     "note": "Protein with fruit.",
     "items": [
@@ -1400,7 +1400,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 3,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Idli and sprouts",
     "note": "A light South Indian start.",
     "items": [
@@ -1421,7 +1421,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 4,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Dosa and curd",
     "note": "A familiar breakfast plate.",
     "items": [
@@ -1442,7 +1442,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 5,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Dhokla and egg",
     "note": "Steamed carbs with protein.",
     "items": [
@@ -1463,7 +1463,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 6,
-    "mealSlot": "BREAKFAST",
+    "mealIndex": 0,
     "title": "Omelette and roti",
     "note": "A savoury protein start.",
     "items": [
@@ -1484,7 +1484,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 0,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti, dal, and vegetables",
     "note": "A balanced everyday plate.",
     "items": [
@@ -1509,7 +1509,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 1,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice and rajma",
     "note": "A filling plant-based lunch.",
     "items": [
@@ -1530,7 +1530,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 2,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and chole",
     "note": "Chickpeas with a green vegetable.",
     "items": [
@@ -1551,7 +1551,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 3,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Brown rice and chicken",
     "note": "A balanced chicken lunch.",
     "items": [
@@ -1572,7 +1572,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 4,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and fish curry",
     "note": "A lighter fish lunch.",
     "items": [
@@ -1593,7 +1593,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 5,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Rice and dal makhani",
     "note": "A comforting vegetarian lunch.",
     "items": [
@@ -1614,7 +1614,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 6,
-    "mealSlot": "LUNCH",
+    "mealIndex": 1,
     "title": "Roti and paneer",
     "note": "Paneer with vegetables.",
     "items": [
@@ -1635,7 +1635,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 0,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and palak paneer",
     "note": "A cosy balanced dinner.",
     "items": [
@@ -1656,7 +1656,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 1,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and grilled fish",
     "note": "A light evening plate.",
     "items": [
@@ -1677,7 +1677,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 2,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Rice, dal, and bhindi",
     "note": "A simple home dinner.",
     "items": [
@@ -1698,7 +1698,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 3,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and chicken curry",
     "note": "A balanced chicken dinner.",
     "items": [
@@ -1719,7 +1719,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 4,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Khichdi and curd",
     "note": "Easy-to-digest comfort food.",
     "items": [
@@ -1740,7 +1740,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 5,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Brown rice and rajma",
     "note": "Plant protein and slow carbs.",
     "items": [
@@ -1761,7 +1761,7 @@
   {
     "menuGroup": "BALANCED",
     "dayIndex": 6,
-    "mealSlot": "DINNER",
+    "mealIndex": 2,
     "title": "Roti and paneer",
     "note": "A light paneer dinner.",
     "items": [

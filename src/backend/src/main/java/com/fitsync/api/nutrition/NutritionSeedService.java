@@ -51,16 +51,15 @@ public class NutritionSeedService {
         int insertedTemplates = 0;
         for (MealTemplateSeed seed : readTemplates()) {
             MenuGroup menuGroup = MenuGroup.valueOf(seed.menuGroup());
-            MealSlot mealSlot = MealSlot.valueOf(seed.mealSlot());
-            if (templateRepository.findByMenuGroupAndDayIndexAndMealSlot(
-                    menuGroup, seed.dayIndex(), mealSlot).isPresent()) {
+            if (templateRepository.findByMenuGroupAndDayIndexAndMealIndex(
+                    menuGroup, seed.dayIndex(), seed.mealIndex()).isPresent()) {
                 continue;
             }
 
             MealTemplate template = new MealTemplate();
             template.setMenuGroup(menuGroup);
             template.setDayIndex(seed.dayIndex());
-            template.setMealSlot(mealSlot);
+            template.setMealIndex(seed.mealIndex());
             template.setTitle(seed.title());
             template.setNote(seed.note());
 
@@ -112,7 +111,7 @@ public class NutritionSeedService {
     public record MealTemplateSeed(
             String menuGroup,
             int dayIndex,
-            String mealSlot,
+            int mealIndex,
             String title,
             String note,
             List<MealItemSeed> items) {

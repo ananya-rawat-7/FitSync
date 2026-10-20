@@ -8,7 +8,6 @@ import MacroSummary from "../components/MacroSummary.jsx";
 import MealDayPanel from "../components/MealDayPanel.jsx";
 import MealEditor from "../components/MealEditor.jsx";
 import WaterTracker from "../components/WaterTracker.jsx";
-import { mealSlotLabels } from "../constants/nutrition.js";
 import { fitnessGoalLabels } from "../constants/profile.js";
 import { getWeekDays, localDateKey } from "../constants/weeklyPlan.js";
 import { authApi, foodApi, foodLogApi, mealPlanApi, waterApi } from "../services/api.js";
@@ -124,8 +123,8 @@ export default function FoodJournalPage() {
     }
   };
 
-  const openMealEditor = (dateKey, mealSlot, meal = null) => {
-    setEditor({ dateKey, mealSlot, meal });
+  const openMealEditor = (dateKey, meal = null) => {
+    setEditor({ dateKey, meal });
   };
   const closeEditor = () => setEditor(null);
 
@@ -148,7 +147,7 @@ export default function FoodJournalPage() {
       await Promise.all([loadMeals(), loadTodayLog()]);
       setCelebration({
         title: "CONGO!",
-        message: `${mealSlotLabels[meal.mealSlot]} is logged. Great work!`,
+        message: `${meal.title} is logged. Great work!`,
       });
       setMealStatus("Meal logged.");
     } catch (failure) {
@@ -262,14 +261,14 @@ export default function FoodJournalPage() {
         {mealError && <p className="form-message is-error" role="alert">{mealError}</p>}
         {foodError && <p className="form-message is-error" role="alert">{foodError}</p>}
 
-        <div className="meal-week-list">
+        <div className="week-board">
           {weekDays.map((day) => (
             <MealDayPanel
               key={day.key}
               day={day}
               meals={mealsByDay[day.key] || []}
               onAddMeal={openMealEditor}
-              onEditMeal={(meal) => openMealEditor(meal.plannedDate, meal.mealSlot, meal)}
+              onEditMeal={(meal) => openMealEditor(meal.plannedDate, meal)}
               onRemoveMeal={removeMeal}
               onLogMeal={logMeal}
               onLogDay={logDay}
@@ -278,7 +277,7 @@ export default function FoodJournalPage() {
             />
           ))}
         </div>
-        <p className="workout-plan-note">Generated meals fill empty slots and preserve meals you logged or added yourself. Future meals can be planned and edited, but only today or earlier can be logged.</p>
+        <p className="workout-plan-note">Generated meals fill your day and preserve meals you logged or added yourself. Add a snack or extra meal any time. Only today's meals can be logged.</p>
       </section>
 
       <MacroSummary totals={logTotals(todayLog)} target={macroTargets} />
@@ -301,7 +300,6 @@ export default function FoodJournalPage() {
         open={Boolean(editor)}
         meal={editor?.meal || null}
         dateKey={editor?.dateKey || weekStart}
-        mealSlot={editor?.mealSlot || "BREAKFAST"}
         foods={foods}
         onClose={closeEditor}
         onSaved={handleMealSaved}

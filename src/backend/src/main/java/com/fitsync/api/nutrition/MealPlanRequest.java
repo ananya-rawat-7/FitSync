@@ -11,7 +11,6 @@ import java.util.List;
 
 public record MealPlanRequest(
         @NotNull LocalDate plannedDate,
-        @NotNull MealSlot mealSlot,
         @NotBlank @Size(max = 120) String title,
         @Size(max = 500) String notes,
         @NotEmpty List<@Valid MealPlanItemRequest> items) {

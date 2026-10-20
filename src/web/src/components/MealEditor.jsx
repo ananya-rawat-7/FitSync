@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Trash2, X } from "lucide-react";
 import FoodPicker from "./FoodPicker.jsx";
-import { mealSlotLabels } from "../constants/nutrition.js";
 import { foodApi, mealPlanApi } from "../services/api.js";
 import {
   foodPer100,
@@ -44,7 +43,6 @@ export default function MealEditor({
   open,
   meal,
   dateKey,
-  mealSlot,
   foods,
   onClose,
   onSaved,
@@ -80,18 +78,18 @@ export default function MealEditor({
       initializedKey.current = null;
       return;
     }
-    const key = `${meal?.id ?? "new"}:${dateKey}:${mealSlot}`;
+    const key = `${meal?.id ?? "new"}:${dateKey}`;
     if (initializedKey.current === key) return;
     initializedKey.current = key;
 
-    setTitle(meal?.title || `${mealSlotLabels[mealSlot]} meal`);
+    setTitle(meal?.title || "New meal");
     setNotes(meal?.notes || "");
     setItems(draftFromMeal(meal, foods));
     setPickerOpen(false);
     setCustomOpen(false);
     setCustomForm(blankCustomFood);
     setError("");
-  }, [open, meal, dateKey, mealSlot, foods]);
+  }, [open, meal, dateKey, foods]);
 
   const itemTotals = items.reduce((totals, item) => {
     const macros = scaleNutrition(item.per100, item.grams);
@@ -172,7 +170,6 @@ export default function MealEditor({
     try {
       const payload = {
         plannedDate: dateKey,
-        mealSlot,
         title: title.trim(),
         notes: notes.trim(),
         items: items.map((item) => ({ foodId: item.foodId, grams: Number(item.grams) })),
@@ -205,7 +202,7 @@ export default function MealEditor({
         <X />
       </button>
       <span className="eyebrow">{meal ? "EDIT MEAL" : "ADD MEAL"}</span>
-      <h2>{mealSlotLabels[mealSlot]}</h2>
+      <h2>{meal ? "Edit meal" : "Add a meal"}</h2>
       <p className="meal-editor-date">{formatDate(dateKey)}</p>
       {error && <p className="form-message is-error" role="alert">{error}</p>}
 

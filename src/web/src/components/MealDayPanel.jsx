@@ -1,6 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
-import { MEAL_SLOTS, mealSlotLabels } from "../constants/nutrition.js";
-import { nutrientTotals } from "../utils/nutrition.js";
+import { nutrientTotals, formatMacro } from "../utils/nutrition.js";
 import MealCard from "./MealCard.jsx";
 
 export default function MealDayPanel({
@@ -14,62 +12,62 @@ export default function MealDayPanel({
   loggingMealId,
   loggingDay,
 }) {
-  const totals = nutrientTotals(meals.flatMap((meal) => meal.items || []));
-  const loggedCount = meals.filter((meal) => meal.logged).length;
-  const allLogged = meals.length > 0 && loggedCount === meals.length;
-  const canLogDay = !day.isFuture && meals.length > 0 && !allLogged;
+  const sortedMeals = [...meals].sort(
+    (first, second) => (first.positionInDay ?? 0) - (second.positionInDay ?? 0),
+  );
+  const totals = nutrientTotals(sortedMeals.flatMap((meal) => meal.items || []));
+  const loggedCount = sortedMeals.filter((meal) => meal.logged).length;
+  const allLogged = sortedMeals.length > 0 && loggedCount === sortedMeals.length;
+  const canLogDay = Boolean(day.isToday) && sortedMeals.length > 0 && !allLogged;
+  const logDayTitle = !day.isToday
+    ? "Only today's meals can be logged."
+    : allLogged
+      ? "All meals are already logged."
+      : undefined;
 
   return (
-    <section className={`meal-day${day.isToday ? " is-today" : ""}${day.isPast ? " is-past" : ""}${day.isFuture ? " is-future" : ""}`}>
-      <header className="meal-day-header">
-        <div className="meal-day-heading">
-          <span>{day.label}</span>
-          <small>{day.dateLabel}</small>
-        </div>
-        <div className="meal-day-totals">
-          <span><strong>{Math.round(totals.calories)}</strong> kcal</span>
-          <span>P {totals.protein} · C {totals.carbs} · F {totals.fat}</span>
-          <span>{loggedCount}/{meals.length} logged</span>
-        </div>
-        <button
-          className="button button-small button-outline"
-          type="button"
-          disabled={!canLogDay || loggingDay}
-          title={day.isFuture ? "A future day cannot be logged." : allLogged ? "All meals are already logged." : undefined}
-          onClick={() => onLogDay(day)}
-        >
-          {loggingDay ? "Logging…" : "Log all meals"} <CheckCircle2 />
-        </button>
+    <article className={`week-day meal-day${day.isToday ? " is-today" : ""}${day.isPast ? " is-past" : ""}`}>
+      <header className="week-day-header">
+        <span>{day.label}</span>
+        <small>{day.dateLabel}</small>
       </header>
 
-      <div className="meal-slots">
-        {MEAL_SLOTS.map((slot) => {
-          const meal = meals.find((item) => item.mealSlot === slot);
-          if (!meal) {
-            return (
-              <button
-                type="button"
-                className="meal-slot-empty"
-                key={slot}
-                onClick={() => onAddMeal(day.key, slot)}
-              >
-                + Add {mealSlotLabels[slot].toLowerCase()}
-              </button>
-            );
-          }
-          return (
+      <div className="meal-day-totals">
+        <span><strong>{Math.round(totals.calories)}</strong> kcal</span>
+        <span>P {formatMacro(totals.protein)} · C {formatMacro(totals.carbs)} · F {formatMacro(totals.fat)}</span>
+        <span>{loggedCount}/{sortedMeals.length} logged</span>
+      </div>
+
+      {sortedMeals.length === 0 ? (
+        <div className="week-day-empty">
+          <p>Rest / no meals planned.</p>
+          <button type="button" className="text-button" onClick={() => onAddMeal(day.key)}>+ Add meal</button>
+        </div>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="text-button week-day-edit"
+            disabled={!canLogDay || loggingDay}
+            title={logDayTitle}
+            onClick={() => onLogDay(day)}
+          >
+            {loggingDay ? "Logging…" : "Log all meals"}
+          </button>
+          {sortedMeals.map((meal) => (
             <MealCard
               key={meal.id}
               meal={meal}
-              future={day.isFuture}
+              day={day}
               onLog={onLogMeal}
               onEdit={onEditMeal}
               onRemove={onRemoveMeal}
               logging={loggingMealId === meal.id}
             />
-          );
-        })}
-      </div>
-    </section>
+          ))}
+          <button type="button" className="text-button week-day-add" onClick={() => onAddMeal(day.key)}>+ Add meal</button>
+        </>
+      )}
+    </article>
   );
 }

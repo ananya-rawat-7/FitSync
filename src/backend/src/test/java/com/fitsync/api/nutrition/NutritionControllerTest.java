@@ -135,12 +135,12 @@ class NutritionControllerTest {
 
         org.junit.jupiter.api.Assertions.assertEquals(21, meals.size());
         MealTemplate expected = mealTemplateRepository
-                .findByMenuGroupAndDayIndexAndMealSlot(MenuGroup.MUSCLE_GAIN, 0, MealSlot.BREAKFAST)
+                .findByMenuGroupAndDayIndexAndMealIndex(MenuGroup.MUSCLE_GAIN, 0, 0)
                 .orElseThrow();
         org.junit.jupiter.api.Assertions.assertEquals(expected.getTitle(), meals.get(0).get("title").asText());
         org.junit.jupiter.api.Assertions.assertEquals(today.toString(),
                 meals.get(0).get("plannedDate").asText());
-        org.junit.jupiter.api.Assertions.assertEquals("BREAKFAST", meals.get(0).get("mealSlot").asText());
+        org.junit.jupiter.api.Assertions.assertEquals(0, meals.get(0).get("positionInDay").asInt());
         org.junit.jupiter.api.Assertions.assertTrue(meals.get(0).get("items").size() > 0);
         org.junit.jupiter.api.Assertions.assertTrue(meals.get(0).get("items").get(0).get("protein").isNumber());
     }
@@ -153,7 +153,7 @@ class NutritionControllerTest {
         long eggId = foodId("Boiled egg");
         long bananaId = foodId("Banana");
 
-        String body = mealBody(today, "BREAKFAST", "Updated breakfast",
+        String body = mealBody(today, "Updated breakfast",
                 List.of(Map.of("foodId", eggId, "grams", 120),
                         Map.of("foodId", bananaId, "grams", 150)));
 
@@ -173,7 +173,7 @@ class NutritionControllerTest {
     void logsAMealAndRejectsDuplicatesAndFutureMeals() throws Exception {
         JsonNode meals = generateWeek(today);
         long todayMealId = meals.get(0).get("id").asLong();
-        long tomorrowMealId = findMeal(meals, today.plusDays(1), "BREAKFAST").get("id").asLong();
+        long tomorrowMealId = findMeal(meals, today.plusDays(1), 0).get("id").asLong();
 
         mockMvc.perform(post("/api/meal-plans/{id}/log", todayMealId)
                         .header("Authorization", bearer()))
@@ -230,8 +230,8 @@ class NutritionControllerTest {
     @Test
     void regeneratingPreservesLoggedAndManualMeals() throws Exception {
         JsonNode meals = generateWeek(today);
-        JsonNode breakfast = findMeal(meals, today, "BREAKFAST");
-        JsonNode lunch = findMeal(meals, today, "LUNCH");
+        JsonNode breakfast = findMeal(meals, today, 0);
+        JsonNode lunch = findMeal(meals, today, 1);
         long breakfastId = breakfast.get("id").asLong();
         long lunchId = lunch.get("id").asLong();
 
@@ -243,7 +243,7 @@ class NutritionControllerTest {
                 .andExpect(status().isNoContent());
 
         long eggId = foodId("Boiled egg");
-        String manualBody = mealBody(today, "LUNCH", "Manual lunch",
+        String manualBody = mealBody(today, "Manual lunch",
                 List.of(Map.of("foodId", eggId, "grams", 150)));
         String manualResponse = mockMvc.perform(post("/api/meal-plans")
                         .header("Authorization", bearer())
@@ -256,10 +256,9 @@ class NutritionControllerTest {
         generateWeek(today);
 
         JsonNode todayMeals = getMeals(today, today);
-        org.junit.jupiter.api.Assertions.assertEquals(3, todayMeals.size());
+        org.junit.jupiter.api.Assertions.assertEquals(2, todayMeals.size());
         boolean breakfastPresent = false;
         boolean manualLunchPresent = false;
-        int generatedDinners = 0;
         for (JsonNode meal : todayMeals) {
             if (meal.get("id").asLong() == breakfastId) {
                 breakfastPresent = true;
@@ -269,19 +268,15 @@ class NutritionControllerTest {
                 manualLunchPresent = true;
                 org.junit.jupiter.api.Assertions.assertEquals("Manual lunch", meal.get("title").asText());
             }
-            if ("DINNER".equals(meal.get("mealSlot").asText())) {
-                generatedDinners++;
-            }
         }
         org.junit.jupiter.api.Assertions.assertTrue(breakfastPresent);
         org.junit.jupiter.api.Assertions.assertTrue(manualLunchPresent);
-        org.junit.jupiter.api.Assertions.assertEquals(1, generatedDinners);
     }
 
     @Test
     void deletingTheLastDiaryEntryUnlogsTheMeal() throws Exception {
         JsonNode meals = generateWeek(today);
-        JsonNode breakfast = findMeal(meals, today, "BREAKFAST");
+        JsonNode breakfast = findMeal(meals, today, 0);
         long breakfastId = breakfast.get("id").asLong();
 
         mockMvc.perform(post("/api/meal-plans/{id}/log", breakfastId)
@@ -413,21 +408,20 @@ class NutritionControllerTest {
         return objectMapper.readTree(response);
     }
 
-    private JsonNode findMeal(JsonNode meals, LocalDate date, String slot) {
+    private JsonNode findMeal(JsonNode meals, LocalDate date, int position) {
         for (JsonNode meal : meals) {
             if (meal.get("plannedDate").asText().equals(date.toString())
-                    && meal.get("mealSlot").asText().equals(slot)) {
+                    && meal.get("positionInDay").asInt() == position) {
                 return meal;
             }
         }
-        throw new IllegalStateException("Meal not found: " + date + " " + slot);
+        throw new IllegalStateException("Meal not found: " + date + " position " + position);
     }
 
-    private String mealBody(LocalDate date, String slot, String title, List<Map<String, Object>> items)
+    private String mealBody(LocalDate date, String title, List<Map<String, Object>> items)
             throws Exception {
         return objectMapper.writeValueAsString(Map.of(
                 "plannedDate", date.toString(),
-                "mealSlot", slot,
                 "title", title,
                 "notes", "",
                 "items", items));

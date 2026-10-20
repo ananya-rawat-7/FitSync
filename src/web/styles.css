@@ -794,37 +794,14 @@ h1 span, h2 span { color: var(--orange); }
 .celebration-dialog[open] { animation: celebration-pop .22s ease-out; }
 
 .meal-week-panel { margin-top: 20px; padding: 25px; }
-.meal-week-list { display: grid; gap: 12px; margin-top: 18px; }
-.meal-day { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line); background: white; }
-.meal-day.is-today { border-color: var(--orange); box-shadow: inset 3px 0 0 var(--orange); }
-.meal-day.is-past { opacity: .8; }
-.meal-day-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.meal-day-heading { display: grid; gap: 2px; min-width: 110px; }
-.meal-day-heading span { color: var(--navy); font-family: var(--display); font-size: 22px; line-height: 1; }
-.meal-day-heading small { color: var(--muted); font-size: 8px; }
-.meal-day-totals { display: flex; flex-wrap: wrap; gap: 10px; color: var(--muted); font-size: 8px; }
+.meal-week-panel .week-board { margin-top: 18px; }
+.meal-day { min-width: 0; }
+.meal-day-totals { display: flex; flex-wrap: wrap; gap: 3px 8px; color: var(--muted); font-size: 8px; line-height: 1.4; }
 .meal-day-totals strong { color: var(--navy); }
-.meal-day-header .button { flex-shrink: 0; }
-.meal-day-header .button svg { width: 13px; height: 13px; }
-.meal-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.meal-card { display: grid; gap: 7px; align-content: start; padding: 12px; border: 1px solid var(--line); background: var(--paper); }
-.meal-card.is-logged { background: #f2f8f3; border-left: 3px solid #41835f; }
-.meal-card-heading { display: grid; gap: 3px; }
-.meal-slot { color: var(--orange); font-size: 8px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
-.meal-card-heading strong { color: var(--navy); font-size: 11px; line-height: 1.3; }
-.meal-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
-.meal-items { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.meal-items li { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding-top: 4px; border-top: 1px solid var(--line); }
-.meal-items strong { color: var(--navy); font-size: 9px; line-height: 1.3; }
-.meal-items span { color: var(--muted); font-size: 8px; white-space: nowrap; }
-.meal-macros { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 7px; border-top: 1px solid var(--line); color: #41835f; font-size: 8px; }
-.meal-macros strong { color: var(--navy); font-size: 10px; }
-.meal-logged-note { margin: 0; color: #41835f; font-size: 8px; }
-.meal-card .activity-actions { flex-wrap: wrap; gap: 6px; }
-.meal-card .activity-actions button { font-size: 8px; }
-.meal-card .activity-actions button:disabled { opacity: .45; cursor: not-allowed; }
-.meal-slot-empty { min-height: 110px; display: grid; place-items: center; padding: 12px; border: 1px dashed var(--line); background: transparent; color: var(--muted); font: inherit; font-size: 9px; cursor: pointer; }
-.meal-slot-empty:hover { border-color: var(--orange); color: var(--orange); }
+.meal-day .text-button:disabled { opacity: .45; cursor: not-allowed; }
+.meal-card { min-width: 0; }
+.meal-macros { display: flex; flex-wrap: wrap; gap: 7px; padding-top: 6px; border-top: 1px solid var(--line); color: #41835f; font-size: 8px; }
+.meal-macros strong { color: var(--navy); font-size: 9px; }
 
 .meal-editor-dialog { width: min(820px, calc(100% - 32px)); max-height: min(92vh, 900px); }
 .meal-editor-date { margin: -12px 0 16px; color: var(--muted); font-size: 10px; }
@@ -906,14 +883,12 @@ h1 span, h2 span { color: var(--orange); }
 .water-log li > button svg { width: 13px; height: 13px; }
 
 @media (max-width: 900px) {
-  .meal-slots { grid-template-columns: 1fr; }
   .macro-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .meal-editor-item { grid-template-columns: 1fr 90px 1fr 30px; }
 }
 
 @media (max-width: 640px) {
   .meal-week-panel, .macro-summary, .daily-log-panel, .water-tracker { padding: 17px 13px; }
-  .meal-day-header { align-items: flex-start; flex-direction: column; }
   .meal-editor-dialog { width: 100%; max-height: 100vh; padding: 20px 14px; }
   .meal-editor-fields { grid-template-columns: 1fr; }
   .meal-editor-item { grid-template-columns: 1fr; }

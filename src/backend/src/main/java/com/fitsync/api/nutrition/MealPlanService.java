@@ -11,11 +11,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -44,23 +43,18 @@ public class MealPlanService {
     public List<MealPlan> findAll(String email, LocalDate start, LocalDate end) {
         List<MealPlan> plans = planRepository.findForRange(email, start, end);
         plans.sort(Comparator.comparing(MealPlan::getPlannedDate)
-                .thenComparingInt(plan -> plan.getMealSlot().ordinal()));
+                .thenComparingInt(MealPlan::getPositionInDay));
         plans.forEach(plan -> plan.getItems().size());
         return plans;
     }
 
     public MealPlan create(MealPlanRequest request, String email) {
         UserAccount owner = findOwner(email);
-        if (planRepository.existsByOwner_EmailAndPlannedDateAndMealSlot(
-                email, request.plannedDate(), request.mealSlot())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "A meal already exists for that day and slot");
-        }
-
         MealPlan plan = new MealPlan();
         plan.setOwner(owner);
         plan.setPlannedDate(request.plannedDate());
-        plan.setMealSlot(request.mealSlot());
+        plan.setPositionInDay((int) planRepository
+                .countByOwner_EmailAndPlannedDate(email, request.plannedDate()));
         plan.setTitle(request.title().trim());
         plan.setNotes(blankToNull(request.notes()));
         plan.setGenerated(false);
@@ -92,39 +86,37 @@ public class MealPlanService {
         planRepository.deleteAll(existingGenerated);
 
         List<MealPlan> existing = planRepository.findForRange(email, start, end);
-        Set<String> occupied = new HashSet<>();
-        for (MealPlan plan : existing) {
-            occupied.add(slotKey(plan.getPlannedDate(), plan.getMealSlot()));
-        }
+        Map<LocalDate, List<MealPlan>> existingByDate = existing.stream()
+                .collect(Collectors.groupingBy(MealPlan::getPlannedDate));
+        Set<LocalDate> loggedDates = existing.stream()
+                .filter(MealPlan::isLogged)
+                .map(MealPlan::getPlannedDate)
+                .collect(Collectors.toSet());
 
         MenuGroup menuGroup = MenuGroup.forGoal(owner.getFitnessGoal());
-        List<MealTemplate> templates = templateRepository.findAllByMenuGroup(menuGroup);
+        List<MealTemplate> templates = templateRepository
+                .findAllByMenuGroupOrderByDayIndexAscMealIndexAsc(menuGroup);
         if (templates.isEmpty()) {
             throw new IllegalStateException(
                     "No meal templates are available. Restart the backend so the nutrition seeder can populate the database.");
         }
-
-        Map<String, MealTemplate> byKey = new HashMap<>();
-        for (MealTemplate template : templates) {
-            byKey.put(template.getDayIndex() + "|" + template.getMealSlot(), template);
-        }
+        Map<Integer, List<MealTemplate>> templatesByDay = templates.stream()
+                .collect(Collectors.groupingBy(MealTemplate::getDayIndex));
 
         List<MealPlan> created = new ArrayList<>();
         for (int dayIndex = 0; dayIndex < 7; dayIndex++) {
             LocalDate date = start.plusDays(dayIndex);
-            for (MealSlot slot : MealSlot.values()) {
-                if (occupied.contains(slotKey(date, slot))) {
-                    continue;
-                }
-                MealTemplate template = byKey.get(dayIndex + "|" + slot);
-                if (template == null) {
-                    continue;
-                }
+            if (loggedDates.contains(date)) {
+                continue;
+            }
 
+            List<MealTemplate> dayTemplates = templatesByDay.getOrDefault(dayIndex, List.of());
+            int position = existingByDate.getOrDefault(date, List.of()).size();
+            for (MealTemplate template : dayTemplates) {
                 MealPlan plan = new MealPlan();
                 plan.setOwner(owner);
                 plan.setPlannedDate(date);
-                plan.setMealSlot(slot);
+                plan.setPositionInDay(position++);
                 plan.setTitle(template.getTitle());
                 plan.setNotes(template.getNote());
                 plan.setGenerated(true);
@@ -147,8 +139,8 @@ public class MealPlanService {
         if (plan.isLogged()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This meal has already been logged");
         }
-        if (plan.getPlannedDate().isAfter(LocalDate.now())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A future meal cannot be logged");
+        if (!plan.getPlannedDate().equals(LocalDate.now())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only today's meals can be logged");
         }
 
         List<FoodLogEntry> entries = createLogEntries(plan);
@@ -160,14 +152,14 @@ public class MealPlanService {
     }
 
     public List<FoodLogEntryResponse> logDay(String email, LocalDate date) {
-        if (date.isAfter(LocalDate.now())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A future day cannot be logged");
+        if (!date.equals(LocalDate.now())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only today's meals can be logged");
         }
 
         List<MealPlan> plans = planRepository
                 .findAllByOwner_EmailAndPlannedDateAndLoggedFalse(email, date);
         if (plans.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "There are no meals left to log for that day");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "There are no meals left to log for today");
         }
 
         List<FoodLogEntry> entries = new ArrayList<>();
@@ -196,10 +188,6 @@ public class MealPlanService {
             items.add(new MealPlanItem(food, request.grams()));
         }
         return items;
-    }
-
-    private static String slotKey(LocalDate date, MealSlot slot) {
-        return date + "|" + slot;
     }
 
     private MealPlan findById(Long id, String email) {

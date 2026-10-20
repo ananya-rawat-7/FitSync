@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface MealTemplateRepository extends JpaRepository<MealTemplate, Long> {
 
-    List<MealTemplate> findAllByMenuGroup(MenuGroup menuGroup);
+    List<MealTemplate> findAllByMenuGroupOrderByDayIndexAscMealIndexAsc(MenuGroup menuGroup);
 
-    Optional<MealTemplate> findByMenuGroupAndDayIndexAndMealSlot(
-            MenuGroup menuGroup, int dayIndex, MealSlot mealSlot);
+    Optional<MealTemplate> findByMenuGroupAndDayIndexAndMealIndex(
+            MenuGroup menuGroup, int dayIndex, int mealIndex);
 }

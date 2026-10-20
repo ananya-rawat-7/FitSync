@@ -5,8 +5,6 @@ import com.fitsync.api.auth.UserAccount;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +14,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "meal_plans",
-        uniqueConstraints = @UniqueConstraint(name = "uk_meal_plans_user_date_slot",
-                columnNames = {"user_id", "planned_date", "meal_slot"}))
+@Table(name = "meal_plans")
 public class MealPlan {
 
     @Id
@@ -46,10 +41,8 @@ public class MealPlan {
     @Column(name = "planned_date", nullable = false)
     private LocalDate plannedDate;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "meal_slot", nullable = false, length = 20)
-    private MealSlot mealSlot;
+    @Column(name = "position_in_day", nullable = false)
+    private int positionInDay;
 
     @NotBlank
     @Size(max = 120)
@@ -95,12 +88,12 @@ public class MealPlan {
         this.plannedDate = plannedDate;
     }
 
-    public MealSlot getMealSlot() {
-        return mealSlot;
+    public int getPositionInDay() {
+        return positionInDay;
     }
 
-    public void setMealSlot(MealSlot mealSlot) {
-        this.mealSlot = mealSlot;
+    public void setPositionInDay(int positionInDay) {
+        this.positionInDay = positionInDay;
     }
 
     public String getTitle() {

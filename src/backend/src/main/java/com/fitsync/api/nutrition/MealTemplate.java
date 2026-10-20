@@ -20,8 +20,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "meal_templates",
-        uniqueConstraints = @UniqueConstraint(name = "uk_meal_templates_group_day_slot",
-                columnNames = {"menu_group", "day_index", "meal_slot"}))
+        uniqueConstraints = @UniqueConstraint(name = "uk_meal_templates_group_day_index",
+                columnNames = {"menu_group", "day_index", "meal_index"}))
 public class MealTemplate {
 
     @Id
@@ -35,9 +35,8 @@ public class MealTemplate {
     @Column(name = "day_index", nullable = false)
     private int dayIndex;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "meal_slot", nullable = false, length = 20)
-    private MealSlot mealSlot;
+    @Column(name = "meal_index", nullable = false)
+    private int mealIndex;
 
     @NotBlank
     @Size(max = 120)
@@ -73,12 +72,12 @@ public class MealTemplate {
         this.dayIndex = dayIndex;
     }
 
-    public MealSlot getMealSlot() {
-        return mealSlot;
+    public int getMealIndex() {
+        return mealIndex;
     }
 
-    public void setMealSlot(MealSlot mealSlot) {
-        this.mealSlot = mealSlot;
+    public void setMealIndex(int mealIndex) {
+        this.mealIndex = mealIndex;
     }
 
     public String getTitle() {

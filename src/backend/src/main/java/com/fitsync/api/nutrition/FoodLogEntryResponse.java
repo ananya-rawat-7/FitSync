@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public record FoodLogEntryResponse(
         Long id,
         LocalDate loggedOn,
-        MealSlot mealSlot,
+        String mealTitle,
         String name,
         BigDecimal grams,
         BigDecimal calories,
@@ -21,7 +21,7 @@ public record FoodLogEntryResponse(
         return new FoodLogEntryResponse(
                 entry.getId(),
                 entry.getLoggedOn(),
-                entry.getMealSlot(),
+                entry.getMealTitle(),
                 entry.getName(),
                 entry.getGrams(),
                 entry.getCalories(),

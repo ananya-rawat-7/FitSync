@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fitsync.api.auth.UserAccount;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,9 +32,8 @@ public class FoodLogEntry {
     @Column(name = "logged_on", nullable = false)
     private LocalDate loggedOn;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "meal_slot", nullable = false, length = 20)
-    private MealSlot mealSlot;
+    @Column(name = "meal_title", nullable = false, length = 120)
+    private String mealTitle;
 
     @Column(nullable = false, length = 120)
     private String name;
@@ -68,7 +65,7 @@ public class FoodLogEntry {
     public FoodLogEntry(UserAccount owner, MealPlan plan, MealPlanItem item) {
         this.owner = owner;
         this.loggedOn = plan.getPlannedDate();
-        this.mealSlot = plan.getMealSlot();
+        this.mealTitle = plan.getTitle();
         this.name = item.getName();
         this.grams = item.getGrams();
         this.calories = item.getCalories();
@@ -91,8 +88,8 @@ public class FoodLogEntry {
         return loggedOn;
     }
 
-    public MealSlot getMealSlot() {
-        return mealSlot;
+    public String getMealTitle() {
+        return mealTitle;
     }
 
     public String getName() {
