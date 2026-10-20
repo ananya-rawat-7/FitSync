@@ -63,6 +63,15 @@ public class WorkoutPlan {
     @Column(name = "position_in_day")
     private Integer positionInDay = 0;
 
+    @Column(name = "is_completed")
+    private Boolean completed = false;
+
+    @Column(name = "completed_at")
+    private LocalDateTime completedAt;
+
+    @Column(name = "completed_session_id")
+    private Long completedSessionId;
+
     @Valid
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("positionIndex ASC")
@@ -150,6 +159,30 @@ public class WorkoutPlan {
 
     public void setPositionInDay(int positionInDay) {
         this.positionInDay = positionInDay;
+    }
+
+    public boolean isCompleted() {
+        return Boolean.TRUE.equals(completed);
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public Long getCompletedSessionId() {
+        return completedSessionId;
+    }
+
+    public void setCompletedSessionId(Long completedSessionId) {
+        this.completedSessionId = completedSessionId;
     }
 
     public List<WorkoutPlanExercise> getExercises() {

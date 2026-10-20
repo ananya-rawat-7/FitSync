@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUp, Plus, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, Plus, Trash2, X } from "lucide-react";
 import ExercisePicker from "./ExercisePicker.jsx";
 import { exerciseApi, workoutPlanApi } from "../services/api.js";
 
@@ -23,6 +23,7 @@ function draftFromPlan(plan) {
   return {
     key: String(plan.id),
     id: plan.id,
+    completed: Boolean(plan.completed),
     name: plan.name,
     category: plan.category,
     durationMinutes: String(plan.durationMinutes),
@@ -44,6 +45,7 @@ function newDraft() {
   return {
     key: nextKey(),
     id: null,
+    completed: false,
     name: "New session",
     category: "Strength",
     durationMinutes: "30",
@@ -306,6 +308,7 @@ export default function WeeklyPlanEditor({ open, dateKey, plans, selectedPlanId,
               <button type="button" className="editor-workout-select" onClick={() => setSelectedKey(plan.key)}>
                 <strong>{plan.name || "Untitled session"}</strong>
                 <small>{plan.category} · {plan.durationMinutes || 0} min · {plan.exercises.length} exercises</small>
+                {plan.completed && <span className="workout-done-badge"><CheckCircle2 /> Done</span>}
               </button>
               <div className="editor-move-buttons">
                 <button type="button" aria-label="Move workout up" disabled={index === 0} onClick={() => movePlan(plan.key, -1)}><ArrowUp /></button>

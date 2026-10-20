@@ -152,7 +152,7 @@ class WorkoutSessionControllerTest {
 
     @Test
     void plannedWorkoutsStayOutOfSessionHistoryUntilExplicitlyLogged() throws Exception {
-        WorkoutPlan plan = plan("Planned run", "Cardio", 35, LocalDateTime.now().minusDays(1));
+        WorkoutPlan plan = plan("Planned run", "Cardio", 35, LocalDateTime.now());
 
         String response = mockMvc.perform(post("/api/workout-plans")
                         .header("Authorization", bearer())
@@ -182,12 +182,41 @@ class WorkoutSessionControllerTest {
         org.junit.jupiter.api.Assertions.assertTrue(
                 !completed.getPerformedAt().isBefore(beforeCompletion)
                         && !completed.getPerformedAt().isAfter(afterCompletion));
+
+        mockMvc.perform(post("/api/workout-plans/{id}/complete", id)
+                        .header("Authorization", bearer()))
+                .andExpect(status().isConflict());
+
         mockMvc.perform(get("/api/workout-plans").header("Authorization", bearer()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name").value("Planned run"))
+                .andExpect(jsonPath("$[0].completed").value(true));
         mockMvc.perform(get("/api/workouts").header("Authorization", bearer()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    void rejectsLoggingAPlanThatIsNotToday() throws Exception {
+        String response = mockMvc.perform(post("/api/workout-plans")
+                        .header("Authorization", bearer())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                plan("Tomorrow run", "Cardio", 25, LocalDateTime.now().plusDays(1)))))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        long id = objectMapper.readTree(response).get("id").asLong();
+
+        mockMvc.perform(post("/api/workout-plans/{id}/complete", id)
+                        .header("Authorization", bearer()))
+                .andExpect(status().isBadRequest());
+        org.junit.jupiter.api.Assertions.assertTrue(repository.findAll().isEmpty());
+
+        mockMvc.perform(get("/api/workout-plans").header("Authorization", bearer()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].completed").value(false));
     }
 
     @Test

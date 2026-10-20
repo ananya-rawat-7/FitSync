@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -95,14 +97,36 @@ public class WorkoutPlanService {
         LocalDateTime rangeEnd = start.plusDays(7).atStartOfDay();
 
         List<WorkoutPlan> existingGenerated = planRepository
-                .findAllByOwner_EmailAndGeneratedTrueAndPlannedAtBetween(email, rangeStart, rangeEnd);
+                .findAllByOwner_EmailAndGeneratedTrueAndPlannedAtBetween(email, rangeStart, rangeEnd)
+                .stream()
+                .filter(plan -> !plan.isCompleted())
+                .toList();
         planRepository.deleteAll(existingGenerated);
 
-        return planRepository.saveAll(weeklyPlanGenerator.build(owner, start));
+        Set<LocalDate> completedDates = planRepository
+                .findAllByOwner_EmailAndCompletedTrueAndPlannedAtBetween(email, rangeStart, rangeEnd)
+                .stream()
+                .map(plan -> plan.getPlannedAt().toLocalDate())
+                .collect(Collectors.toSet());
+
+        List<WorkoutPlan> generated = weeklyPlanGenerator.build(owner, start).stream()
+                .filter(plan -> !completedDates.contains(plan.getPlannedAt().toLocalDate()))
+                .toList();
+
+        return planRepository.saveAll(generated);
     }
 
     public WorkoutSession complete(Long id, String email) {
         WorkoutPlan plan = findById(id, email);
+        if (plan.isCompleted()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "This workout has already been logged");
+        }
+        if (!plan.getPlannedAt().toLocalDate().equals(LocalDate.now())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Only today's workout can be logged");
+        }
+
         WorkoutSession session = new WorkoutSession();
         session.setName(plan.getName());
         session.setCategory(plan.getCategory());
@@ -112,7 +136,12 @@ public class WorkoutPlanService {
         session.setOwner(plan.getOwner());
 
         WorkoutSession completed = sessionRepository.save(session);
-        planRepository.delete(plan);
+
+        plan.setCompleted(true);
+        plan.setCompletedAt(LocalDateTime.now());
+        plan.setCompletedSessionId(completed.getId());
+        planRepository.save(plan);
+
         return completed;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -248,6 +249,55 @@ class WeeklyPlanControllerTest {
                 .andExpect(jsonPath("$[0].positionInDay").value(0))
                 .andExpect(jsonPath("$[1].name").value("First session"))
                 .andExpect(jsonPath("$[1].positionInDay").value(1));
+    }
+
+    @Test
+    void completedGeneratedPlansSurviveRegeneration() throws Exception {
+        String today = LocalDate.now().toString();
+
+        String generated = mockMvc.perform(post("/api/workout-plans/generate-week")
+                        .header("Authorization", bearer())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(Map.of("startDate", today))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(7)))
+                .andReturn().getResponse().getContentAsString();
+
+        JsonNode firstWeek = objectMapper.readTree(generated);
+        long completedPlanId = firstWeek.get(0).get("id").asLong();
+        org.junit.jupiter.api.Assertions.assertEquals(today,
+                firstWeek.get(0).get("plannedAt").asText().substring(0, 10));
+
+        mockMvc.perform(post("/api/workout-plans/{id}/complete", completedPlanId)
+                        .header("Authorization", bearer()))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/workout-plans/generate-week")
+                        .header("Authorization", bearer())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(Map.of("startDate", today))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(6)));
+
+        String plansResponse = mockMvc.perform(get("/api/workout-plans").header("Authorization", bearer()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        JsonNode plans = objectMapper.readTree(plansResponse);
+
+        org.junit.jupiter.api.Assertions.assertEquals(7, plans.size());
+        long todayPlans = 0;
+        boolean completedPlanPresent = false;
+        for (JsonNode plan : plans) {
+            if (plan.get("plannedAt").asText().startsWith(today)) {
+                todayPlans++;
+            }
+            if (plan.get("id").asLong() == completedPlanId) {
+                completedPlanPresent = true;
+                org.junit.jupiter.api.Assertions.assertTrue(plan.get("completed").asBoolean());
+            }
+        }
+        org.junit.jupiter.api.Assertions.assertEquals(1, todayPlans);
+        org.junit.jupiter.api.Assertions.assertTrue(completedPlanPresent);
     }
 
     @Test

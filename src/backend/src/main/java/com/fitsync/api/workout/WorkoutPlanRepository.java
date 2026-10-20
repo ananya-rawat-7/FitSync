@@ -16,4 +16,7 @@ public interface WorkoutPlanRepository extends JpaRepository<WorkoutPlan, Long> 
 
     List<WorkoutPlan> findAllByOwner_EmailAndGeneratedTrueAndPlannedAtBetween(
             String email, LocalDateTime start, LocalDateTime end);
+
+    List<WorkoutPlan> findAllByOwner_EmailAndCompletedTrueAndPlannedAtBetween(
+            String email, LocalDateTime start, LocalDateTime end);
 }
