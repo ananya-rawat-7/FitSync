@@ -22,13 +22,18 @@ export function localDateKey(value) {
   return `${year}-${month}-${day}`;
 }
 
-export function getPlanWeekDays() {
-  const todayKey = localDateKey(new Date());
+export function getWeekDays(weekOffset = 0) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayKey = localDateKey(today);
+  const dayOfWeek = today.getDay();
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + mondayOffset + weekOffset * 7);
 
   return Array.from({ length: 7 }, (_, index) => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() + index + 1);
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + index);
     const key = localDateKey(date);
 
     return {
@@ -37,6 +42,7 @@ export function getPlanWeekDays() {
       shortLabel: date.toLocaleDateString(undefined, { weekday: "short" }),
       dateLabel: date.toLocaleDateString(undefined, { month: "short", day: "numeric" }),
       isToday: key === todayKey,
+      isPast: key < todayKey,
     };
   });
 }

@@ -8,9 +8,11 @@ import java.util.Optional;
 
 public interface WorkoutPlanRepository extends JpaRepository<WorkoutPlan, Long> {
 
-    List<WorkoutPlan> findAllByOwner_EmailOrderByPlannedAtAsc(String email);
+    List<WorkoutPlan> findAllByOwner_EmailOrderByPlannedAtAscPositionInDayAsc(String email);
 
     Optional<WorkoutPlan> findByIdAndOwner_Email(Long id, String email);
+
+    long countByOwner_EmailAndPlannedAtBetween(String email, LocalDateTime start, LocalDateTime end);
 
     List<WorkoutPlan> findAllByOwner_EmailAndGeneratedTrueAndPlannedAtBetween(
             String email, LocalDateTime start, LocalDateTime end);

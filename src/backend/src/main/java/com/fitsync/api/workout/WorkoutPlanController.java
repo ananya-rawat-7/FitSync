@@ -45,6 +45,13 @@ public class WorkoutPlanController {
         return service.generateWeek(authentication.getName(), startDate);
     }
 
+    @PutMapping("/reorder")
+    public List<WorkoutPlan> reorder(
+            @Valid @RequestBody ReorderPlansRequest request,
+            Authentication authentication) {
+        return service.reorder(authentication.getName(), request.date(), request.planIds());
+    }
+
     @PutMapping("/{id}")
     public WorkoutPlan update(
             @PathVariable Long id,

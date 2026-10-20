@@ -27,7 +27,7 @@ FitSync/
         │   ├── auth/         # Registration, login, profile, account model/repository
         │   ├── config/        # CORS and API error responses
         │   ├── security/     # JWT creation, validation, and Spring Security
-        │   └── workout/      # Sessions, goal-based plans, exercise catalog, repositories, services, and controllers
+        │   └── workout/      # Sessions, plans, DB-backed exercise catalog and goal templates, services, and controllers
 ```
 
 ## Requirements
@@ -115,7 +115,7 @@ The preview is available at `http://localhost:4173`. Keep production credentials
 | `http://localhost:5173/register` | Public | Create an account |
 | `http://localhost:5173/login` | Public | Sign in |
 | `http://localhost:5173/dashboard` | Protected | Account-specific activity totals and recent workouts |
-| `http://localhost:5173/workouts` | Protected | Build a goal-based week, browse exercises, and manage planned and completed workouts |
+| `http://localhost:5173/workouts` | Protected | Build a goal-based week, edit each day's workouts and exercises, and review workout logs |
 | `http://localhost:5173/profile` | Protected | View account details and update optional fitness details |
 
 ## API and access rules
@@ -139,17 +139,21 @@ Only registration and login are public. Every other API route requires a valid, 
 | `POST` | `/api/calories` | JWT | Logs a food or drink entry with meal, calories, and date |
 | `DELETE` | `/api/calories/{id}` | JWT | Deletes an owned calorie entry (`204`) |
 | `GET` | `/api/workout-plans` | JWT | Lists the authenticated user's planned sessions, including exercises |
-| `POST` | `/api/workout-plans` | JWT | Creates a manual plan for the authenticated user |
-| `PUT` | `/api/workout-plans/{id}` | JWT | Updates an owned plan; existing exercises are preserved |
-| `POST` | `/api/workout-plans/generate-week` | JWT | Builds a 7-day exercise plan from the profile goal; accepts optional `startDate` |
+| `POST` | `/api/workout-plans` | JWT | Creates a session in a day for the authenticated user |
+| `PUT` | `/api/workout-plans/{id}` | JWT | Updates an owned plan and replaces its exercise list with the submitted order |
+| `PUT` | `/api/workout-plans/reorder` | JWT | Reorders a day's plans; body is `{"date":"YYYY-MM-DD","planIds":[...]}` |
+| `POST` | `/api/workout-plans/generate-week` | JWT | Builds a Monday–Sunday week from the DB-backed goal templates; accepts optional `startDate` |
 | `POST` | `/api/workout-plans/{id}/complete` | JWT | Logs a plan as a completed session and removes the plan |
 | `DELETE` | `/api/workout-plans/{id}` | JWT | Removes an owned plan (`204`) |
-| `GET` | `/api/exercises?goal=...` | JWT | Returns the exercise library, optionally filtered by fitness goal |
+| `GET` | `/api/exercises?goal=...` | JWT | Returns the DB-backed library (global + the user's custom exercises), optionally filtered by goal |
+| `POST` | `/api/exercises` | JWT | Creates a reusable custom exercise owned by the authenticated user (`201`) |
 | `GET` | `/api/health` | Public | Returns `{"status":"ok"}` when the API is reachable |
 
 Registration accepts optional weight (kg), height (cm), age, gender, and fitness target details. Supported targets are `BUILD_STRENGTH`, `LOSE_WEIGHT`, `GAIN_WEIGHT`, `IMPROVE_ENDURANCE`, `IMPROVE_FLEXIBILITY`, `MAINTAIN_FITNESS`, and `OTHER`. These can also be changed or cleared later from the signed-in Profile page. Passwords are encoded with BCrypt and are never included in response DTOs. Workout ownership is taken from the authenticated identity, not from request JSON. Invalid or absent tokens receive `401`; a valid identity without permission receives `403`. The current API has no role-specific operations, so an authenticated account has access only to its own workouts. Logout clears the token from browser `sessionStorage`; because JWTs are stateless, a token already copied elsewhere remains valid until its 24-hour expiry.
 
-The Workouts page can build a complete week from the profile goal. `POST /api/workout-plans/generate-week` returns seven planned sessions (tomorrow through day 7) with named exercises, sets, reps, rest periods, and short instructions. `LOSE_WEIGHT` emphasizes cardio, HIIT, full-body strength, and recovery; `GAIN_WEIGHT` emphasizes four progressive strength sessions with light cardio and recovery. Regenerating a week replaces only the auto-generated plans in that range, so manually added plans remain. The exercise library is exposed by `GET /api/exercises` and filtered by the same goal. The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
+The Workouts page shows the current calendar week, Monday–Sunday, with previous/next week navigation. It is ordered as **Your week**, then the **Weekly workout minutes** chart, then **Workout logs** last. `POST /api/workout-plans/generate-week` reads the goal templates from the database and returns seven planned sessions (Monday–Sunday) with named exercises, sets, reps, rest periods, and short instructions. Regenerating a week replaces only the auto-generated plans in that range, so manually added sessions remain. Past dates keep their sessions visible, but their **Log workout** button is disabled; today and future days can still be logged.
+
+The exercise catalog and goal templates live in MySQL. A one-time startup seeder populates the global exercises and the seven-day templates for `LOSE_WEIGHT`, `GAIN_WEIGHT`, `BUILD_STRENGTH`, `IMPROVE_ENDURANCE`, `IMPROVE_FLEXIBILITY`, and `MAINTAIN_FITNESS`; all runtime reads and writes use the database. The standalone library section is gone from the page. Instead, opening **Edit day** gives a modal day editor where the user can reorder workouts, reorder exercises, edit sets/reps/rest/instructions, add an exercise from the database-backed library, or create a custom exercise. Custom exercises are saved to the user's library for reuse. Completed sessions remain editable from **Workout logs**, including the session name. The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
 
 Registration and login example:
 

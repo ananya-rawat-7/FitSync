@@ -1,6 +1,7 @@
 package com.fitsync.api.workout;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,9 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -23,11 +24,9 @@ public class WorkoutPlanExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Size(max = 100)
     private String name;
 
-    @NotBlank
     @Size(max = 50)
     private String category;
 
@@ -53,7 +52,26 @@ public class WorkoutPlanExercise {
     @JoinColumn(name = "workout_plan_id", nullable = false)
     private WorkoutPlan plan;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
+
+    @Transient
+    @JsonIgnore
+    private Long exerciseIdInput;
+
     protected WorkoutPlanExercise() {
+    }
+
+    public WorkoutPlanExercise(Exercise exercise, Integer setCount, String reps, Integer restSeconds) {
+        this.exercise = exercise;
+        this.name = exercise.getName();
+        this.category = exercise.getCategory();
+        this.setCount = setCount != null ? setCount : exercise.getDefaultSetCount();
+        this.reps = reps != null ? reps : exercise.getDefaultReps();
+        this.restSeconds = restSeconds != null ? restSeconds : exercise.getDefaultRestSeconds();
+        this.instructions = exercise.getInstructions();
     }
 
     public WorkoutPlanExercise(String name, String category, Integer setCount, String reps,
@@ -132,5 +150,29 @@ public class WorkoutPlanExercise {
 
     public void setPlan(WorkoutPlan plan) {
         this.plan = plan;
+    }
+
+    @JsonIgnore
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    @JsonProperty("exerciseId")
+    public Long getExerciseId() {
+        return exercise == null ? null : exercise.getId();
+    }
+
+    @JsonProperty("exerciseId")
+    public void setExerciseId(Long exerciseId) {
+        this.exerciseIdInput = exerciseId;
+    }
+
+    @JsonIgnore
+    public Long getExerciseIdInput() {
+        return exerciseIdInput;
     }
 }

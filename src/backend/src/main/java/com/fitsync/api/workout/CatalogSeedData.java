@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public final class ExerciseCatalog {
+public final class CatalogSeedData {
 
-    public static final String DEFAULT_GOAL = "MAINTAIN_FITNESS";
+    public static final String DEFAULT_GOAL = WorkoutGoals.DEFAULT;
 
     private static final Set<String> STRENGTH_GOALS = Set.of(
             "BUILD_STRENGTH", "GAIN_WEIGHT", "LOSE_WEIGHT", "MAINTAIN_FITNESS", "OTHER");
@@ -122,7 +122,7 @@ public final class ExerciseCatalog {
                     "Breathe in through your nose and out slowly, letting your shoulders and jaw relax.",
                     ALL_GOALS));
 
-    private static final Map<String, List<DayTemplate>> WEEK_TEMPLATES = Map.of(
+    public static final Map<String, List<DayTemplate>> WEEK_TEMPLATES = Map.of(
             "LOSE_WEIGHT", List.of(
                     day("Full-body strength", "Strength", 35,
                             "Keep rest short and focus on controlled form.",
@@ -256,34 +256,7 @@ public final class ExerciseCatalog {
                             "Rest, hydrate, and prepare for the next week.",
                             "Deep Breathing", "Cat-Cow", "Child's Pose")));
 
-    private ExerciseCatalog() {
-    }
-
-    public static List<ExerciseTemplate> forGoal(String goal) {
-        if (goal == null || goal.isBlank()) {
-            return EXERCISES;
-        }
-        return EXERCISES.stream()
-                .filter(exercise -> exercise.goals().contains(goal))
-                .toList();
-    }
-
-    public static List<DayTemplate> weekFor(String goal) {
-        String normalized = normalizeGoal(goal);
-        return WEEK_TEMPLATES.getOrDefault(normalized, WEEK_TEMPLATES.get(DEFAULT_GOAL));
-    }
-
-    public static String normalizeGoal(String goal) {
-        if (goal == null || goal.isBlank()) {
-            return DEFAULT_GOAL;
-        }
-        return WEEK_TEMPLATES.containsKey(goal) ? goal : DEFAULT_GOAL;
-    }
-
-    public static Optional<ExerciseTemplate> find(String name) {
-        return EXERCISES.stream()
-                .filter(exercise -> exercise.name().equals(name))
-                .findFirst();
+    private CatalogSeedData() {
     }
 
     private static DayTemplate day(String title, String category, int durationMinutes,

@@ -60,6 +60,9 @@ public class WorkoutPlan {
     @Column(name = "auto_generated")
     private Boolean generated = false;
 
+    @Column(name = "position_in_day")
+    private Integer positionInDay = 0;
+
     @Valid
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("positionIndex ASC")
@@ -139,6 +142,14 @@ public class WorkoutPlan {
 
     public void setGenerated(boolean generated) {
         this.generated = generated;
+    }
+
+    public int getPositionInDay() {
+        return positionInDay == null ? 0 : positionInDay;
+    }
+
+    public void setPositionInDay(int positionInDay) {
+        this.positionInDay = positionInDay;
     }
 
     public List<WorkoutPlanExercise> getExercises() {

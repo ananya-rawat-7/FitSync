@@ -21,6 +21,60 @@ CREATE TABLE IF NOT EXISTS user_accounts (
     UNIQUE KEY uk_user_accounts_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE IF NOT EXISTS exercises (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    equipment VARCHAR(80) DEFAULT 'None',
+    difficulty VARCHAR(30) DEFAULT 'Beginner',
+    default_set_count INT DEFAULT NULL,
+    default_reps VARCHAR(32) DEFAULT NULL,
+    default_rest_seconds INT DEFAULT NULL,
+    instructions VARCHAR(500) DEFAULT NULL,
+    owner_id BIGINT DEFAULT NULL,
+    PRIMARY KEY (id),
+    KEY idx_exercises_owner (owner_id),
+    CONSTRAINT fk_exercises_owner
+        FOREIGN KEY (owner_id) REFERENCES user_accounts (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS exercise_goals (
+    exercise_id BIGINT NOT NULL,
+    goal VARCHAR(32) NOT NULL,
+    PRIMARY KEY (exercise_id, goal),
+    CONSTRAINT fk_exercise_goals_exercise
+        FOREIGN KEY (exercise_id) REFERENCES exercises (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS workout_templates (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    goal VARCHAR(32) NOT NULL,
+    day_index INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    duration_minutes INT NOT NULL,
+    note VARCHAR(500) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_workout_templates_goal_day (goal, day_index)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS workout_template_exercises (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    template_id BIGINT NOT NULL,
+    exercise_id BIGINT NOT NULL,
+    position_index INT NOT NULL DEFAULT 0,
+    set_count INT DEFAULT NULL,
+    reps VARCHAR(32) DEFAULT NULL,
+    rest_seconds INT DEFAULT NULL,
+    PRIMARY KEY (id),
+    KEY idx_template_exercises_template (template_id),
+    KEY idx_template_exercises_exercise (exercise_id),
+    CONSTRAINT fk_template_exercises_template
+        FOREIGN KEY (template_id) REFERENCES workout_templates (id) ON DELETE CASCADE,
+    CONSTRAINT fk_template_exercises_exercise
+        FOREIGN KEY (exercise_id) REFERENCES exercises (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE IF NOT EXISTS workout_sessions (
     id BIGINT NOT NULL AUTO_INCREMENT,
     category VARCHAR(50) NOT NULL,
@@ -47,6 +101,7 @@ CREATE TABLE IF NOT EXISTS workout_plans (
     goal VARCHAR(32) DEFAULT NULL,
     day_of_week VARCHAR(12) DEFAULT NULL,
     auto_generated BOOLEAN DEFAULT FALSE,
+    position_in_day INT DEFAULT 0,
     user_id BIGINT DEFAULT NULL,
     PRIMARY KEY (id),
     KEY idx_workout_plans_user_id (user_id),
@@ -57,6 +112,7 @@ CREATE TABLE IF NOT EXISTS workout_plans (
 CREATE TABLE IF NOT EXISTS workout_plan_exercises (
     id BIGINT NOT NULL AUTO_INCREMENT,
     workout_plan_id BIGINT NOT NULL,
+    exercise_id BIGINT DEFAULT NULL,
     name VARCHAR(100) NOT NULL,
     category VARCHAR(50) NOT NULL,
     set_count INT DEFAULT NULL,
@@ -66,8 +122,11 @@ CREATE TABLE IF NOT EXISTS workout_plan_exercises (
     position_index INT NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     KEY idx_workout_plan_exercises_plan (workout_plan_id),
+    KEY idx_workout_plan_exercises_exercise (exercise_id),
     CONSTRAINT fk_workout_plan_exercises_plan
-        FOREIGN KEY (workout_plan_id) REFERENCES workout_plans (id) ON DELETE CASCADE
+        FOREIGN KEY (workout_plan_id) REFERENCES workout_plans (id) ON DELETE CASCADE,
+    CONSTRAINT fk_workout_plan_exercises_exercise
+        FOREIGN KEY (exercise_id) REFERENCES exercises (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS calorie_entries (
