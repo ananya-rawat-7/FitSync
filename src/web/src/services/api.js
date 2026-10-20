@@ -85,8 +85,28 @@ export const exerciseApi = {
   createCustom: (exercise) => request("/exercises", json("POST", exercise)),
 };
 
-export const calorieApi = {
-  list: () => request("/calories"),
-  create: (entry) => request("/calories", json("POST", entry)),
-  remove: (id) => request(`/calories/${id}`, { method: "DELETE" }),
+export const foodApi = {
+  list: () => request("/foods"),
+  createCustom: (food) => request("/foods", json("POST", food)),
+};
+
+export const mealPlanApi = {
+  list: (start, end) => request(`/meal-plans?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`),
+  create: (meal) => request("/meal-plans", json("POST", meal)),
+  update: (id, meal) => request(`/meal-plans/${id}`, json("PUT", meal)),
+  remove: (id) => request(`/meal-plans/${id}`, { method: "DELETE" }),
+  generateWeek: (startDate) => request("/meal-plans/generate-week", json("POST", startDate ? { startDate } : {})),
+  log: (id) => request(`/meal-plans/${id}/log`, { method: "POST" }),
+  logDay: (date) => request("/meal-plans/log-day", json("POST", { date })),
+};
+
+export const foodLogApi = {
+  list: (start, end) => request(`/food-log?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`),
+  remove: (id) => request(`/food-log/${id}`, { method: "DELETE" }),
+};
+
+export const waterApi = {
+  list: (start, end) => request(`/water?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`),
+  create: (entry) => request("/water", json("POST", entry)),
+  remove: (id) => request(`/water/${id}`, { method: "DELETE" }),
 };

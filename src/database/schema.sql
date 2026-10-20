@@ -21,6 +21,118 @@ CREATE TABLE IF NOT EXISTS user_accounts (
     UNIQUE KEY uk_user_accounts_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE IF NOT EXISTS foods (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(120) NOT NULL,
+    category VARCHAR(80) NOT NULL,
+    calories_per_100g DECIMAL(8, 2) NOT NULL,
+    protein_per_100g DECIMAL(7, 2) NOT NULL,
+    carbs_per_100g DECIMAL(7, 2) NOT NULL,
+    fat_per_100g DECIMAL(7, 2) NOT NULL,
+    owner_id BIGINT DEFAULT NULL,
+    PRIMARY KEY (id),
+    KEY idx_foods_owner (owner_id),
+    CONSTRAINT fk_foods_owner
+        FOREIGN KEY (owner_id) REFERENCES user_accounts (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS meal_templates (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    menu_group VARCHAR(32) NOT NULL,
+    day_index INT NOT NULL,
+    meal_slot VARCHAR(20) NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    note VARCHAR(500) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_meal_templates_group_day_slot (menu_group, day_index, meal_slot)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS meal_template_items (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    template_id BIGINT NOT NULL,
+    food_id BIGINT NOT NULL,
+    grams DECIMAL(8, 2) NOT NULL,
+    position_index INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    KEY idx_meal_template_items_template (template_id),
+    KEY idx_meal_template_items_food (food_id),
+    CONSTRAINT fk_meal_template_items_template
+        FOREIGN KEY (template_id) REFERENCES meal_templates (id) ON DELETE CASCADE,
+    CONSTRAINT fk_meal_template_items_food
+        FOREIGN KEY (food_id) REFERENCES foods (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS meal_plans (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    planned_date DATE NOT NULL,
+    meal_slot VARCHAR(20) NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    notes VARCHAR(500) DEFAULT NULL,
+    auto_generated BOOLEAN NOT NULL DEFAULT FALSE,
+    logged BOOLEAN NOT NULL DEFAULT FALSE,
+    logged_at DATETIME(6) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_meal_plans_user_date_slot (user_id, planned_date, meal_slot),
+    KEY idx_meal_plans_user_date (user_id, planned_date),
+    CONSTRAINT fk_meal_plans_user
+        FOREIGN KEY (user_id) REFERENCES user_accounts (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS meal_plan_items (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    meal_plan_id BIGINT NOT NULL,
+    food_id BIGINT DEFAULT NULL,
+    name VARCHAR(120) NOT NULL,
+    grams DECIMAL(8, 2) NOT NULL,
+    calories DECIMAL(8, 2) NOT NULL,
+    protein DECIMAL(7, 2) NOT NULL,
+    carbs DECIMAL(7, 2) NOT NULL,
+    fat DECIMAL(7, 2) NOT NULL,
+    position_index INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    KEY idx_meal_plan_items_plan (meal_plan_id),
+    KEY idx_meal_plan_items_food (food_id),
+    CONSTRAINT fk_meal_plan_items_plan
+        FOREIGN KEY (meal_plan_id) REFERENCES meal_plans (id) ON DELETE CASCADE,
+    CONSTRAINT fk_meal_plan_items_food
+        FOREIGN KEY (food_id) REFERENCES foods (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS food_log_entries (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    logged_on DATE NOT NULL,
+    meal_slot VARCHAR(20) NOT NULL,
+    name VARCHAR(120) NOT NULL,
+    grams DECIMAL(8, 2) NOT NULL,
+    calories DECIMAL(8, 2) NOT NULL,
+    protein DECIMAL(7, 2) NOT NULL,
+    carbs DECIMAL(7, 2) NOT NULL,
+    fat DECIMAL(7, 2) NOT NULL,
+    source_meal_plan_id BIGINT DEFAULT NULL,
+    logged_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id),
+    KEY idx_food_log_entries_user_date (user_id, logged_on),
+    KEY idx_food_log_entries_source (source_meal_plan_id),
+    CONSTRAINT fk_food_log_entries_user
+        FOREIGN KEY (user_id) REFERENCES user_accounts (id),
+    CONSTRAINT fk_food_log_entries_source
+        FOREIGN KEY (source_meal_plan_id) REFERENCES meal_plans (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS water_entries (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    logged_on DATE NOT NULL,
+    milliliters INT NOT NULL,
+    logged_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id),
+    KEY idx_water_entries_user_date (user_id, logged_on),
+    CONSTRAINT fk_water_entries_user
+        FOREIGN KEY (user_id) REFERENCES user_accounts (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE IF NOT EXISTS exercises (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -130,17 +242,4 @@ CREATE TABLE IF NOT EXISTS workout_plan_exercises (
         FOREIGN KEY (workout_plan_id) REFERENCES workout_plans (id) ON DELETE CASCADE,
     CONSTRAINT fk_workout_plan_exercises_exercise
         FOREIGN KEY (exercise_id) REFERENCES exercises (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE IF NOT EXISTS calorie_entries (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    calories INT NOT NULL,
-    consumed_on DATE DEFAULT NULL,
-    food_name VARCHAR(255) DEFAULT NULL,
-    meal_type ENUM('BREAKFAST', 'DINNER', 'LUNCH', 'SNACK') DEFAULT NULL,
-    user_id BIGINT NOT NULL,
-    PRIMARY KEY (id),
-    KEY idx_calorie_entries_user_id (user_id),
-    CONSTRAINT fk_calorie_entries_user
-        FOREIGN KEY (user_id) REFERENCES user_accounts (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

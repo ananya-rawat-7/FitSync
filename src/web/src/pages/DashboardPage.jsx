@@ -3,7 +3,7 @@ import { Activity, ArrowUpRight, Check, HeartPulse } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "../auth/AuthContext.jsx";
-import { getCalorieEstimate } from "../components/FoodJournal.jsx";
+import { getCalorieEstimate } from "../utils/nutrition.js";
 import WeeklyBarChart from "../components/WeeklyBarChart.jsx";
 import {
   fitnessGoalLabels,

@@ -1,0 +1,1042 @@
+[
+  {
+    "name": "Roti / Chapati",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 7.5,
+    "carbsPer100g": 52.5,
+    "fatPer100g": 6.7
+  },
+  {
+    "name": "Plain paratha",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 7.5,
+    "carbsPer100g": 52.5,
+    "fatPer100g": 6.7
+  },
+  {
+    "name": "Aloo paratha",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 6.3,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 5.6
+  },
+  {
+    "name": "Naan",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 310,
+    "proteinPer100g": 7.8,
+    "carbsPer100g": 54.3,
+    "fatPer100g": 6.9
+  },
+  {
+    "name": "Cooked white rice",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 130,
+    "proteinPer100g": 3.3,
+    "carbsPer100g": 22.8,
+    "fatPer100g": 2.9
+  },
+  {
+    "name": "Cooked brown rice",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 120,
+    "proteinPer100g": 3,
+    "carbsPer100g": 21,
+    "fatPer100g": 2.7
+  },
+  {
+    "name": "Vegetable pulao",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 3.8,
+    "carbsPer100g": 26.3,
+    "fatPer100g": 3.3
+  },
+  {
+    "name": "Vegetable biryani",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 110,
+    "proteinPer100g": 2.8,
+    "carbsPer100g": 19.3,
+    "fatPer100g": 2.4
+  },
+  {
+    "name": "Chicken biryani",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 18.8,
+    "carbsPer100g": 1.9,
+    "fatPer100g": 7.5
+  },
+  {
+    "name": "Dal tadka",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 100,
+    "proteinPer100g": 7.5,
+    "carbsPer100g": 12.5,
+    "fatPer100g": 2.2
+  },
+  {
+    "name": "Moong dal, cooked",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 60,
+    "proteinPer100g": 4.5,
+    "carbsPer100g": 7.5,
+    "fatPer100g": 1.3
+  },
+  {
+    "name": "Masoor dal, cooked",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 70,
+    "proteinPer100g": 5.3,
+    "carbsPer100g": 8.8,
+    "fatPer100g": 1.6
+  },
+  {
+    "name": "Chana dal, cooked",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 80,
+    "proteinPer100g": 6,
+    "carbsPer100g": 10,
+    "fatPer100g": 1.8
+  },
+  {
+    "name": "Dal makhani",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 80,
+    "proteinPer100g": 6,
+    "carbsPer100g": 10,
+    "fatPer100g": 1.8
+  },
+  {
+    "name": "Rajma curry",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 110,
+    "proteinPer100g": 8.3,
+    "carbsPer100g": 13.8,
+    "fatPer100g": 2.4
+  },
+  {
+    "name": "Chole / Chana masala",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 120,
+    "proteinPer100g": 9,
+    "carbsPer100g": 15,
+    "fatPer100g": 2.7
+  },
+  {
+    "name": "Aloo sabzi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 100,
+    "proteinPer100g": 5,
+    "carbsPer100g": 13.8,
+    "fatPer100g": 2.8
+  },
+  {
+    "name": "Bhindi sabzi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 100,
+    "proteinPer100g": 5,
+    "carbsPer100g": 13.8,
+    "fatPer100g": 2.8
+  },
+  {
+    "name": "Baingan bharta",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 100,
+    "proteinPer100g": 5,
+    "carbsPer100g": 13.8,
+    "fatPer100g": 2.8
+  },
+  {
+    "name": "Palak paneer",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 120,
+    "proteinPer100g": 12,
+    "carbsPer100g": 3,
+    "fatPer100g": 6.7
+  },
+  {
+    "name": "Paneer butter masala",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 170,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 18.9
+  },
+  {
+    "name": "Shahi paneer",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 160,
+    "proteinPer100g": 16,
+    "carbsPer100g": 4,
+    "fatPer100g": 8.9
+  },
+  {
+    "name": "Mixed vegetable curry",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 90,
+    "proteinPer100g": 4.5,
+    "carbsPer100g": 12.4,
+    "fatPer100g": 2.5
+  },
+  {
+    "name": "Cabbage sabzi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 70,
+    "proteinPer100g": 3.5,
+    "carbsPer100g": 9.6,
+    "fatPer100g": 1.9
+  },
+  {
+    "name": "Cauliflower sabzi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 80,
+    "proteinPer100g": 4,
+    "carbsPer100g": 11,
+    "fatPer100g": 2.2
+  },
+  {
+    "name": "Pumpkin sabzi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 50,
+    "proteinPer100g": 2.5,
+    "carbsPer100g": 6.9,
+    "fatPer100g": 1.4
+  },
+  {
+    "name": "Idli",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 130,
+    "proteinPer100g": 3.3,
+    "carbsPer100g": 22.8,
+    "fatPer100g": 2.9
+  },
+  {
+    "name": "Plain dosa",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 210,
+    "proteinPer100g": 5.3,
+    "carbsPer100g": 36.8,
+    "fatPer100g": 4.7
+  },
+  {
+    "name": "Masala dosa",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 180,
+    "proteinPer100g": 4.5,
+    "carbsPer100g": 31.5,
+    "fatPer100g": 4
+  },
+  {
+    "name": "Medu vada",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 5,
+    "carbsPer100g": 31.3,
+    "fatPer100g": 11.7
+  },
+  {
+    "name": "Poha",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 110,
+    "proteinPer100g": 2.8,
+    "carbsPer100g": 19.3,
+    "fatPer100g": 2.4
+  },
+  {
+    "name": "Upma",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 90,
+    "proteinPer100g": 2.3,
+    "carbsPer100g": 15.8,
+    "fatPer100g": 2
+  },
+  {
+    "name": "Besan chilla",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 170,
+    "proteinPer100g": 8.5,
+    "carbsPer100g": 23.4,
+    "fatPer100g": 4.7
+  },
+  {
+    "name": "Dhokla",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 3.8,
+    "carbsPer100g": 26.3,
+    "fatPer100g": 3.3
+  },
+  {
+    "name": "Uttapam",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 3.8,
+    "carbsPer100g": 26.3,
+    "fatPer100g": 3.3
+  },
+  {
+    "name": "Khichdi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 100,
+    "proteinPer100g": 2.5,
+    "carbsPer100g": 17.5,
+    "fatPer100g": 2.2
+  },
+  {
+    "name": "Curd / Dahi",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 60,
+    "proteinPer100g": 3.3,
+    "carbsPer100g": 4.8,
+    "fatPer100g": 3.1
+  },
+  {
+    "name": "Paneer",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 260,
+    "proteinPer100g": 26,
+    "carbsPer100g": 6.5,
+    "fatPer100g": 14.4
+  },
+  {
+    "name": "Whole milk",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 60,
+    "proteinPer100g": 3.3,
+    "carbsPer100g": 4.8,
+    "fatPer100g": 3.1
+  },
+  {
+    "name": "Ghee",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 90,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 10
+  },
+  {
+    "name": "Butter",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 70,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 7.8
+  },
+  {
+    "name": "Boiled egg",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 160,
+    "proteinPer100g": 14,
+    "carbsPer100g": 1.2,
+    "fatPer100g": 11
+  },
+  {
+    "name": "Omelette",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 160,
+    "proteinPer100g": 14,
+    "carbsPer100g": 1.2,
+    "fatPer100g": 11
+  },
+  {
+    "name": "Cooked chicken breast",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 170,
+    "proteinPer100g": 29.8,
+    "carbsPer100g": 0,
+    "fatPer100g": 5.7
+  },
+  {
+    "name": "Chicken curry",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 130,
+    "proteinPer100g": 16.3,
+    "carbsPer100g": 1.6,
+    "fatPer100g": 6.5
+  },
+  {
+    "name": "Tandoori chicken",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 190,
+    "proteinPer100g": 23.8,
+    "carbsPer100g": 2.4,
+    "fatPer100g": 9.5
+  },
+  {
+    "name": "Fish curry",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 110,
+    "proteinPer100g": 13.8,
+    "carbsPer100g": 1.4,
+    "fatPer100g": 5.5
+  },
+  {
+    "name": "Grilled fish",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 130,
+    "proteinPer100g": 16.3,
+    "carbsPer100g": 1.6,
+    "fatPer100g": 6.5
+  },
+  {
+    "name": "Cooked mutton curry",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 180,
+    "proteinPer100g": 22.5,
+    "carbsPer100g": 2.3,
+    "fatPer100g": 9
+  },
+  {
+    "name": "Sprouted moong",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 30,
+    "proteinPer100g": 2.3,
+    "carbsPer100g": 3.8,
+    "fatPer100g": 0.7
+  },
+  {
+    "name": "Boiled chickpeas",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 160,
+    "proteinPer100g": 12,
+    "carbsPer100g": 20,
+    "fatPer100g": 3.6
+  },
+  {
+    "name": "Boiled potato",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 90,
+    "proteinPer100g": 3.4,
+    "carbsPer100g": 15.8,
+    "fatPer100g": 1.5
+  },
+  {
+    "name": "Cucumber",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 20,
+    "proteinPer100g": 0.8,
+    "carbsPer100g": 3.5,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Tomato",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 20,
+    "proteinPer100g": 0.8,
+    "carbsPer100g": 3.5,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Carrot",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 1.5,
+    "carbsPer100g": 7,
+    "fatPer100g": 0.7
+  },
+  {
+    "name": "Banana",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 90,
+    "proteinPer100g": 1.1,
+    "carbsPer100g": 20.3,
+    "fatPer100g": 0.5
+  },
+  {
+    "name": "Apple",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 50,
+    "proteinPer100g": 0.6,
+    "carbsPer100g": 11.3,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Mango",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 60,
+    "proteinPer100g": 0.8,
+    "carbsPer100g": 13.5,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Papaya",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 0.5,
+    "carbsPer100g": 9,
+    "fatPer100g": 0.2
+  },
+  {
+    "name": "Watermelon",
+    "category": "Common Indian foods",
+    "caloriesPer100g": 30,
+    "proteinPer100g": 0.4,
+    "carbsPer100g": 6.8,
+    "fatPer100g": 0.2
+  },
+  {
+    "name": "Samosa",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 6,
+    "carbsPer100g": 37.5,
+    "fatPer100g": 14
+  },
+  {
+    "name": "Kachori",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 350,
+    "proteinPer100g": 7,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 16.3
+  },
+  {
+    "name": "Aloo tikki",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 200,
+    "proteinPer100g": 4,
+    "carbsPer100g": 25,
+    "fatPer100g": 9.3
+  },
+  {
+    "name": "Vada pav",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 280,
+    "proteinPer100g": 5.6,
+    "carbsPer100g": 35,
+    "fatPer100g": 13.1
+  },
+  {
+    "name": "Pav bhaji",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 120,
+    "proteinPer100g": 2.4,
+    "carbsPer100g": 15,
+    "fatPer100g": 5.6
+  },
+  {
+    "name": "Pani puri / Golgappa",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 6.3,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 5.6
+  },
+  {
+    "name": "Bhel puri",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 180,
+    "proteinPer100g": 4.5,
+    "carbsPer100g": 31.5,
+    "fatPer100g": 4
+  },
+  {
+    "name": "Sev puri",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 6.3,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 5.6
+  },
+  {
+    "name": "Dahi puri",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 200,
+    "proteinPer100g": 11,
+    "carbsPer100g": 16,
+    "fatPer100g": 10.2
+  },
+  {
+    "name": "Pakora / Pakoda",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 6,
+    "carbsPer100g": 37.5,
+    "fatPer100g": 14
+  },
+  {
+    "name": "Onion bhaji",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 6,
+    "carbsPer100g": 37.5,
+    "fatPer100g": 14
+  },
+  {
+    "name": "Bread pakora",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 7.5,
+    "carbsPer100g": 52.5,
+    "fatPer100g": 6.7
+  },
+  {
+    "name": "French fries",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 310,
+    "proteinPer100g": 6.2,
+    "carbsPer100g": 38.8,
+    "fatPer100g": 14.5
+  },
+  {
+    "name": "Potato chips",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 530,
+    "proteinPer100g": 10.6,
+    "carbsPer100g": 66.3,
+    "fatPer100g": 24.7
+  },
+  {
+    "name": "Aloo bhujia",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 530,
+    "proteinPer100g": 10.6,
+    "carbsPer100g": 66.3,
+    "fatPer100g": 24.7
+  },
+  {
+    "name": "Namkeen mixture",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 500,
+    "proteinPer100g": 10,
+    "carbsPer100g": 62.5,
+    "fatPer100g": 23.3
+  },
+  {
+    "name": "Mathri",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 480,
+    "proteinPer100g": 9.6,
+    "carbsPer100g": 60,
+    "fatPer100g": 22.4
+  },
+  {
+    "name": "Chakli / Murukku",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 500,
+    "proteinPer100g": 10,
+    "carbsPer100g": 62.5,
+    "fatPer100g": 23.3
+  },
+  {
+    "name": "Papad, fried",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 500,
+    "proteinPer100g": 10,
+    "carbsPer100g": 62.5,
+    "fatPer100g": 23.3
+  },
+  {
+    "name": "Instant noodles, cooked",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 3.8,
+    "carbsPer100g": 26.3,
+    "fatPer100g": 3.3
+  },
+  {
+    "name": "Instant noodles, dry",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 11.3,
+    "carbsPer100g": 78.8,
+    "fatPer100g": 10
+  },
+  {
+    "name": "Pizza",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 270,
+    "proteinPer100g": 5.4,
+    "carbsPer100g": 33.8,
+    "fatPer100g": 12.6
+  },
+  {
+    "name": "Veg burger",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 5,
+    "carbsPer100g": 31.3,
+    "fatPer100g": 11.7
+  },
+  {
+    "name": "Chicken burger",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 270,
+    "proteinPer100g": 33.8,
+    "carbsPer100g": 3.4,
+    "fatPer100g": 13.5
+  },
+  {
+    "name": "Grilled cheese sandwich",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 270,
+    "proteinPer100g": 5.4,
+    "carbsPer100g": 33.8,
+    "fatPer100g": 12.6
+  },
+  {
+    "name": "Veg cheese sandwich",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 5,
+    "carbsPer100g": 31.3,
+    "fatPer100g": 11.7
+  },
+  {
+    "name": "White bread",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 270,
+    "proteinPer100g": 6.8,
+    "carbsPer100g": 47.3,
+    "fatPer100g": 6
+  },
+  {
+    "name": "Chicken momos, steamed",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 150,
+    "proteinPer100g": 18.8,
+    "carbsPer100g": 1.9,
+    "fatPer100g": 7.5
+  },
+  {
+    "name": "Fried momos",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 5,
+    "carbsPer100g": 31.3,
+    "fatPer100g": 11.7
+  },
+  {
+    "name": "Spring rolls",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 250,
+    "proteinPer100g": 5,
+    "carbsPer100g": 31.3,
+    "fatPer100g": 11.7
+  },
+  {
+    "name": "Chole bhature",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 280,
+    "proteinPer100g": 21,
+    "carbsPer100g": 35,
+    "fatPer100g": 6.2
+  },
+  {
+    "name": "Aloo puri",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 300,
+    "proteinPer100g": 7.5,
+    "carbsPer100g": 52.5,
+    "fatPer100g": 6.7
+  },
+  {
+    "name": "Onion rings, fried",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 350,
+    "proteinPer100g": 7,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 16.3
+  },
+  {
+    "name": "Popcorn, buttered",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 50
+  },
+  {
+    "name": "Chocolate bar",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 530,
+    "proteinPer100g": 6.6,
+    "carbsPer100g": 119.3,
+    "fatPer100g": 2.9
+  },
+  {
+    "name": "Cream biscuits",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 480,
+    "proteinPer100g": 9.6,
+    "carbsPer100g": 60,
+    "fatPer100g": 22.4
+  },
+  {
+    "name": "Glucose biscuits",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 9,
+    "carbsPer100g": 56.3,
+    "fatPer100g": 21
+  },
+  {
+    "name": "Donut",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 400,
+    "proteinPer100g": 8,
+    "carbsPer100g": 50,
+    "fatPer100g": 18.7
+  },
+  {
+    "name": "Cake with frosting",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 350,
+    "proteinPer100g": 7,
+    "carbsPer100g": 43.8,
+    "fatPer100g": 16.3
+  },
+  {
+    "name": "Ice cream",
+    "category": "Junk & street foods",
+    "caloriesPer100g": 210,
+    "proteinPer100g": 11.6,
+    "carbsPer100g": 16.8,
+    "fatPer100g": 10.7
+  },
+  {
+    "name": "Gulab jamun",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 320,
+    "proteinPer100g": 6.4,
+    "carbsPer100g": 44,
+    "fatPer100g": 13.2
+  },
+  {
+    "name": "Jalebi",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 400,
+    "proteinPer100g": 8,
+    "carbsPer100g": 55,
+    "fatPer100g": 16.4
+  },
+  {
+    "name": "Rasgulla",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 180,
+    "proteinPer100g": 3.6,
+    "carbsPer100g": 24.8,
+    "fatPer100g": 7.4
+  },
+  {
+    "name": "Kaju katli",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 480,
+    "proteinPer100g": 9.6,
+    "carbsPer100g": 66,
+    "fatPer100g": 19.7
+  },
+  {
+    "name": "Besan ladoo",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 9,
+    "carbsPer100g": 61.9,
+    "fatPer100g": 18.5
+  },
+  {
+    "name": "Motichoor ladoo",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 400,
+    "proteinPer100g": 8,
+    "carbsPer100g": 55,
+    "fatPer100g": 16.4
+  },
+  {
+    "name": "Soan papdi",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 9,
+    "carbsPer100g": 61.9,
+    "fatPer100g": 18.5
+  },
+  {
+    "name": "Mysore pak",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 450,
+    "proteinPer100g": 9,
+    "carbsPer100g": 61.9,
+    "fatPer100g": 18.5
+  },
+  {
+    "name": "Gajar halwa",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 200,
+    "proteinPer100g": 4,
+    "carbsPer100g": 27.5,
+    "fatPer100g": 8.2
+  },
+  {
+    "name": "Rice kheer",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 120,
+    "proteinPer100g": 6.6,
+    "carbsPer100g": 9.6,
+    "fatPer100g": 6.1
+  },
+  {
+    "name": "Rabri",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 200,
+    "proteinPer100g": 11,
+    "carbsPer100g": 16,
+    "fatPer100g": 10.2
+  },
+  {
+    "name": "Barfi",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 350,
+    "proteinPer100g": 7,
+    "carbsPer100g": 48.1,
+    "fatPer100g": 14.4
+  },
+  {
+    "name": "Peda",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 350,
+    "proteinPer100g": 7,
+    "carbsPer100g": 48.1,
+    "fatPer100g": 14.4
+  },
+  {
+    "name": "Coconut ladoo",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 400,
+    "proteinPer100g": 8,
+    "carbsPer100g": 55,
+    "fatPer100g": 16.4
+  },
+  {
+    "name": "Kulfi",
+    "category": "Indian sweets & desserts",
+    "caloriesPer100g": 200,
+    "proteinPer100g": 11,
+    "carbsPer100g": 16,
+    "fatPer100g": 10.2
+  },
+  {
+    "name": "Water",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 0,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 0
+  },
+  {
+    "name": "Black coffee, unsweetened",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 0,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 0
+  },
+  {
+    "name": "Black tea, unsweetened",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 0,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 0
+  },
+  {
+    "name": "Milk tea with sugar",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 2.2,
+    "carbsPer100g": 3.2,
+    "fatPer100g": 2
+  },
+  {
+    "name": "Coffee with milk and sugar",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 50,
+    "proteinPer100g": 2.8,
+    "carbsPer100g": 4,
+    "fatPer100g": 2.6
+  },
+  {
+    "name": "Sweet lassi",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 70,
+    "proteinPer100g": 3.9,
+    "carbsPer100g": 5.6,
+    "fatPer100g": 3.6
+  },
+  {
+    "name": "Salted lassi",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 2.2,
+    "carbsPer100g": 3.2,
+    "fatPer100g": 2
+  },
+  {
+    "name": "Buttermilk / Chaas",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 20,
+    "proteinPer100g": 0,
+    "carbsPer100g": 0,
+    "fatPer100g": 2.2
+  },
+  {
+    "name": "Mango shake",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 70,
+    "proteinPer100g": 0.9,
+    "carbsPer100g": 15.8,
+    "fatPer100g": 0.4
+  },
+  {
+    "name": "Banana shake",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 80,
+    "proteinPer100g": 1,
+    "carbsPer100g": 18,
+    "fatPer100g": 0.4
+  },
+  {
+    "name": "Fresh orange juice",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 50,
+    "proteinPer100g": 0.6,
+    "carbsPer100g": 11.3,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Sugarcane juice",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 60,
+    "proteinPer100g": 0.8,
+    "carbsPer100g": 13.5,
+    "fatPer100g": 0.3
+  },
+  {
+    "name": "Lemonade with sugar",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 0.5,
+    "carbsPer100g": 9,
+    "fatPer100g": 0.2
+  },
+  {
+    "name": "Cola soft drink",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 40,
+    "proteinPer100g": 0.5,
+    "carbsPer100g": 9,
+    "fatPer100g": 0.2
+  },
+  {
+    "name": "Packaged fruit drink",
+    "category": "Drinks & beverages",
+    "caloriesPer100g": 50,
+    "proteinPer100g": 0.6,
+    "carbsPer100g": 11.3,
+    "fatPer100g": 0.3
+  }
+]

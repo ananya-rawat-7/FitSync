@@ -1,0 +1,1782 @@
+[
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 0,
+    "mealSlot": "BREAKFAST",
+    "title": "Lean protein breakfast",
+    "note": "A light, protein-forward start.",
+    "items": [
+      {
+        "foodName": "Besan chilla",
+        "grams": 120
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 1,
+    "mealSlot": "BREAKFAST",
+    "title": "Egg and poha bowl",
+    "note": "Comforting poha with eggs on the side.",
+    "items": [
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Poha",
+        "grams": 120
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 2,
+    "mealSlot": "BREAKFAST",
+    "title": "Upma with curd",
+    "note": "A gentle savoury breakfast with fruit.",
+    "items": [
+      {
+        "foodName": "Upma",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Papaya",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 3,
+    "mealSlot": "BREAKFAST",
+    "title": "Dhokla and sprouts",
+    "note": "Steamed dhokla with a fresh sprout salad.",
+    "items": [
+      {
+        "foodName": "Dhokla",
+        "grams": 150
+      },
+      {
+        "foodName": "Sprouted moong",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 4,
+    "mealSlot": "BREAKFAST",
+    "title": "Omelette and dosa",
+    "note": "A protein omelette with a small dosa.",
+    "items": [
+      {
+        "foodName": "Omelette",
+        "grams": 120
+      },
+      {
+        "foodName": "Plain dosa",
+        "grams": 80
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 5,
+    "mealSlot": "BREAKFAST",
+    "title": "Idli and curd",
+    "note": "Steamed idli with curd and fruit.",
+    "items": [
+      {
+        "foodName": "Idli",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 6,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha and egg",
+    "note": "A balanced start with a boiled egg.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 120
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 0,
+    "mealSlot": "LUNCH",
+    "title": "Roti, dal, and vegetables",
+    "note": "A simple balanced plate.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 1,
+    "mealSlot": "LUNCH",
+    "title": "Brown rice and rajma",
+    "note": "Slow carbs with a bean curry.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 150
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 2,
+    "mealSlot": "LUNCH",
+    "title": "Roti with chole",
+    "note": "Chickpea curry with a green vegetable.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Chole / Chana masala",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 3,
+    "mealSlot": "LUNCH",
+    "title": "Rice and fish curry",
+    "note": "A lighter fish curry with rice.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 150
+      },
+      {
+        "foodName": "Fish curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 4,
+    "mealSlot": "LUNCH",
+    "title": "Roti, moong dal, and paneer",
+    "note": "Protein from dal and paneer.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Moong dal, cooked",
+        "grams": 150
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 5,
+    "mealSlot": "LUNCH",
+    "title": "Rice, chicken, and vegetables",
+    "note": "A filling but moderate plate.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 150
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 120
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 6,
+    "mealSlot": "LUNCH",
+    "title": "Roti with dal makhani",
+    "note": "A creamy dal with vegetables.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Dal makhani",
+        "grams": 120
+      },
+      {
+        "foodName": "Baingan bharta",
+        "grams": 150
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 0,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and palak paneer",
+    "note": "A cosy, protein-rich dinner.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 200
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 1,
+    "mealSlot": "DINNER",
+    "title": "Roti and grilled fish",
+    "note": "A light grilled-fish dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Grilled fish",
+        "grams": 120
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 2,
+    "mealSlot": "DINNER",
+    "title": "Rice, dal, and bhindi",
+    "note": "A simple home-style dinner.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 120
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 3,
+    "mealSlot": "DINNER",
+    "title": "Roti and paneer butter masala",
+    "note": "A smaller portion of a rich curry.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Paneer butter masala",
+        "grams": 120
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 4,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and curd",
+    "note": "Easy-to-digest dinner with curd.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 200
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 5,
+    "mealSlot": "DINNER",
+    "title": "Roti and chicken curry",
+    "note": "A balanced chicken dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 120
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "FAT_LOSS",
+    "dayIndex": 6,
+    "mealSlot": "DINNER",
+    "title": "Brown rice and rajma",
+    "note": "A plant-forward dinner.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 120
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 0,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha, egg, and milk",
+    "note": "A high-energy breakfast.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 150
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      },
+      {
+        "foodName": "Banana",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 1,
+    "mealSlot": "BREAKFAST",
+    "title": "Omelette and paratha",
+    "note": "Protein and slow carbs.",
+    "items": [
+      {
+        "foodName": "Omelette",
+        "grams": 150
+      },
+      {
+        "foodName": "Plain paratha",
+        "grams": 100
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 2,
+    "mealSlot": "BREAKFAST",
+    "title": "Upma with paneer",
+    "note": "A savoury breakfast with extra protein.",
+    "items": [
+      {
+        "foodName": "Upma",
+        "grams": 180
+      },
+      {
+        "foodName": "Paneer",
+        "grams": 80
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 3,
+    "mealSlot": "BREAKFAST",
+    "title": "Idli, egg, and milk",
+    "note": "A filling South Indian start.",
+    "items": [
+      {
+        "foodName": "Idli",
+        "grams": 180
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 4,
+    "mealSlot": "BREAKFAST",
+    "title": "Besan chilla and curd",
+    "note": "Protein-rich chilla with curd.",
+    "items": [
+      {
+        "foodName": "Besan chilla",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 150
+      },
+      {
+        "foodName": "Banana",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 5,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha, paneer, and papaya",
+    "note": "A filling breakfast with fruit.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 150
+      },
+      {
+        "foodName": "Paneer",
+        "grams": 80
+      },
+      {
+        "foodName": "Papaya",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 6,
+    "mealSlot": "BREAKFAST",
+    "title": "Dosa and omelette",
+    "note": "A larger breakfast for a training day.",
+    "items": [
+      {
+        "foodName": "Plain dosa",
+        "grams": 120
+      },
+      {
+        "foodName": "Omelette",
+        "grams": 120
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 0,
+    "mealSlot": "LUNCH",
+    "title": "Rice, chicken, and curd",
+    "note": "A strong protein and carb plate.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 1,
+    "mealSlot": "LUNCH",
+    "title": "Roti and paneer curry",
+    "note": "A rich vegetarian lunch.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Paneer butter masala",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 2,
+    "mealSlot": "LUNCH",
+    "title": "Brown rice and rajma",
+    "note": "A filling plant-based lunch.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 220
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 3,
+    "mealSlot": "LUNCH",
+    "title": "Roti and tandoori chicken",
+    "note": "Lean protein with vegetables.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Tandoori chicken",
+        "grams": 150
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 4,
+    "mealSlot": "LUNCH",
+    "title": "Rice and fish curry",
+    "note": "A balanced fish lunch.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Fish curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 5,
+    "mealSlot": "LUNCH",
+    "title": "Roti, chole, and paneer",
+    "note": "Protein from beans and paneer.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Chole / Chana masala",
+        "grams": 180
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 6,
+    "mealSlot": "LUNCH",
+    "title": "Vegetable biryani and curd",
+    "note": "A hearty rice lunch.",
+    "items": [
+      {
+        "foodName": "Vegetable biryani",
+        "grams": 250
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 0,
+    "mealSlot": "DINNER",
+    "title": "Roti and chicken breast",
+    "note": "A lean, high-protein dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Cooked chicken breast",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 1,
+    "mealSlot": "DINNER",
+    "title": "Rice and dal makhani",
+    "note": "A calorie-dense vegetarian dinner.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 200
+      },
+      {
+        "foodName": "Dal makhani",
+        "grams": 150
+      },
+      {
+        "foodName": "Paneer",
+        "grams": 80
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 2,
+    "mealSlot": "DINNER",
+    "title": "Roti and grilled fish",
+    "note": "A lighter training-day dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Grilled fish",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 3,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and paneer",
+    "note": "Comforting and protein-rich.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 250
+      },
+      {
+        "foodName": "Paneer",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 4,
+    "mealSlot": "DINNER",
+    "title": "Brown rice and chicken",
+    "note": "A balanced recovery dinner.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 200
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 5,
+    "mealSlot": "DINNER",
+    "title": "Roti, rajma, and curd",
+    "note": "Plant protein with curd.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "MUSCLE_GAIN",
+    "dayIndex": 6,
+    "mealSlot": "DINNER",
+    "title": "Rice and moong dal",
+    "note": "Easy carbs and protein.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 220
+      },
+      {
+        "foodName": "Moong dal, cooked",
+        "grams": 180
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 0,
+    "mealSlot": "BREAKFAST",
+    "title": "Idli and banana",
+    "note": "Fast carbs before a session.",
+    "items": [
+      {
+        "foodName": "Idli",
+        "grams": 200
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Banana",
+        "grams": 120
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 1,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha and egg",
+    "note": "A steady-energy breakfast.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 180
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 2,
+    "mealSlot": "BREAKFAST",
+    "title": "Dosa and curd",
+    "note": "A light carb-focused start.",
+    "items": [
+      {
+        "foodName": "Plain dosa",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Banana",
+        "grams": 120
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 3,
+    "mealSlot": "BREAKFAST",
+    "title": "Upma and milk",
+    "note": "Familiar carbs with protein.",
+    "items": [
+      {
+        "foodName": "Upma",
+        "grams": 180
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      },
+      {
+        "foodName": "Papaya",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 4,
+    "mealSlot": "BREAKFAST",
+    "title": "Uttapam and sprouts",
+    "note": "A filling savoury breakfast.",
+    "items": [
+      {
+        "foodName": "Uttapam",
+        "grams": 180
+      },
+      {
+        "foodName": "Sprouted moong",
+        "grams": 100
+      },
+      {
+        "foodName": "Banana",
+        "grams": 120
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 5,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha and curd",
+    "note": "Easy-to-digest carbs.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 180
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Mango",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 6,
+    "mealSlot": "BREAKFAST",
+    "title": "Chilla and milk",
+    "note": "Protein with a carb base.",
+    "items": [
+      {
+        "foodName": "Besan chilla",
+        "grams": 150
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 0,
+    "mealSlot": "LUNCH",
+    "title": "Rice, dal, and vegetables",
+    "note": "A classic endurance lunch.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 180
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 1,
+    "mealSlot": "LUNCH",
+    "title": "Roti and rajma",
+    "note": "Slow carbs with beans.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 2,
+    "mealSlot": "LUNCH",
+    "title": "Brown rice and chicken",
+    "note": "Protein and complex carbs.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 3,
+    "mealSlot": "LUNCH",
+    "title": "Pulao and curd",
+    "note": "A lighter rice lunch.",
+    "items": [
+      {
+        "foodName": "Vegetable pulao",
+        "grams": 250
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 4,
+    "mealSlot": "LUNCH",
+    "title": "Rice and chole",
+    "note": "Plant protein and carbs.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Chole / Chana masala",
+        "grams": 180
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 5,
+    "mealSlot": "LUNCH",
+    "title": "Roti and fish curry",
+    "note": "A balanced fish lunch.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 120
+      },
+      {
+        "foodName": "Fish curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 6,
+    "mealSlot": "LUNCH",
+    "title": "Brown rice and dal",
+    "note": "A comforting carb-forward lunch.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 250
+      },
+      {
+        "foodName": "Dal makhani",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 0,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and curd",
+    "note": "Easy recovery dinner.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 250
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 1,
+    "mealSlot": "DINNER",
+    "title": "Roti and paneer",
+    "note": "Protein with a light curry.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 100
+      },
+      {
+        "foodName": "Paneer butter masala",
+        "grams": 120
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 2,
+    "mealSlot": "DINNER",
+    "title": "Rice, dal, and palak paneer",
+    "note": "A filling vegetarian dinner.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 220
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 180
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 3,
+    "mealSlot": "DINNER",
+    "title": "Roti and grilled fish",
+    "note": "A lighter evening meal.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 100
+      },
+      {
+        "foodName": "Grilled fish",
+        "grams": 150
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 4,
+    "mealSlot": "DINNER",
+    "title": "Pulao and curd",
+    "note": "Comforting carbs for recovery.",
+    "items": [
+      {
+        "foodName": "Vegetable pulao",
+        "grams": 220
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 5,
+    "mealSlot": "DINNER",
+    "title": "Roti and rajma",
+    "note": "Plant protein and slow carbs.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 100
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 180
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "ENDURANCE",
+    "dayIndex": 6,
+    "mealSlot": "DINNER",
+    "title": "Brown rice and chicken",
+    "note": "A balanced recovery plate.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 220
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 0,
+    "mealSlot": "BREAKFAST",
+    "title": "Poha and egg",
+    "note": "A simple balanced breakfast.",
+    "items": [
+      {
+        "foodName": "Poha",
+        "grams": 150
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 1,
+    "mealSlot": "BREAKFAST",
+    "title": "Upma and curd",
+    "note": "Savoury, filling, and easy.",
+    "items": [
+      {
+        "foodName": "Upma",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Banana",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 2,
+    "mealSlot": "BREAKFAST",
+    "title": "Chilla and milk",
+    "note": "Protein with fruit.",
+    "items": [
+      {
+        "foodName": "Besan chilla",
+        "grams": 120
+      },
+      {
+        "foodName": "Whole milk",
+        "grams": 200
+      },
+      {
+        "foodName": "Papaya",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 3,
+    "mealSlot": "BREAKFAST",
+    "title": "Idli and sprouts",
+    "note": "A light South Indian start.",
+    "items": [
+      {
+        "foodName": "Idli",
+        "grams": 150
+      },
+      {
+        "foodName": "Sprouted moong",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 4,
+    "mealSlot": "BREAKFAST",
+    "title": "Dosa and curd",
+    "note": "A familiar breakfast plate.",
+    "items": [
+      {
+        "foodName": "Plain dosa",
+        "grams": 120
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Mango",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 5,
+    "mealSlot": "BREAKFAST",
+    "title": "Dhokla and egg",
+    "note": "Steamed carbs with protein.",
+    "items": [
+      {
+        "foodName": "Dhokla",
+        "grams": 150
+      },
+      {
+        "foodName": "Boiled egg",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 6,
+    "mealSlot": "BREAKFAST",
+    "title": "Omelette and roti",
+    "note": "A savoury protein start.",
+    "items": [
+      {
+        "foodName": "Omelette",
+        "grams": 120
+      },
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 60
+      },
+      {
+        "foodName": "Apple",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 0,
+    "mealSlot": "LUNCH",
+    "title": "Roti, dal, and vegetables",
+    "note": "A balanced everyday plate.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 1,
+    "mealSlot": "LUNCH",
+    "title": "Rice and rajma",
+    "note": "A filling plant-based lunch.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 180
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 2,
+    "mealSlot": "LUNCH",
+    "title": "Roti and chole",
+    "note": "Chickpeas with a green vegetable.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Chole / Chana masala",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 3,
+    "mealSlot": "LUNCH",
+    "title": "Brown rice and chicken",
+    "note": "A balanced chicken lunch.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 180
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 120
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 4,
+    "mealSlot": "LUNCH",
+    "title": "Roti and fish curry",
+    "note": "A lighter fish lunch.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Fish curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 5,
+    "mealSlot": "LUNCH",
+    "title": "Rice and dal makhani",
+    "note": "A comforting vegetarian lunch.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 180
+      },
+      {
+        "foodName": "Dal makhani",
+        "grams": 120
+      },
+      {
+        "foodName": "Baingan bharta",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 6,
+    "mealSlot": "LUNCH",
+    "title": "Roti and paneer",
+    "note": "Paneer with vegetables.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Paneer butter masala",
+        "grams": 120
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 0,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and palak paneer",
+    "note": "A cosy balanced dinner.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 200
+      },
+      {
+        "foodName": "Palak paneer",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 1,
+    "mealSlot": "DINNER",
+    "title": "Roti and grilled fish",
+    "note": "A light evening plate.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Grilled fish",
+        "grams": 120
+      },
+      {
+        "foodName": "Cabbage sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 2,
+    "mealSlot": "DINNER",
+    "title": "Rice, dal, and bhindi",
+    "note": "A simple home dinner.",
+    "items": [
+      {
+        "foodName": "Cooked white rice",
+        "grams": 150
+      },
+      {
+        "foodName": "Dal tadka",
+        "grams": 150
+      },
+      {
+        "foodName": "Bhindi sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 3,
+    "mealSlot": "DINNER",
+    "title": "Roti and chicken curry",
+    "note": "A balanced chicken dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Chicken curry",
+        "grams": 120
+      },
+      {
+        "foodName": "Cauliflower sabzi",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 4,
+    "mealSlot": "DINNER",
+    "title": "Khichdi and curd",
+    "note": "Easy-to-digest comfort food.",
+    "items": [
+      {
+        "foodName": "Khichdi",
+        "grams": 200
+      },
+      {
+        "foodName": "Curd / Dahi",
+        "grams": 100
+      },
+      {
+        "foodName": "Cucumber",
+        "grams": 100
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 5,
+    "mealSlot": "DINNER",
+    "title": "Brown rice and rajma",
+    "note": "Plant protein and slow carbs.",
+    "items": [
+      {
+        "foodName": "Cooked brown rice",
+        "grams": 150
+      },
+      {
+        "foodName": "Rajma curry",
+        "grams": 150
+      },
+      {
+        "foodName": "Mixed vegetable curry",
+        "grams": 150
+      }
+    ]
+  },
+  {
+    "menuGroup": "BALANCED",
+    "dayIndex": 6,
+    "mealSlot": "DINNER",
+    "title": "Roti and paneer",
+    "note": "A light paneer dinner.",
+    "items": [
+      {
+        "foodName": "Roti / Chapati",
+        "grams": 80
+      },
+      {
+        "foodName": "Paneer",
+        "grams": 100
+      },
+      {
+        "foodName": "Tomato",
+        "grams": 100
+      }
+    ]
+  }
+]

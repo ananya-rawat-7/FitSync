@@ -43,6 +43,7 @@ export function getWeekDays(weekOffset = 0) {
       dateLabel: date.toLocaleDateString(undefined, { month: "short", day: "numeric" }),
       isToday: key === todayKey,
       isPast: key < todayKey,
+      isFuture: key > todayKey,
     };
   });
 }

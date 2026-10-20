@@ -27,7 +27,8 @@ FitSync/
         │   ├── auth/         # Registration, login, profile, account model/repository
         │   ├── config/        # CORS and API error responses
         │   ├── security/     # JWT creation, validation, and Spring Security
-        │   └── workout/      # Sessions, plans, DB-backed exercise catalog and goal templates, services, and controllers
+        │   ├── workout/      # Sessions, plans, DB-backed exercise catalog and goal templates, services, and controllers
+        │   └── nutrition/    # Foods, meal plans, daily diary, water, macros, and goal-based menus
 ```
 
 ## Requirements
@@ -116,6 +117,7 @@ The preview is available at `http://localhost:4173`. Keep production credentials
 | `http://localhost:5173/login` | Public | Sign in |
 | `http://localhost:5173/dashboard` | Protected | Account-specific activity totals and recent workouts |
 | `http://localhost:5173/workouts` | Protected | Build a goal-based week, edit each day's workouts and exercises, and review workout logs |
+| `http://localhost:5173/food-journal` | Protected | Plan a goal-based meal week, log meals, review macros, and track water |
 | `http://localhost:5173/profile` | Protected | View account details and update optional fitness details |
 
 ## API and access rules
@@ -135,9 +137,20 @@ Only registration and login are public. Every other API route requires a valid, 
 | `POST` | `/api/workouts` | JWT | Creates a workout for the authenticated user (`201`) |
 | `PUT` | `/api/workouts/{id}` | JWT | Updates an owned workout |
 | `DELETE` | `/api/workouts/{id}` | JWT | Deletes an owned workout (`204`) |
-| `GET` | `/api/calories` | JWT | Lists only the authenticated user's food calorie entries |
-| `POST` | `/api/calories` | JWT | Logs a food or drink entry with meal, calories, and date |
-| `DELETE` | `/api/calories/{id}` | JWT | Deletes an owned calorie entry (`204`) |
+| `GET` | `/api/foods` | JWT | Returns the DB-backed food library (global + the user's custom foods) with per-100 g macros |
+| `POST` | `/api/foods` | JWT | Creates a reusable custom food owned by the authenticated user (`201`) |
+| `GET` | `/api/meal-plans?start=...&end=...` | JWT | Lists planned meals in a date range with foods and macros |
+| `POST` | `/api/meal-plans` | JWT | Creates a meal for a date and Breakfast/Lunch/Dinner slot (`201`) |
+| `PUT` | `/api/meal-plans/{id}` | JWT | Updates a meal's title, notes, and food list; logged state is preserved |
+| `DELETE` | `/api/meal-plans/{id}` | JWT | Removes an owned meal; the diary remains (`204`) |
+| `POST` | `/api/meal-plans/generate-week` | JWT | Builds a goal-based Monday–Sunday menu; accepts optional `startDate` |
+| `POST` | `/api/meal-plans/{id}/log` | JWT | Copies a meal to the daily diary and marks it logged; a second log returns `409` |
+| `POST` | `/api/meal-plans/log-day` | JWT | Bulk-logs all unlogged meals for a date |
+| `GET` | `/api/food-log?start=...&end=...` | JWT | Returns the daily food diary entries in a date range |
+| `DELETE` | `/api/food-log/{id}` | JWT | Removes a diary entry; the source meal unlogs when its last entry goes (`204`) |
+| `GET` | `/api/water?start=...&end=...` | JWT | Returns water entries in a date range |
+| `POST` | `/api/water` | JWT | Logs a water amount (1–5000 ml) for today or an earlier date (`201`) |
+| `DELETE` | `/api/water/{id}` | JWT | Deletes an owned water entry (`204`) |
 | `GET` | `/api/workout-plans` | JWT | Lists the authenticated user's planned sessions, including exercises |
 | `POST` | `/api/workout-plans` | JWT | Creates a session in a day for the authenticated user |
 | `PUT` | `/api/workout-plans/{id}` | JWT | Updates an owned plan and replaces its exercise list with the submitted order |
@@ -153,7 +166,7 @@ Registration accepts optional weight (kg), height (cm), age, gender, and fitness
 
 The Workouts page shows the current calendar week, Monday–Sunday, with previous/next week navigation. It is ordered as **Your week**, then the **Weekly workout minutes** chart, then **Workout logs** last. `POST /api/workout-plans/generate-week` reads the goal templates from the database and returns seven planned sessions (Monday–Sunday) with named exercises, sets, reps, rest periods, and short instructions. Regenerating a week replaces only the auto-generated plans in that range, so manually added sessions remain. Only **today's uncompleted** plan can be logged. Past and future days stay visible and editable, but their **Log workout** buttons are faded and disabled. Logging a plan keeps it on the board with a **Done** badge and logged time, and the same plan cannot be logged twice. A small **CONGO!** celebration modal appears after a successful log. Rebuilding the week preserves completed plans and skips their dates, so they do not duplicate or disappear.
 
-The exercise catalog and goal templates live in MySQL. A one-time startup seeder populates the global exercises and the seven-day templates for `LOSE_WEIGHT`, `GAIN_WEIGHT`, `BUILD_STRENGTH`, `IMPROVE_ENDURANCE`, `IMPROVE_FLEXIBILITY`, and `MAINTAIN_FITNESS`; all runtime reads and writes use the database. The standalone library section is gone from the page. Instead, opening **Edit day** gives a modal day editor where the user can reorder workouts, reorder exercises, edit sets/reps/rest/instructions, add an exercise from the database-backed library, or create a custom exercise. Custom exercises are saved to the user's library for reuse. Completed workouts keep their Edit and Remove actions and show a Done indicator in the day editor. Completed sessions remain editable from **Workout logs**, including the session name. The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. Food logging is available separately on the Food journal page, with a searchable catalog derived from the provided Indian foods calorie spreadsheet. It estimates calories from logged grams using the catalog's kcal-per-100-g values. For foods outside the catalog, users can enter the food name, amount, and calories from a label or other nutrition source. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
+The exercise catalog and goal templates live in MySQL. A one-time startup seeder populates the global exercises and the seven-day templates for `LOSE_WEIGHT`, `GAIN_WEIGHT`, `BUILD_STRENGTH`, `IMPROVE_ENDURANCE`, `IMPROVE_FLEXIBILITY`, and `MAINTAIN_FITNESS`; all runtime reads and writes use the database. The standalone library section is gone from the page. Instead, opening **Edit day** gives a modal day editor where the user can reorder workouts, reorder exercises, edit sets/reps/rest/instructions, add an exercise from the database-backed library, or create a custom exercise. Custom exercises are saved to the user's library for reuse. Completed workouts keep their Edit and Remove actions and show a Done indicator in the day editor. Completed sessions remain editable from **Workout logs**, including the session name. The Progress page shows a per-account workout summary, weekly activity chart, adult BMI reference scale, and rough daily energy range. The Food journal page plans a goal-based Monday–Sunday menu with Breakfast, Lunch, and Dinner. Meals are stored in MySQL and generated from four seeded menu groups (fat loss, muscle gain, endurance, and balanced) mapped from the profile goal. Each meal can be edited, removed, and logged. Logging copies the meal's foods into a daily diary and marks the meal logged; a day has a bulk **Log all meals** action. The diary drives the **Today's macros** summary (calories, protein, carbs, and fat) and **Today's log**, and can be corrected by deleting entries; deleting the last diary entry for a meal unlogs the plan so it can be logged again. A separate water tracker provides quick-add buttons, a weekly chart with a 2 L reference, and a daily water log. **CONGO!** celebration modals appear after meal or day logging. The food library is DB-backed with per-100 g macros for 130 foods, plus user-owned custom foods. The old calorie-only tracker and `/api/calories` endpoints are removed; existing `calorie_entries` data remains legacy in existing databases. All nutrition values are estimates and are not verified by the app. Adult BMI categories and energy targets are educational estimates only; the estimated energy range uses a sedentary baseline, and the dashboard offers general meal and movement ideas rather than medical or diet prescriptions.
 
 Registration and login example:
 
